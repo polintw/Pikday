@@ -13,7 +13,6 @@ import Signin from './Signin/Signin.jsx';
 import Resend from './Resend/Resend.jsx';
 import Unsubscribe from './Unsubscribe/Unsubscribe.jsx';
 import Confirmation from './components/Confirmation/Confirmation.jsx';
-import SvgLogo from '../Components/Svg/SvgLogo.jsx';
 import ServiceLinks from '../Components/ServiceLinks.jsx';
 import ModalBox from '../Components/ModalBox.jsx';
 import ModalBackground from '../Components/ModalBackground.jsx';
@@ -61,7 +60,7 @@ class Sign extends React.Component {
               <div
                 className={classnames(styles.boxLogo)}
                 onClick={(e)=>{e.preventDefault(); e.stopPropagation(); window.location.assign('/');}}>
-                <SvgLogo/>
+
               </div>
               <div
                 className={classnames(styles.boxServiceLink)}>

@@ -5,7 +5,6 @@ import {
 import {connect} from "react-redux";
 import classnames from 'classnames';
 import styles from "./styles.module.css";
-import Invite from '../../../partAround/Index/Invite/Invite.jsx';
 import CreateShare from '../../../../Unit/Editing/CreateShare.jsx';
 
 class FeedEmpty extends React.Component {
@@ -65,14 +64,7 @@ class FeedEmpty extends React.Component {
       );
     }
     else{
-      return (
-        <div
-          className={classnames(styles.boxInvite)}>
-          <Invite
-            belongOnly={false}
-            reqNode={this.props.nodeAtId}/>
-        </div>
-      )
+      return null;
     };
   }
 

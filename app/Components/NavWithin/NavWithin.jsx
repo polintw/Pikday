@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from "react-redux";
 import classnames from 'classnames';
 import styles from "./styles.module.css";
-import SvgLogo from '../Svg/SvgLogo.jsx';
 import ServiceLinks from '../ServiceLinks.jsx';
 
 class NavWithin extends React.Component {
@@ -34,7 +33,7 @@ class NavWithin extends React.Component {
         <div
           className={classnames(styles.boxLogo)}
           onClick={(e)=>{e.preventDefault(); e.stopPropagation(); this.props._refer_to('', '/')}}>
-          <SvgLogo/>
+
         </div>
         <div
           className={classnames(styles.boxFooter)}>

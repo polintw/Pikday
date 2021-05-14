@@ -28,10 +28,12 @@ class Around extends React.Component {
   }
 
   render(){
-    <div
-      style={this.style.withinCom_Around_}>
-      <IndexWrapper {...this.props}/>
-    </div>
+    return (
+      <div
+        style={this.style.withinCom_Around_}>
+        <IndexWrapper {...this.props}/>
+      </div>
+    )
   }
 }
 

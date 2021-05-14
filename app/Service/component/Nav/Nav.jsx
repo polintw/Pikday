@@ -7,7 +7,6 @@ import {connect} from "react-redux";
 import classnames from 'classnames';
 import styles from "./styles.module.css";
 import AccountPalette from '../../../Components/AccountPalette.jsx';
-import SvgLogo from '../../../Components/Svg/SvgLogo.jsx';
 
 class Nav extends React.Component {
   constructor(props){
@@ -98,8 +97,7 @@ class Nav extends React.Component {
                 <div
                   className={classnames(styles.smallDisplayBox)}
                   style={{height:"20px"}}>
-                  <SvgLogo
-                    reverseColor={false}/>
+
                 </div>
                 <div
                   className={classnames(styles.smallDisplayNone)}>

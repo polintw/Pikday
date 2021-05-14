@@ -30,67 +30,73 @@ class NavFeed extends React.Component {
   }
 
   render(){
-    let gatheringify = this.props.location.pathname.includes('fellows') ? false : true;
-
     return(
       <div
         className={classnames(styles.comNavFeed, styles.boxTitle)}>
         <div
           style={{display:'flex'}}>
           <Link
-            to={ "/" }
-            topath={"gathering"}
-            className={
-              // classnames('plainLinkButton', styles.boxLinkLeft)
-              classnames('plainLinkButton')
-            }
-            style={{cursor: 'default'}}
-            onClick={(e)=>{ if( gatheringify ) e.preventDefault(); }}
+            to={ "/self/calendar" }
+            topath={"calendar"}
+            className={classnames('plainLinkButton')}
+            onTouchStart={this._handleEnter_link}
+            onTouchEnd={this._handleLeave_link}
             onMouseEnter={this._handleEnter_link}
             onMouseLeave={this._handleLeave_link}>
             <span
               className={classnames(
                 "fontContentPlain", "weightBold",
                 {
-                  [styles.spanLinkMouse]: (this.state.onNavLink == 'gathering' && !gatheringify),
-                  ["colorLightGrey"]: !gatheringify,
-                  ["colorAssistGold"]: gatheringify
+                  [styles.spanLinkMouse]: (this.state.onNavLink == 'calendar'),
+                  ["colorLightGrey"]: (this.state.onNavLink != 'calendar'),
+                  ["colorEditBlack"]: (this.state.onNavLink == 'calendar'),
                 }
               )}>
-              {this.props.i18nUIString.catalog["title_FeedAssigned_"] }
+              {this.props.i18nUIString.catalog["title_Index_NavFeed_"][0] }
             </span>
           </Link>
-        </div>
-        <div
-          className={classnames(styles.boxGatheringBase)}>
-
-          <div>
+          <Link
+            to={"/cosmic/today"}
+            topath={"today"}
+            className={classnames('plainLinkButton')}
+            onTouchStart={this._handleEnter_link}
+            onTouchEnd={this._handleLeave_link}
+            onMouseEnter={this._handleEnter_link}
+            onMouseLeave={this._handleLeave_link}
+            style={{ padding: '0 5px' }}>
             <span
-              className={classnames('colorWhiteGrey', 'fontContentPlain', 'smallDisplayNone')}
-              style={{ padding: '0 5px' }}>
-              {"．"}
+              className={classnames(
+                "fontContentPlain", "weightBold",
+                {
+                  [styles.spanLinkMouse]: (this.state.onNavLink == 'today'),
+                  ["colorLightGrey"]: (this.state.onNavLink != 'today'),
+                  ["colorEditBlack"]: (this.state.onNavLink == 'today'),
+                }
+              )}>
+              {this.props.i18nUIString.catalog["title_Index_NavFeed_"][1] }
             </span>
-            <Link
-              to={"/cosmic/focus"}
-              topath={"focus"}
-              className={classnames('plainLinkButton')}
-              onTouchStart={this._handleEnter_link}
-              onTouchEnd={this._handleLeave_link}
-              onMouseEnter={this._handleEnter_link}
-              onMouseLeave={this._handleLeave_link}
-              style={{ padding: '0 5px' }}>
-              <span
-                className={classnames(
-                  "fontContentPlain", "weightBold", styles.spanBaseNode,
-                  {
-                    [styles.spanBaseNodeMouse]: (this.state.onNavLink == 'focus'),
-                    ["colorWhiteGrey"]: (this.state.onNavLink != 'focus'),
-                    ["colorEditBlack"]: (this.state.onNavLink == 'focus')
-                  }
-                )}>
-                {this.props.i18nUIString.catalog['link_Focus']}</span>
-            </Link>
-          </div>
+          </Link>
+          <Link
+            to={"/cosmic/yesterday"}
+            topath={"yesterday"}
+            className={classnames('plainLinkButton')}
+            onTouchStart={this._handleEnter_link}
+            onTouchEnd={this._handleLeave_link}
+            onMouseEnter={this._handleEnter_link}
+            onMouseLeave={this._handleLeave_link}
+            style={{ padding: '0 5px' }}>
+            <span
+              className={classnames(
+                "fontContentPlain", "weightBold",
+                {
+                  [styles.spanLinkMouse]: (this.state.onNavLink == 'yesterday'),
+                  ["colorLightGrey"]: (this.state.onNavLink != 'yesterday'),
+                  ["colorEditBlack"]: (this.state.onNavLink == 'yesterday'),
+                }
+              )}>
+              {this.props.i18nUIString.catalog["title_Index_NavFeed_"][2] }
+            </span>
+          </Link>
         </div>
       </div>
     )

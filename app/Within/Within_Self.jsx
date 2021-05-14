@@ -9,7 +9,7 @@ import {
 import {connect} from "react-redux";
 import classnames from 'classnames';
 import styles from "./styles.module.css";
-import Calendar from './partSelf/Calendar/Calendar.jsx';
+import Calendar from './partSelf/Calendar/Wrapper.jsx';
 import NavWithin from '../Components/NavWithin/NavWithin.jsx';
 import NavWihtinSelf from '../Components/NavWithin/NavWihtinSelf.jsx';
 import NavOptions from '../Components/NavOptions/NavOptions.jsx';

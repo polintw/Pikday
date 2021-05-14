@@ -36,7 +36,6 @@ class Wrapper extends React.Component {
     this.axiosSource = axios.CancelToken.source();
     this._createdRespond = this._createdRespond.bind(this);
     this._construct_UnitInit = this._construct_UnitInit.bind(this);
-    this._render_FooterHint = this._render_FooterHint.bind(this);
     this._render_Newly = this._render_Newly.bind(this);
   }
 
@@ -113,9 +112,8 @@ class Wrapper extends React.Component {
 
               </div>
               <div
-                className={classnames(styles.boxRow, styles.boxFooter)}>
-                {this._render_FooterHint()}
-              </div>
+                className={classnames(styles.boxRow, styles.boxFooter)}/>
+
             </div>
           )
         }
@@ -172,25 +170,6 @@ class Wrapper extends React.Component {
       )
     ) :
     null;
-  }
-
-  _render_FooterHint(){
-    // by feed length, we gave users some message about the thing they could do
-    let feedConcatList = this.props.indexLists.listBrowsed.concat(this.props.indexLists.listUnread);
-    if (!this.props.belongsByType['residence'] && !this.props.belongsByType['homeland']) { //first, if the belong do not be set at all, which means could not share and do fetch any feed
-      return (
-        <span
-          className={classnames(styles.spanFooterHint, "fontTitleSmall", "colorGrey")}>
-          {this.props.i18nUIString.catalog["descript_AroundIndex_footer_BelongHint"]}</span>
-      );
-    }
-    else{
-      return (
-        <span
-          className={classnames(styles.spanFooterHint, "fontTitleSmall", "colorLightGrey")}>
-          {this.props.i18nUIString.catalog['descript_AroundIndex_footer']}</span>
-      );
-    }
   }
 }
 
