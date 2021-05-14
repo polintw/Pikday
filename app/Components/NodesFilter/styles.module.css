@@ -1,0 +1,111 @@
+.comNodesFilter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.boxMap {
+  align-self: center;
+  width: 86%;
+  height: 82vh;
+  margin-top: 8px;
+}
+
+.comNodesImgs {
+  display: flex;
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+  padding: 0 2%;
+}
+
+.boxNode {
+  width: 20%;
+  padding: 5vh 5% 1rem 2.5%;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+
+.boxNodeMouseon { /* must after boxNode */
+  box-shadow: inset 0 0 8px 0 rgba(84, 84, 84 , 45%);
+}
+
+.boxUnits {
+  display: flex;
+  width: 80%;
+  position: relative;
+  flex-wrap: wrap;
+}
+
+.boxUnitImg {
+  width: 29%;
+  height: 10vw;
+  position: relative;
+  margin: 8px 1%;
+  cursor: pointer;
+}
+
+.boxUnitImgMouseOff {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  box-shadow: 0 0 4px 0 rgba(84, 84, 84, 0.45);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.boxUnitImgMouseOn {
+  width: 110%;
+  height: 105%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 4px 0 rgba(84, 84, 84, 0.45);
+}
+
+.boxEmptyDescript {
+  width: 100%;
+  padding: 6rem 0;
+  text-align: center;
+}
+
+@media screen and (max-width:1110px) and (min-width: 860px) {
+  .comNodesImgs {
+    flex-direction: column;
+    margin: 8px 0 0;
+  }
+
+  .boxNode {
+    width: 100%;
+    padding: 0 2.5% 8px;
+  }
+
+  .boxUnits {
+    justify-content: space-between;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width:860px) {
+  .comNodesImgs {
+    flex-direction: column;
+    margin: 8px 0 0;
+  }
+
+  .boxNode {
+    width: 100%;
+    padding: 0 2.5% 8px;
+  }
+
+  .boxUnits {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .boxUnitImg {
+    width: 49%;
+    height: 27vw;
+    margin: 8px 0;
+  }
+}

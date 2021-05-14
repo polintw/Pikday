@@ -1,0 +1,38 @@
+.boxImgPosition { /*used in OpenedMark, MarksLayer, and ImgLayer.*/
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+  border-radius: 4px;
+}
+
+.boxMarkSpot { /*now used by ImgLayerEditing, OpenedMark, and MarksLayer*/
+  width: 48px;
+  height: 48px;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  overflow: visible;
+  cursor: pointer;
+}
+
+.boxMarkCurCir {
+  position: absolute;
+  width: 57%;
+  height: auto;
+  top: 53%;
+  transform: translate(0, -50%);
+  cursor: pointer;
+}
+
+/* for framework React Leaflet */
+.leaflet-container {
+  height: 100%;
+}
+
+@media screen and (max-width:860px) {
+  .boxImgPosition { /*used in OpenedMark, MarksLayer, and ImgLayer.*/
+    top: 0;
+    transform: translate(50%, 0%);
+  }
+
+}

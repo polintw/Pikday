@@ -1,0 +1,28 @@
+.comSinCloseDialog {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  min-height: 24rem;
+  box-sizing: border-box;
+  padding: 2rem 10% 3rem;
+}
+
+.boxMessage {
+
+}
+
+.boxButton {
+
+}
+
+.boxTop {
+  position: absolute;
+  top: 0;
+  right: 5%;
+}
+
+.spanMessage {
+
+}

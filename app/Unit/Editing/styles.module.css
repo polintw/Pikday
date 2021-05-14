@@ -1,0 +1,123 @@
+.comCreateShare {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.comSharedEdit {
+
+}
+
+.comCreateRespond {
+
+}
+
+.boxEditinginCreate {
+  width: 740px;
+  height: 560px;
+  min-width: 51.39%;
+  max-width: 100vw;
+  min-height: 70.94%;
+  /*max-height: 96vh; to see, if the editor has 560px height on small screen*/
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  border-radius: 4px;
+  background-color: #FFFFFF;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.5);
+}
+
+.comEditingPanel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.boxContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.boxContentWidth {
+  width: 86.48%;
+}
+
+.boxPanelHeight {
+  height: 100%;
+}
+
+.boxPanelPadding {
+  padding-top: 4.44vh;
+  padding-bottom: 4.44vh;
+}
+
+.boxFrame {
+  width: 100%;
+  height: 71.36%;
+  box-sizing: border-box;
+  margin-bottom: 2.54vh;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.boxSubmit {
+  width: 100%;
+  margin-bottom: 2.54vh;
+}
+
+.boxImgImport {
+  width: 65%;
+  height: 80%;
+  position: absolute;
+  left: 5%;
+  top: 10%;
+  box-sizing: border-box;
+}
+
+.boxNodesList {
+  width: 100%;
+}
+
+.boxSubtitle {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.boxSubtitleGPS {
+  display: flex;
+}
+
+.boxAssignedNodes {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.boxNodesRowBtnLink {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (max-width:860px) {
+  .comEditingPanel {
+    justify-content: space-around;
+  }
+  .boxContentWidth {
+    width: 92%;
+  }
+}

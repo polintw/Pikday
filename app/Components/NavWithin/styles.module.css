@@ -1,0 +1,103 @@
+.comNavWithin {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.boxLogo {
+  width: 73%;
+  max-width: 27vw;
+  min-width: 9vw;
+  box-sizing: border-box;
+  margin-bottom: 2.66vh;
+  mix-blend-mode: darken;
+  text-align: center;
+  cursor: pointer;
+}
+
+.boxFooter {
+  position: relative;
+  margin-bottom: 2.66vh;
+}
+
+.boxRightsClaim {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.comNavWithinSelf {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.comNavWithinCosmic {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 90.52px;
+  height: 100%;
+  float: right;
+}
+
+.boxNavCosmic {
+  box-sizing: border-box;
+  margin: 0 0 1.5rem;
+  padding: 0 0 1rem;
+  border-bottom: 1px solid #d8d8d8;
+}
+
+.boxNavLink {
+  display: inline-block;
+  box-sizing: border-box;
+  border: solid 1px #a3a3a3;
+  border-radius: 8px;
+  padding: 4px 13px 6px;
+}
+
+.boxNavLinkMouseon {
+  border: solid 1px #444444;
+}
+
+.boxSvgArrow {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 1rem;
+}
+
+.spanNavLink {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.spanLinkItem {
+  display: inline-block;
+  border-bottom: solid 0.75px transparent;
+}
+
+.spanLinkItemMouse {
+  border-bottom: solid 0.75px #545454;
+}
+
+@media screen and (max-width:1110px) {
+  .boxRightsClaim {
+    text-align: right;
+  }
+}
+
+@media screen and (max-width:860px) {
+  .smallDisplayBox {
+    display: block;
+  }
+
+  .smallDisplayNone {
+    display: none;
+  }
+
+}

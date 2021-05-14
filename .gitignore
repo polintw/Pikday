@@ -1,0 +1,14 @@
+README.txt
+
+node_modules/
+faked/
+config/.env.json
+public/react/
+
+stylesSelfFront.css
+stylesWithin.css
+stylesService.css
+stylesSign.css
+
+# Built
+serverBuilt.js*

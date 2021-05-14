@@ -1,0 +1,90 @@
+.boxDraggable {
+  display: flex;
+  width: 45%;
+  min-width: 270px;
+  max-height: 98%;
+  position: absolute;
+  overflow: visible;
+}
+
+.boxDraggableEditing {
+  height: 98%;
+}
+
+.boxMarkBlock {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  box-shadow: 0 0 5px 0 #c0d3f0;
+  background-color: rgba(255, 255, 255, 0.96);
+}
+
+.boxBlockDraft {
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+  padding: 0 5% 5%;
+  margin-top: 13.33%;
+  overflow-y: auto;
+}
+
+.boxBlockInteract {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+  padding: 3% 5% 5%;
+}
+
+.boxDraftEditor {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.boxBlockSubmit {
+  display: inline-block;
+  width: 77px;
+  height: 32px;
+  position: relative;
+  box-sizing: border-box;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.draggableCursor {
+  cursor: move;
+}
+
+.draggableLight { /* after .boxMarkBlock */
+  box-shadow: 0 0 6px 0 #fff8f7;
+}
+
+@media screen and (max-width:860px) {
+  .boxBlockDraft {
+    margin-top: 30px;
+  }
+
+  .boxBlockInteract {
+    padding-top: 1rem;
+  }
+
+  .boxBlockBack {
+    position: absolute;
+    top: 3.2%;
+    right: 7%;
+    cursor: pointer;
+  }
+
+  .boxDraggable {
+    width: 100%;
+    max-height: 48vh;
+    position: relative;
+    margin: 0 0 2.54vh;
+    overflow: visible;
+  }
+}

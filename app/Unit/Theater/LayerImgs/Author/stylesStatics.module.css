@@ -1,0 +1,53 @@
+.comAuthorPanel {
+  display: flex;
+}
+
+.boxSet {
+  position: relative;
+  margin-top: 2rem;
+  text-align: right;
+}
+
+.boxSetSubtitle {
+  margin: 5px 0 0 0;
+}
+
+.boxInspiredBulb {
+    display: inline-block;
+    width: auto;
+    height: 24px;
+    position: absolute;
+    left: 0;
+    top: 5%;
+}
+
+.btnAuthorErase {
+  margin-right: 1rem;
+}
+
+@media screen and (max-width:860px) {
+  .comStaticsSmall {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .boxSet{
+    display: inline-flex;
+    margin: 2.54vh 0 0; /* overlap margin-top set in normal size*/
+  }
+
+  .boxSetSubtitle {
+    margin: 0 0 0 5px;
+  }
+
+  .comAuthorPanel {
+    flex-direction: column-reverse;
+    margin-left: 1rem;
+  }
+
+  .btnAuthorErase {
+    margin-right: 0;
+    margin-top: 1rem;
+  }
+}

@@ -1,0 +1,121 @@
+.comTitlePath {
+    display: flex;
+    flex-direction: column;
+}
+
+.boxUpper {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.boxDescription {
+  margin: 12.69vh 0 0;
+}
+
+.linkTitleText {
+  display: inline-block;
+  max-width: 68%;
+  margin-right: 30px;
+}
+
+.boxSubtitle {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.boxSubtitleLeft {
+  margin-right: 4px;
+}
+
+.boxSubtitleCenter {
+  display: flex;
+  align-items: center;
+  margin: 0 2px;
+}
+
+.boxInspiredCount {
+  margin-left: 4px;
+}
+
+.boxBtnShare {
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+
+.boxIconCopy {
+  width: 22px;
+  height: 18px;
+  text-align: center;
+}
+
+.boxModalEmit {
+  position: absolute;
+  bottom: 110%;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.boxHiddenText {
+  position: absolute;
+  left: 200%;
+}
+
+.boxProjectInfo {
+  display: inline-block;
+  max-width: 80%;
+}
+
+.boxSvgNetGlobe {
+  display: inline-block;
+  width: 1.2rem;
+  height: 1.2rem;
+  margin: 0 5px;
+}
+
+.linkSetlink {
+  display: inline-flex;
+  align-items: center;
+}
+
+.spanLinkSetlink {
+  display: inline-block;
+  width: 196px;
+  border-bottom: solid 1px transparent;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.spanLinkSetlinkMouse {
+  border-bottom: solid 1px #444444;
+}
+
+.spanKey {
+  margin-right: 4px;
+}
+
+@media screen and (max-width:860px) {
+  .boxProjectInfo {
+    max-width: 100%; /* overwritten 'max-width' in normal width */
+  }
+
+  .boxDescription {
+    margin: 10.15vh 0 0;
+  }
+
+  .boxInspiredCount {
+    margin-left: 0;
+  }
+
+  .boxSubtitle {
+    margin-top: 16px;
+  }
+
+  .boxSubtitleCenter {
+    margin: 0 4px 0 2px;
+  }
+}

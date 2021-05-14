@@ -1,0 +1,31 @@
+.comMap {
+  width: 100%;
+  height: 100%;
+}
+
+.popupMain {
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.popupNode {
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.spanpopupNode {
+  display: inline-block;
+  border-bottom: solid 0.75px transparent;
+}
+
+.spanpopupNodeMouse {
+  border-bottom: solid 0.75px #545454;
+}
+
+@media screen and (max-width:860px) {
+  .comMap {
+    height: 69vh;
+  }
+}

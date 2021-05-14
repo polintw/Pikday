@@ -1,0 +1,21 @@
+.comBooleanDialog {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 100%;
+  min-height: 24rem;
+  box-sizing: border-box;
+  padding: 4rem 10% 3rem;
+}
+
+.boxMessage {
+  overflow: auto;
+}
+
+.boxfoot {
+  margin: 3rem 0 0;
+}
+
+.spanMessage {
+
+}

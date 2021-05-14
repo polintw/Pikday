@@ -1,0 +1,15 @@
+.comSearchModal {
+  position: relative;
+}
+
+.boxTypeSetting {
+  position: relative;
+}
+
+.boxSearchInput {
+  padding-right: 5%;
+}
+
+.spanClose {
+  cursor: pointer;
+}

@@ -1,0 +1,8 @@
+.comExplore {
+  max-width: 99vw;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width:860px) {
+
+}

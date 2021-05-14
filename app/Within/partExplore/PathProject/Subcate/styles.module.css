@@ -1,0 +1,59 @@
+.comSubcatesList {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.boxSubcatesList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  position: relative;
+}
+
+.boxListItem {
+  width: 48%;
+  min-width: 32.92vw; /* refer to NailFeed, 30.16 + 1.38*2; max-width the same */
+  max-width: 99vw;
+  height: 329px; /* refer to NailFeed, 289px + 20px*2 */
+  min-height: 36.675vh;
+  position: relative;
+  box-sizing: border-box;
+  margin: 8px 0;
+}
+
+.boxSubcateIntro {
+  align-self: center;
+  width: 100%;
+  min-height: 70vh;
+  margin: 4px 0;
+}
+
+.boxTitleSubcate {
+  width: 100%;
+  margin: 0 0 4px;
+}
+
+
+.boxFooter {
+  width: 100%;
+  position: relative;
+  padding-top: 2rem;
+  margin-bottom: 36vh;
+}
+
+
+@media screen and (max-width:860px) {
+  .boxListItem {
+    width: 100%;
+  }
+
+  .boxSubcateIntro {
+    width: 100%;
+  }
+
+  .boxFooter {
+    margin-bottom: 14vh;
+  }
+}
