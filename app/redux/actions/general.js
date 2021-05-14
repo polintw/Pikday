@@ -1,6 +1,5 @@
 import {
   SET_TOKENSTATUS,
-  SET_FETCHFLAGS,
   SET_MESSAGE_SINGLE,
   SET_MESSAGE_SINGLECLOSE,
   SET_MESSAGE_BOOLEAN,
@@ -55,24 +54,6 @@ export function setMessageSingleClose(obj) {
 export function setMessageBoolean(obj) {
   return { type: SET_MESSAGE_BOOLEAN, messageBoolean: obj}
 };
-
-export function setFlag(targetArr){
-  //this actoin creator, could do function return is because we use 'thunk' middleware when create store
-  return (dispatch, getState) => {
-    //by this method we could use 'getState' & 'dispatch' in action creator
-    const currentState =  getState();
-    let flagObj = {};
-    targetArr.forEach((target, index)=>{
-      flagObj[target] = currentState[target] ? false : true;
-    })
-
-    let submitObj = {
-      type: SET_FETCHFLAGS,
-      flags: flagObj
-    };
-    dispatch(submitObj)
-  }
-}
 
 export function handleNounsList(nounsArr) {
   //this actoin creator, could do function return is because we use 'thunk' middleware when create store

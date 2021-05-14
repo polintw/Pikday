@@ -4,7 +4,6 @@ import {
   SET_MESSAGE_SINGLE,
   SET_MESSAGE_SINGLECLOSE,
   SET_MESSAGE_BOOLEAN,
-  SET_FETCHFLAGS,
   SET_UNITCURRENT,
   SET_TOKENSTATUS,
   SET_BELONGSBYTYPE,
@@ -20,8 +19,6 @@ import {
 } from '../types/typesWithin.js';
 import {
   SET_UNITVIEW,
-  SET_UNITSUBCATE,
-  SUBMIT_UNITRESPONDSLIST,
   UNIT_SUBMITTING_SWITCH
 } from '../types/typesUnit.js';
 import {
@@ -61,9 +58,6 @@ function pageWithin(state = initialGeneral, action){
         messageBoolean: action.messageBoolean
       })
       break;
-    case SET_FETCHFLAGS:
-      return Object.assign({}, state, {...action.flags}) //there were many kind of flags, all binary(bool), and all set by this case.
-      break;
     case SET_TOKENSTATUS:
       return Object.assign({}, state, {
         ...action.status
@@ -72,11 +66,6 @@ function pageWithin(state = initialGeneral, action){
     case SET_UNITVIEW:
       return Object.assign({}, state, {
         unitView: action.unitView
-      })
-      break;
-    case SET_UNITSUBCATE:
-      return Object.assign({}, state, {
-        unitSubCate: {...state.unitSubCate, ...action.unitSubCate}
       })
       break;
     case SET_UNITCURRENT:
@@ -107,11 +96,6 @@ function pageWithin(state = initialGeneral, action){
     case SUBMIT_SHAREDSLIST:
       return Object.assign({}, state, {
         sharedsList: { ...state.sharedsList, ...action.listsObj}
-      })
-      break;
-    case SUBMIT_UNITRESPONDSLIST:
-      return Object.assign({}, state, {
-        unitCurrentResponds: {...state.unitCurrentResponds, ...action.listsObj}
       })
       break;
     case UPDATE_NOUNSBASIC:

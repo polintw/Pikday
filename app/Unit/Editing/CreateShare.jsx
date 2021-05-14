@@ -124,7 +124,6 @@ class CreateShare extends React.Component {
       beneathBase64: stateObj.beneathSrc,
       joinedMarks: Object.assign({}, stateObj.coverMarks.data, stateObj.beneathMarks.data),
       joinedMarksList: stateObj.coverMarks.list.concat(stateObj.beneathMarks.list),
-      refsArr: stateObj.refsArr,
       nodesSet: stateObj.nodesSet,
       submitTime: submitTime,
       outboundLinkMain: stateObj.outboundLinkMain,
