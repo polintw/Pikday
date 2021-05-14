@@ -9,8 +9,7 @@ import {connect} from "react-redux";
 import classnames from 'classnames';
 import styles from "./styles.module.css";
 import Explore from './partExplore/Explore.jsx';
-import Focus from './partCosmic/Focus/Wrapper.jsx';
-import Nodes from './partCosmic/Nodes/Wrapper.jsx';
+import DayFeed from './partCosmic/DayFeed/Wrapper.jsx';
 import NavOptions from '../Components/NavOptions/NavOptions.jsx';
 import NavWithin from '../Components/NavWithin/NavWithin.jsx';
 import NavWihtinCosmic from '../Components/NavWithin/NavWihtinCosmic.jsx';
@@ -20,9 +19,6 @@ import SingleDialog from '../Components/Dialog/SingleDialog/SingleDialog.jsx';
 import SingleCloseDialog from '../Components/Dialog/SingleCloseDialog/SingleCloseDialog.jsx';
 import BooleanDialog from '../Components/Dialog/BooleanDialog/BooleanDialog.jsx';
 import ScrollToTop from '../Components/RouterScrollTop.jsx';
-import {
-  fetchBelongRecords
-} from '../redux/actions/general.js'
 
 class WithinCosmic extends React.Component {
   constructor(props){
@@ -43,19 +39,6 @@ class WithinCosmic extends React.Component {
 
   _refer_von_cosmic(identifier, route){
     switch (route) {
-      case 'user':
-        if(identifier == this.props.userInfo.id){
-          window.location.assign('/user/screen');
-        }else{
-          this.setState((prevState, props)=>{
-            let switchTo = {
-              params: '/cosmic/users/'+identifier+'/accumulated',
-              query: ''
-            };
-            return {switchTo: switchTo}
-          })
-        }
-        break;
       case 'noun':
         this.setState((prevState, props)=>{
           let switchTo = {
@@ -68,11 +51,6 @@ class WithinCosmic extends React.Component {
       default:
         window.location.assign(route)
     }
-  }
-
-  static getDerivedStateFromProps(props, state){
-    //It should return an object to update the state, or 'null' to update nothing.
-    return null;
   }
 
   componentDidUpdate(prevProps, prevState, snapshot){
@@ -90,8 +68,6 @@ class WithinCosmic extends React.Component {
     Here is the highest level next only to status() in root, fetching data or any info needed
     */
     if( !window.localStorage['token'] ) return;
-    //beneath are the process difinately need a token
-    this.props._fetch_belongRecords();
   }
 
   componentWillUnmount() {
@@ -120,11 +96,14 @@ class WithinCosmic extends React.Component {
                 styles.boxContentFilledLeft)} />
             <div
               className={classnames(styles.boxAroundContentCenter)}>
+              <div>
+                {"Back arrow"}
+              </div>
               <ScrollToTop>
                 <Switch>
                   <Route path={this.props.match.path + "/explore"} render={(props) => <Explore {...props} _refer_von_cosmic={this._refer_von_cosmic} />} />
-                  <Route path={this.props.match.path + "/focus"} render={(props) => <Focus {...props} _refer_von_cosmic={this._refer_von_cosmic} />} />
-                  <Route path={this.props.match.path + "/nodes"} render={(props) => <Nodes {...props} _refer_von_cosmic={this._refer_von_cosmic} />} />
+                  <Route path={this.props.match.path + "/today"} render={(props) => <DayFeed {...props} _refer_von_cosmic={this._refer_von_cosmic} />} />
+                  <Route path={this.props.match.path + "/yesterday"} render={(props) => <DayFeed {...props} _refer_von_cosmic={this._refer_von_cosmic} />} />
                 </Switch>
               </ScrollToTop>
             </div>
@@ -222,7 +201,7 @@ const mapStateToProps = (state)=>{
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    _fetch_belongRecords: () => {dispatch(fetchBelongRecords())},
+
   }
 }
 

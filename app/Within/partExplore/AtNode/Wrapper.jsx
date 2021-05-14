@@ -9,8 +9,6 @@ import styles from "./styles.module.css";
 import Feed from './Feed/Feed.jsx';
 import NavFeed from './NavFeed/NavFeed.jsx';
 import UnitScreen from '../../../Unit/UnitScreen/UnitScreen.jsx';
-import NavCosmicMobile from '../../../Components/NavWithin/NavCosmic/NavCosmicMobile.jsx';
-import NavCosmicNodes from '../../../Components/NavWithin/NavCosmic/NavCosmicNodes.jsx';
 import {
   handleNounsList,
 } from "../../../redux/actions/general.js";
@@ -53,21 +51,6 @@ class Wrapper extends React.Component {
 
     return(
       <div>
-        <div
-          className={classnames(styles.boxNavTop)}>
-          <div
-            style={ {display: 'none'} /* temp, rm this link in nav.*/ }>
-            <NavCosmicNodes/>
-          </div>
-          <div
-            className={classnames("smallDisplayBox")}>
-            <div
-              style={{display: 'flex', alignItems: 'center'}}>
-              <span style={{margin: '0 5px', color: '#b8b8b8'}}>{"．"}</span>
-              <NavCosmicMobile/>
-            </div>
-          </div>
-        </div>
         <div
           className={classnames(styles.comAtNode)}>
           <div
@@ -124,7 +107,6 @@ const mapStateToProps = (state)=>{
   return {
     userInfo: state.userInfo,
     i18nUIString: state.i18nUIString,
-    belongsByType: state.belongsByType,
     nounsBasic: state.nounsBasic
   }
 }
