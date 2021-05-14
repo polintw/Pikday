@@ -40,23 +40,10 @@ class WithinAround extends React.Component {
 
   _refer_von_cosmic(identifier, route){
     switch (route) {
-      case 'user':
-        if(identifier == this.props.userInfo.id){
-          window.location.assign('/user/screen');
-        }else{
-          this.setState((prevState, props)=>{
-            let switchTo = {
-              params: '/cosmic/users/'+identifier+'/accumulated',
-              query: ''
-            };
-            return {switchTo: switchTo}
-          })
-        }
-        break;
       case 'noun':
         this.setState((prevState, props)=>{
           let switchTo = {
-            params: '/cosmic/explore/node',
+            params: '/explore/node',
             query: '?nodeid='+identifier
           };
           return {switchTo: switchTo}
@@ -114,7 +101,6 @@ class WithinAround extends React.Component {
               className={classnames(styles.boxAroundContentCenter)}>
               <Switch>
                 <Route path={this.props.match.path} render={(props)=> <Around {...props} _refer_von_cosmic={this._refer_von_cosmic}/>}/>
-
               </Switch>
             </div>
             <div

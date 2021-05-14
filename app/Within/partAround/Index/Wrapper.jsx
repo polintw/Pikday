@@ -8,32 +8,23 @@ import {
 import {connect} from "react-redux";
 import classnames from 'classnames';
 import styles from "./styles.module.css";
-import stylesFont from '../stylesFont.module.css';
 import {
   axios_visit_GET_last,
   axios_visit_Index
 } from './utils.js';
-import Chain from './Chain/Chain.jsx';
-import BelongsMap from './BelongsMap/BelongsMap.jsx'
-import BelongsSet from './BelongsSet/BelongsSet.jsx';
-import FeedAssigned from './FeedAssigned/FeedAssigned.jsx';
 import NavFeed from "./NavFeed/NavFeed.jsx";
-import OnBoard from '../OnBoard/Wrapper.jsx';
-import GuideNails from '../OnBoard/GuideNails.jsx';
+import IndexShare from './IndexShare/IndexShare.jsx';
 import UnitScreen from '../../../Unit/UnitScreen/UnitScreen.jsx';
 import {
   initAround
 } from '../../../redux/states/statesWithin.js';
 import {
   setIndexList,
-  setWithinFlag
 } from "../../../redux/actions/within.js";
 import {
   cancelErr,
   uncertainErr
 } from '../../../utils/errHandlers.js';
-
-const toDoArr = ["lastVisit", "chainlist"];
 
 class Wrapper extends React.Component {
   constructor(props){
@@ -41,11 +32,8 @@ class Wrapper extends React.Component {
     this.state = {
       axios: false,
       lastVisit: false,
-      mountTodo: toDoArr
     };
     this.axiosSource = axios.CancelToken.source();
-    this._set_mountToDo = this._set_mountToDo.bind(this);
-    this._set_lastVisit = this._set_lastVisit.bind(this);
     this._createdRespond = this._createdRespond.bind(this);
     this._construct_UnitInit = this._construct_UnitInit.bind(this);
     this._render_FooterHint = this._render_FooterHint.bind(this);
@@ -58,38 +46,11 @@ class Wrapper extends React.Component {
   }
 
   _createdRespond(){
-    this.props._set_WithinFlag(true, "chainFetRespond");
-  }
 
-  _set_mountToDo(item){
-    let itemIndex = this.state.mountTodo.indexOf(item);
-    if(!(itemIndex < 0)) //skip if the item already rm
-    this.setState((prevState, props)=>{
-      //remove the label of this process from mout todo
-      let leftToDo = prevState.mountTodo.slice(); //this is line is crucial,
-      //the var 'toDoArr' would be modified if we splice() the prevState.mountTodo directly
-      //so we need to make a shallow copy to avoid this problem.
-      leftToDo.splice(itemIndex, 1);
-      return ({
-        mountTodo: leftToDo
-      });
-    }); //end of 'if'
-
-  }
-
-  _set_lastVisit(visitTime){
-    this.setState({ lastVisit: visitTime});
   }
 
   componentDidUpdate(prevProps, prevState, snapshot){
-    if(this.state.mountTodo.length==0){
-      //now, after everything was mount, we update the visiting time to the server
-      axios_visit_Index(this.axiosSource.token);
-      //and for safety, we reset the state to default.
-      this.setState((prevState, props)=>{
-        return {mountTodo: toDoArr};
-      });
-    }
+
   }
 
   componentDidMount(){
@@ -99,12 +60,11 @@ class Wrapper extends React.Component {
     //get the last visit situation for child component
     axios_visit_GET_last(self.axiosSource.token)
     .then(function(lastVisitRes){
-      self._set_mountToDo("lastVisit"); //and splice the label from the todo list
-
       self.setState({
         axios: false,
         lastVisit: lastVisitRes.main.lastTime
       });
+      axios_visit_Index(this.axiosSource.token);
     })
     .catch(function (thrown) {
       self.setState({axios: false});
@@ -136,23 +96,21 @@ class Wrapper extends React.Component {
             <div
               className={classnames(styles.comAroundWrapper)}>
               <div
-                className={classnames(styles.boxRow, styles.boxRowTop)}>
-                <Chain
-                  {...this.props}
-                  lastVisit={this.state.lastVisit}
-                  _set_mountToDo={this._set_mountToDo}/>
+                className={classnames(styles.boxRow)}>
+                <div>
+                  {"What's the scene to your day today?"}
+                </div>
+                <div
+                  className={classnames(styles.boxIndexShare)}>
+                  <IndexShare
+                    {...this.props}/>
+                </div>
+
               </div>
               <div
                 className={classnames(styles.boxRow)}>
                 <NavFeed {...this.props}/>
-                <Switch>
-                  <Route path={'/fellows'} render={(props)=> <BelongsMap {...props} /> }/>
-                  <Route path={this.props.match.path} render={(props) => <FeedAssigned
-                    {...props}
-                    lastVisit={this.state.lastVisit}
-                    _set_mountToDo={this._set_mountToDo}
-                    _refer_von_cosmic={this.props._refer_von_cosmic} />}/>
-                </Switch>
+
               </div>
               <div
                 className={classnames(styles.boxRow, styles.boxFooter)}>
@@ -186,7 +144,7 @@ class Wrapper extends React.Component {
       ) ? (
         <div
           className={classnames(styles.comAroundWrapper)}>
-          <OnBoard/>
+
           <div
             className={classnames(styles.boxFooter)}
             style={{marginBottom: '6vh'}}></div>
@@ -196,18 +154,16 @@ class Wrapper extends React.Component {
           className={classnames(styles.comAroundWrapper)}>
           <div
             className={classnames(styles.boxRow, styles.boxRowTop)}>
-            <GuideNails
-              guideChoice={'welcome'}/>
+
           </div>
           <div
             className={classnames(styles.boxRow)}>
-            <GuideNails
-              guideChoice={'howShare'}/>
+
           </div>
           <div
             className={classnames(styles.boxRow)}
             style={{margin: '4px 0 0'}}>
-            <BelongsSet/>
+
           </div>
           <div
             className={classnames(styles.boxFooter)}
@@ -224,14 +180,14 @@ class Wrapper extends React.Component {
     if (!this.props.belongsByType['residence'] && !this.props.belongsByType['homeland']) { //first, if the belong do not be set at all, which means could not share and do fetch any feed
       return (
         <span
-          className={classnames(styles.spanFooterHint, stylesFont.fontTitleSmall, stylesFont.colorGrey)}>
+          className={classnames(styles.spanFooterHint, "fontTitleSmall", "colorGrey")}>
           {this.props.i18nUIString.catalog["descript_AroundIndex_footer_BelongHint"]}</span>
       );
     }
     else{
       return (
         <span
-          className={classnames(styles.spanFooterHint, stylesFont.fontTitleSmall, stylesFont.colorLightGrey)}>
+          className={classnames(styles.spanFooterHint, "fontTitleSmall", "colorLightGrey")}>
           {this.props.i18nUIString.catalog['descript_AroundIndex_footer']}</span>
       );
     }
@@ -245,15 +201,12 @@ const mapStateToProps = (state)=>{
     i18nUIString: state.i18nUIString,
     belongsByType: state.belongsByType,
     indexLists: state.indexLists,
-    chainList: state.chainList,
-    sharedsList: state.sharedsList
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     _set_IndexLists: (obj) => { dispatch(setIndexList(obj)); },
-    _set_WithinFlag: (bool, flag) => {dispatch(setWithinFlag(bool, flag)); }
   }
 }
 

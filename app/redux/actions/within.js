@@ -3,7 +3,6 @@ import {
   SUBMIT_FEEDASSIGN,
   SUBMIT_CHAINLIST,
   SUBMIT_SHAREDSLIST,
-  SET_FLAG_CHAINRESPOND
 } from '../types/typesWithin.js';
 import {
   initAround
@@ -14,16 +13,6 @@ import {
 
 export function setIndexList(listsObj){ //mainly used to reset all when unmount
   return {type: SET_INDEXLISTS, lists: listsObj}
-}
-
-export function setWithinFlag(bool, flag){
-  switch (flag) {
-    case "chainFetRespond":
-      return {type: SET_FLAG_CHAINRESPOND, bool: bool}
-      break;
-    default:
-      return {type: SET_FLAG_CHAINRESPOND, bool: bool}
-  }
 }
 
 export function submitFeedAssigned(listsObj, reset){

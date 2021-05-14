@@ -17,7 +17,6 @@ import {
   SUBMIT_FEEDASSIGN,
   SUBMIT_CHAINLIST,
   SUBMIT_SHAREDSLIST,
-  SET_FLAG_CHAINRESPOND
 } from '../types/typesWithin.js';
 import {
   SET_UNITVIEW,
@@ -113,11 +112,6 @@ function pageWithin(state = initialGeneral, action){
     case SUBMIT_UNITRESPONDSLIST:
       return Object.assign({}, state, {
         unitCurrentResponds: {...state.unitCurrentResponds, ...action.listsObj}
-      })
-      break;
-    case SET_FLAG_CHAINRESPOND:
-      return Object.assign({}, state, {
-        flagChainFetRespond: action.bool
       })
       break;
     case UPDATE_NOUNSBASIC:

@@ -6,8 +6,6 @@ import {
 import {connect} from "react-redux";
 import classnames from 'classnames';
 import styles from "./styles.module.css";
-import stylesFont from "../../stylesFont.module.css";
-import GatheringBase from './GatheringBase.jsx';
 
 class NavFeed extends React.Component {
   constructor(props){
@@ -62,35 +60,10 @@ class NavFeed extends React.Component {
               {this.props.i18nUIString.catalog["title_FeedAssigned_"] }
             </span>
           </Link>
-          {
-            /*
-            to hide the link from client, we comment out this paragraph
-            <Link
-              to={ "/fellows" }
-              topath={"fellows"}
-              className={classnames('plainLinkButton', styles.boxLinkRight)}
-              style={{cursor: 'default'}}
-              onClick={(e)=>{ if( !gatheringify ) e.preventDefault(); }}
-              onMouseEnter={this._handleEnter_link}
-              onMouseLeave={this._handleLeave_link}>
-              <span
-                className={classnames(
-                "fontContentPlain", "weightBold",
-                  {
-                    [styles.spanLinkMouse]: (this.state.onNavLink == 'fellows' && gatheringify),
-                    ["colorLightGrey"]: gatheringify,
-                    ["colorAssistGold"]: !gatheringify
-                  }
-                )}>
-                {this.props.i18nUIString.catalog["link_Fellows"] }
-              </span>
-            </Link>
-            */
-          }
         </div>
         <div
           className={classnames(styles.boxGatheringBase)}>
-          <GatheringBase/>
+
           <div>
             <span
               className={classnames('colorWhiteGrey', 'fontContentPlain', 'smallDisplayNone')}
