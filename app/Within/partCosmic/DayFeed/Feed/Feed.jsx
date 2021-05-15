@@ -40,7 +40,14 @@ class Feed extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot){
-
+    if(this.props.dayrange != prevProps.dayrange){
+      this.setState({
+        feedList: [],
+        unitsBasic: {},
+        scrolled: true,
+      });
+      this._set_feedUnits();
+    };
   }
 
   componentDidMount(){
@@ -183,6 +190,7 @@ class Feed extends React.Component {
 
     _axios_get_accumulatedList(this.axiosSource.token, {
       listUnitBase: lastUnitTime,
+      dayRange: this.props.dayrange
     })
     .then((resObj)=>{
       if(resObj.main.unitsList.length > 0){

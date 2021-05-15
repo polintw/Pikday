@@ -5,10 +5,8 @@ const auth = require('./auth/main.js');
 const accountRouter = require('./account/main.js');
 const imgRouter = require('./img/main.js');
 const unitsRouter = require('./units/main.js');
-const pathsRouter = require('./paths/main.js');
 
 const generalRouter = require('./general/main.js');
-const peopleRouter = require('./people/main.js');
 const nounsRouter = require('./nouns/main.js');
 const visitRouter = require('./visit/main.js');
 const shareRouter = require('./share/main.js');
@@ -24,14 +22,11 @@ router.use('/', auth)
 router.use('/img', imgRouter)
 router.use('/general', generalRouter)
 router.use('/units', unitsRouter)
-router.use('/paths', pathsRouter)
 router.use('/nouns', nounsRouter)
-
 
 //approach only after verified
 router.use('/account', accountRouter)
 router.use('/profile', uProfileRouter)
-router.use('/people', peopleRouter)
 
 router.use('/feed', uFeedRouter)
 router.use('/visit', visitRouter)

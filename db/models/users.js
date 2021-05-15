@@ -74,12 +74,6 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'cascade',
       onUpdate: 'cascade'
     });
-    users.hasMany(models.belongs_invitation, {
-      foreignKey:"id_user",
-      sourceKey: "id",
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
-    });
     users.hasMany(models.lastUpdate_nodeBelongs, {
       foreignKey:"id_user",
       sourceKey: "id",
@@ -93,12 +87,6 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'cascade'
     });
     users.hasMany(models.paths, {
-      foreignKey:"id_creator",
-      sourceKey: "id",
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
-    });
-    users.hasMany(models.paths_subcate, {
       foreignKey:"id_creator",
       sourceKey: "id",
       onDelete: 'cascade',

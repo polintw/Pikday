@@ -39,6 +39,11 @@ module.exports = (sequelize, DataTypes) => {
     paranoid: true
   });
   units.associate = function(models) {
+    units.hasOne(models.units_calendar, {
+      foreignKey:"id_unit",
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
+    });
     units.hasMany(models.users_units, {
       foreignKey:"id_unit",
       sourceKey: "id",
@@ -76,12 +81,6 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'cascade'
     });
     units.hasMany(models.units_nodes_assign, {
-      foreignKey:"id_unit",
-      sourceKey: "id",
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
-    });
-    units.hasMany(models.units_paths_subdistribute, {
       foreignKey:"id_unit",
       sourceKey: "id",
       onDelete: 'cascade',

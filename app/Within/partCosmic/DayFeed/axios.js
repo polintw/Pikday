@@ -9,7 +9,7 @@ export function _axios_get_accumulatedList(cancelToken, obj){
 
   return axios({
     method: 'get',
-    url: '/router/feed/focus',
+    url: '/router/feed/daily',
     params: obj,
     headers: header,
     cancelToken: cancelToken

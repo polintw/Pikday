@@ -6,7 +6,6 @@ const {
   authorizedError,
 } = require('../utils/reserrHandler.js');
 
-const invitationExcutive = require('./invitation.js');
 const basicExcutive = require('./basic.js');
 const parseExcutive = require('./parser.js');
 
@@ -35,9 +34,6 @@ main.use(function (req, res, next) {
         case 'parser':
           next();
           break;
-        case 'invitation':
-          next();
-          break;
         case 'basic':
           next();
           break;
@@ -50,8 +46,6 @@ main.use(function (req, res, next) {
 })
 
 //middleware not need token
-main.use('/invitation', invitationExcutive)
-
 main.use('/basic', basicExcutive)
 
 main.use('/parser', parseExcutive)

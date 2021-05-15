@@ -51,7 +51,8 @@ class Wrapper extends React.Component {
           </div>
           <div
             className={classnames(styles.boxRow)}>
-            <Feed/>
+            <Feed
+              {...this.props}/>
           </div>
           <div className={classnames(styles.boxDecoBottom, styles.smallDisplayNone)}></div>
         </div>

@@ -216,15 +216,6 @@ function _handle_ErrCatched(e, req, res){
       clientSet['console'] = '';
       return res.status(e.status).json(clientSet);
       break;
-    case 73:
-      //403,
-      // currently used in patch /invitation/fellows, no belong had been set yet
-      winston.warn(`${e.status} - ${" code 71, "+e.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
-      clientSet['code'] = 73;
-      clientSet['message'] = e.message;
-      clientSet['console'] = '';
-      return res.status(e.status).json(clientSet);
-      break;
     case 77:
       //403,
       // currently used in patch account/password, change password too frequetly
