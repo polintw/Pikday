@@ -8,11 +8,8 @@ import {connect} from "react-redux";
 import classnames from 'classnames';
 import styles from "./styles.module.css";
 import Feed from './Feed/Feed.jsx';
-import TitleShareds from './TitleShareds/TitleShareds.jsx';
+import NavTitle from './NavTitle/NavTitle.jsx';
 import UnitScreen from '../../../Unit/UnitScreen/UnitScreen.jsx';
-import {
-  handleNounsList,
-} from "../../../redux/actions/general.js";
 
 class Wrapper extends React.Component {
   constructor(props){
@@ -51,9 +48,8 @@ class Wrapper extends React.Component {
         <div
           className={classnames(styles.comSelfWrapper)}>
           <div
-            className={classnames(styles.boxRow, styles.boxRow40Top)}>
-            <TitleShareds
-              {...this.props}/>
+            className={classnames(styles.boxRow)}>
+            <NavTitle {...this.props}/>
           </div>
           <div
             className={classnames(styles.boxRow)}>
@@ -101,7 +97,7 @@ const mapStateToProps = (state)=>{
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    _submit_NounsList_new: (arr) => { dispatch(handleNounsList(arr)); },
+
   }
 }
 

@@ -7,7 +7,7 @@ import {connect} from "react-redux";
 import classnames from 'classnames';
 import styles from "./styles.module.css";
 
-class TitleShareds extends React.Component {
+class NavTitle extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -48,14 +48,14 @@ class TitleShareds extends React.Component {
 
   render(){
     return (
-      <div className={styles.comTitleShareds}>
+      <div className={styles.comNavTitle}>
         <div
           className={classnames(styles.boxUpperRow)}>
           <div
             className={classnames(styles.rowTitleText)}>
             <span
               className={classnames("fontTitle", "colorEditBlack", "weightBold")}>
-              {this.props.i18nUIString.catalog['title_yourShareds']}
+              {this.props.i18nUIString.catalog['title_Calendar']}
             </span>
           </div>
           <span
@@ -87,4 +87,4 @@ const mapDispatchToProps = (dispatch) => {
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(TitleShareds));
+)(NavTitle));

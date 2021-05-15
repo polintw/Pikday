@@ -1,4 +1,4 @@
-.comTitleShareds {
+.comNavTitle {
   display: flex;
   flex-direction: column;
 }
@@ -6,6 +6,7 @@
 .boxUpperRow {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: baseline;
   width: 100%;
   margin-bottom: 2rem;

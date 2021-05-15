@@ -8,7 +8,7 @@ import styles from "./styles.module.css";
 import stylesNail from "../../../stylesNail.module.css";
 import FeedEmpty from './FeedEmpty.jsx';
 
-import {_axios_get_accumulatedList} from '../utils.js';
+import {_axios_get_accumulatedList} from '../axios.js';
 import {axios_get_UnitsBasic} from '../../../../utils/fetchHandlers.js';
 import {
   handleNounsList,
@@ -76,26 +76,24 @@ class Feed extends React.Component {
     let groupsDOM = [];
     const _nailsGroup = (unitGroup, groupIndex)=>{
       let nailsDOM = [];
-      unitGroup.forEach((unitId, index) => {
+      unitGroup.forEach((unitTimeObj, index) => {
         //render if there are something in the data
         if( !(unitId in this.state.unitsBasic)) return; //skip if the info of the unit not yet fetch
-        // for laptop / desktop, change nail by cycles
-        let remainder3 = index % 3,
-        remainder2 = index % 2; // cycle, but every 3 units has a wide, left, right in turn.
 
-        nailsDOM.push (remainder3 ? ( // 0 would be false, which means index % 3 =0
+        nailsDOM.push (
           <div
             key={"key_NodeFeed_new_"+index}
             className={classnames(stylesNail.boxNail)}>
-
+            <div
+              className={classnames(stylesNail.boxNail, stylesNail.custFocusNailWide)}>
+              <NailFeedwtNodes
+                {...this.props}
+                unitId={unitId}
+                linkPath={this.props.location.pathname + ((this.props.location.pathname == '/') ? 'unit' : '/unit')}
+                unitBasic={this.state.unitsBasic[unitId]} />
+            </div>
           </div>
-        ): (
-          <div
-            key={"key_NodeFeed_new_"+index}
-            className={classnames(stylesNail.boxNail, stylesNail.custNailWide)}>
-
-          </div>
-        ));
+        );
       });
 
       return nailsDOM;
@@ -118,12 +116,6 @@ class Feed extends React.Component {
   }
 
   render(){
-    let urlParams = new URLSearchParams(this.props.location.search); //we need value in URL query
-    this.pathProjectify = urlParams.has('pathProject');
-    if(urlParams.has('filterNode')){
-      this.filterNode = urlParams.get('filterNode');
-    } else this.filterNode = null;
-
     return (
       <div className={styles.comSharedsFeed}>
         {
@@ -178,18 +170,12 @@ class Feed extends React.Component {
       groupLength = group.length;
       lastUnitTime = this.state.unitsBasic[group[groupLength-1]].createdAt;
     };
-    // in ths /self, always need to know if we are under different identity
-    let pathProjectify = this.props.location.pathname.includes('/pathProject');
+
     const self = this;
     this.setState({axios: true});
     let paramsObj = {
       listUnitBase: lastUnitTime,
-      filterNodes: !!this.filterNode ? [this.filterNode] : []
     };
-    if(pathProjectify){
-      Object.assign(paramsObj, { pathProject: this.props.userInfo.pathName});
-    };
-
     _axios_get_accumulatedList(this.axiosSource.token, paramsObj)
     .then((resObj)=>{
       if(resObj.main.unitsList.length > 0){

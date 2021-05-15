@@ -98,9 +98,6 @@ class WithinSelf extends React.Component {
             <div
               className={classnames(
                 styles.boxAroundContentCenter, styles.boxSelfContent)}>
-              <div>
-                {"Back arrow"}
-              </div>
               <ScrollToTop>
                 <Switch>
                   <Route path={this.props.match.path + '/calendar'} render={(props)=> <Calendar {...props} _refer_von_cosmic={this._refer_von_cosmic}/>}/>

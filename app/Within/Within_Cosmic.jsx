@@ -96,9 +96,6 @@ class WithinCosmic extends React.Component {
                 styles.boxContentFilledLeft)} />
             <div
               className={classnames(styles.boxAroundContentCenter)}>
-              <div>
-                {"Back arrow"}
-              </div>
               <ScrollToTop>
                 <Switch>
                   <Route path={this.props.match.path + "/explore"} render={(props) => <Explore {...props} _refer_von_cosmic={this._refer_von_cosmic} />} />
