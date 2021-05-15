@@ -160,3 +160,9 @@
 .spanNameFirstName {
   font-weight: 600; /* to overlap the default font weight */
 }
+
+@media screen and (max-width:860px) {
+  .tagServiceLink {
+    width: 78px;
+  }
+}

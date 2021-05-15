@@ -74,6 +74,12 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'cascade',
       onUpdate: 'cascade'
     });
+    users.hasMany(models.units_calendar, {
+      foreignKey:"id_author",
+      sourceKey: "id",
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
+    });
     users.hasMany(models.lastUpdate_nodeBelongs, {
       foreignKey:"id_user",
       sourceKey: "id",
