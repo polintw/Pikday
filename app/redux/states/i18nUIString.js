@@ -99,6 +99,7 @@ const i18nUIString_EN = {
   "text_your_cap": "Your",
   "text_read": "read",
   "text_since": "since",
+  "text_at": "at",
   "text_peopleInspired": "People Inspired",
   "text_youInspired": ["(including ", "You", ")"],
   "text_times": "times",
@@ -137,10 +138,11 @@ const i18nUIString_EN = {
   "title_shared": "Shareds",
   "subtitle_email": "Email",
   "subtitle_Password": "Password",
+  "link_Yesterday": "Yesterday",
+  "link_Today": 'Today',
   "link_UnitListResponds": 'View Responds',//Original:'responds'
   "link_PublicExpand": 'Public view',
   "link_ExpandPersonal": 'Expand into Personal',
-  "link_Focus": 'Browse all',
   "link_Fellows": 'Fellows',
   "link_Options_selfLink": "Shareds",
   "link_Options_public": "Public view",
@@ -243,8 +245,10 @@ const i18nUIString_EN = {
 
   "descript_Nail_noMark": "(expand image...)",
 
-  "title_focusBoard": "Focus",
-  "connection_focus_userNode": 'in',
+  "title_DayFeed_dayrange": {
+    "today" : "Today",
+    "yesterday": "Yesterday"
+  },
 
   "title_Nodes": "Nodes map",
 

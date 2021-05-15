@@ -8,15 +8,11 @@ import classnames from 'classnames';
 import styles from "./styles.module.css";
 import stylesNail from "../../../stylesNail.module.css";
 import FeedEmpty from './FeedEmpty.jsx';
-import NailFeedFocus from '../../../../Components/Nails/NailFeedFocus/NailFeedFocus.jsx';
-import NailFeedMobile from '../../../../Components/Nails/NailFeedMobile/NailFeedMobile.jsx';
-import AccountPalette from '../../../../Components/AccountPalette.jsx';
+import NailFeedwtNodes from '../../../../Components/Nails/NailFeedwtNodes/NailFeedwtNodes.jsx';
 import {_axios_get_accumulatedList} from '../axios.js';
 import {axios_get_UnitsBasic} from '../../../../utils/fetchHandlers.js';
 import {
   handleNounsList,
-  handleUsersList,
-  handlePathProjectsList
 } from "../../../../redux/actions/general.js";
 import {
   cancelErr,
@@ -33,9 +29,7 @@ class Feed extends React.Component {
       axios: false,
       feedList: [],
       unitsBasic: {},
-      marksBasic: {},
       scrolled: true,
-      onNodeLink: false
     };
     this.refScroll = React.createRef();
     this.axiosSource = axios.CancelToken.source();
@@ -43,8 +37,6 @@ class Feed extends React.Component {
     this._check_Position = this._check_Position.bind(this);
     this._render_FeedNails = this._render_FeedNails.bind(this);
     this._render_FooterHint = this._render_FooterHint.bind(this);
-    this._handleEnter_NodeLink = this._handleEnter_NodeLink.bind(this);
-    this._handleLeave_NodeLink = this._handleLeave_NodeLink.bind(this);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot){
@@ -88,107 +80,18 @@ class Feed extends React.Component {
       unitGroup.forEach((unitId, index) => {
         //render if there are something in the data
         if( !(unitId in this.state.unitsBasic)) return; //skip if the info of the unit not yet fetch
-        // for mobile device, use one special Nail
-        let cssVW = window.innerWidth;
 
         nailsDOM.push (
           <div
             key={"key_NodeFeed_new_"+index}
             className={classnames(styles.boxModuleItem)}>
               <div
-                className={classnames(styles.boxFocusNailSubtitle)}>
-                <div
-                  className={classnames(styles.boxSubtitleFlex, styles.boxSmallNoFlex)}>
-                  <div
-                     className={classnames(styles.boxFocusNailSubtitleUp, 'colorStandard')}>
-                    <AccountPalette
-                      size={"regularBold"}
-                    referLink={
-                      (this.state.unitsBasic[unitId].authorIdentity == 'pathProject') ?
-                        (
-                          domain.protocol + "://" +
-                          domain.name + '/cosmic/explore/path/' +
-                          (
-                            this.state.unitsBasic[unitId].authorId in this.props.pathsBasic &&
-                            this.props.pathsBasic[this.state.unitsBasic[unitId].authorId].pathName)
-                        ) : (
-                          domain.protocol + "://" +
-                          domain.name + '/cosmic/explore/user?userId=' +
-                          this.state.unitsBasic[unitId].authorId
-                        )
-                    }
-                    userId={this.state.unitsBasic[unitId].authorId}
-                    authorIdentity={this.state.unitsBasic[unitId].authorIdentity}
-                      styleLast={(this.state.unitsBasic[unitId].authorIdentity == 'pathProject') ? { color: 'rgb(69, 135, 160)'} : {}}/>
-                    <span
-                      className={classnames(styles.spanFocusSubtitleConnect, 'colorEditLightBlack', 'fontSubtitle_h5')}>
-                      {this.props.i18nUIString.catalog['connection_focus_userNode']}
-                    </span>
-                  </div>
-                <div
-                  className={classnames(styles.boxFocusNailSubtitleLow)}>
-                  <Link
-                    to={"/cosmic/explore/node?nodeid=" + this.state.unitsBasic[unitId].nounsList[0]}
-                    className={classnames('plainLinkButton')}
-                    eventkey={"mouseEvKey_node_" + unitId + "_" + this.state.unitsBasic[unitId].nounsList[0]}
-                    onMouseEnter={this._handleEnter_NodeLink}
-                    onMouseLeave={this._handleLeave_NodeLink}>
-                    {(this.state.unitsBasic[unitId].nounsList[0] in this.props.nounsBasic) &&
-                      <span
-                        className={classnames(
-                          "fontNodesEqual", "weightBold", "colorEditBlack",
-                          styles.spanBaseNode,
-                          { [styles.spanBaseNodeMouse]: this.state.onNodeLink == ("mouseEvKey_node_" + unitId + "_" + this.state.unitsBasic[unitId].nounsList[0]) }
-                        )}>
-                        {this.props.nounsBasic[this.state.unitsBasic[unitId].nounsList[0]].name}</span>
-                    }
-                  </Link>
-                  <span
-                    className={classnames("fontNodesEqual", "colorEditBlack", "weightBold")}>
-                    {this.state.unitsBasic[unitId].nounsList[0] in this.props.nounsBasic ? (
-                      (this.props.nounsBasic[this.state.unitsBasic[unitId].nounsList[0]].prefix.length > 0) &&
-                      (", ")) : (null)
-                    }
-                  </span>
-                  <br/>
-                  {
-                    (this.state.unitsBasic[unitId].nounsList[0] in this.props.nounsBasic &&
-                      this.props.nounsBasic[this.state.unitsBasic[unitId].nounsList[0]].prefix.length > 0) &&
-                    <div
-                      className={classnames('plainLinkButton')}
-                      style={{display: 'inline-block'}}
-                      eventkey={"mouseEvKey_node_" + unitId + "_prefix_" + this.props.nounsBasic[this.state.unitsBasic[unitId].nounsList[0]].parentId}>
-                        <span
-                          className={classnames("fontSubtitle", "weightBold", "colorEditBlack")}>
-                          {this.props.nounsBasic[this.state.unitsBasic[unitId].nounsList[0]].prefix}</span>
-                    </div>
-                  }
-                </div>
-                </div>
-              </div>
-              <div
                 className={classnames(stylesNail.boxNail, stylesNail.custFocusNailWide)}>
-                {
-                  (cssVW < 860) ? (
-                    <NailFeedMobile
-                      {...this.props}
-                      leftimg={false}
-                      unitId={unitId}
-                      nodisplay={['author']}
-                      linkPath={this.props.location.pathname + ((this.props.location.pathname == '/') ? 'unit' : '/unit')}
-                      unitBasic={this.state.unitsBasic[unitId]}
-                      marksBasic={this.state.marksBasic} />
-                  ): (
-                    <NailFeedFocus
-                      {...this.props}
-                      leftimg={true}
-                      unitId={unitId}
-                      narrowWidth={false}
-                      linkPath={this.props.location.pathname + ((this.props.location.pathname == '/') ? 'unit' : '/unit')}
-                      unitBasic={this.state.unitsBasic[unitId]}
-                      marksBasic={this.state.marksBasic} />
-                  )
-                }
+                <NailFeedwtNodes
+                  {...this.props}
+                  unitId={unitId}
+                  linkPath={this.props.location.pathname + ((this.props.location.pathname == '/') ? 'unit' : '/unit')}
+                  unitBasic={this.state.unitsBasic[unitId]} />
               </div>
           </div>
         );
@@ -299,23 +202,17 @@ class Feed extends React.Component {
         return { //just a way to deal with the next step, stop further request
           main: {
             nounsListMix: [],
-            usersList: [],
-            pathsList: [],
             unitsBasic: {},
-            marksBasic: {}
           }}};
     })
     .then((resObj)=>{
       //after res of axios_Units: call get nouns & users
       self.props._submit_NounsList_new(resObj.main.nounsListMix);
-      self.props._submit_UsersList_new(resObj.main.usersList);
-      self.props._submit_PathsList_new(resObj.main.pathsList);
       //and final, update the data of units to state
       self.setState((prevState, props)=>{
         return ({
           axios: false,
           unitsBasic: {...prevState.unitsBasic, ...resObj.main.unitsBasic},
-          marksBasic: {...prevState.marksBasic, ...resObj.main.marksBasic}
         });
       });
     })
@@ -330,14 +227,6 @@ class Feed extends React.Component {
     });
   }
 
-  _handleEnter_NodeLink(e) {
-    let target = e.currentTarget.getAttribute('eventkey');
-    this.setState({ onNodeLink: target })
-  }
-
-  _handleLeave_NodeLink(e) {
-    this.setState({ onNodeLink: false })
-  }
 }
 
 const mapStateToProps = (state)=>{
@@ -351,8 +240,6 @@ const mapStateToProps = (state)=>{
 const mapDispatchToProps = (dispatch) => {
   return {
     _submit_NounsList_new: (arr) => { dispatch(handleNounsList(arr)); },
-    _submit_UsersList_new: (arr) => { dispatch(handleUsersList(arr)); },
-    _submit_PathsList_new: (arr) => { dispatch(handlePathProjectsList(arr)); },
   }
 }
 

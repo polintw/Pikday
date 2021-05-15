@@ -7,3 +7,12 @@
   justify-content: space-between;
   align-items: baseline;
 }
+
+.spanDaySwitch {
+  display: inline-block;
+  border-bottom: solid 0.75px transparent;
+}
+
+.spanDaySwitchMouseon {
+  border-bottom: solid 0.75px #545454;
+}

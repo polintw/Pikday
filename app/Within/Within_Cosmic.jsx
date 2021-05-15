@@ -102,8 +102,8 @@ class WithinCosmic extends React.Component {
               <ScrollToTop>
                 <Switch>
                   <Route path={this.props.match.path + "/explore"} render={(props) => <Explore {...props} _refer_von_cosmic={this._refer_von_cosmic} />} />
-                  <Route path={this.props.match.path + "/today"} render={(props) => <DayFeed {...props} _refer_von_cosmic={this._refer_von_cosmic} />} />
-                  <Route path={this.props.match.path + "/yesterday"} render={(props) => <DayFeed {...props} _refer_von_cosmic={this._refer_von_cosmic} />} />
+                  <Route path={this.props.match.path + "/today"} render={(props) => <DayFeed {...props} _refer_von_cosmic={this._refer_von_cosmic} dayrange={"today"} />} />
+                  <Route path={this.props.match.path + "/yesterday"} render={(props) => <DayFeed {...props} _refer_von_cosmic={this._refer_von_cosmic} dayrange={"yesterday"} />} />
                 </Switch>
               </ScrollToTop>
             </div>

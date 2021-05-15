@@ -7,9 +7,7 @@ import classnames from 'classnames';
 import styles from "./styles.module.css";
 import stylesNail from "../../../stylesNail.module.css";
 import FeedEmpty from './FeedEmpty.jsx';
-import NailFeed from '../../../../Components/Nails/NailFeed/NailFeed.jsx';
-import NailFeedWide from '../../../../Components/Nails/NailFeedWide/NailFeedWide.jsx';
-import NailFeedMobile from '../../../../Components/Nails/NailFeedMobile/NailFeedMobile.jsx';
+
 import {_axios_get_accumulatedList} from '../utils.js';
 import {axios_get_UnitsBasic} from '../../../../utils/fetchHandlers.js';
 import {
@@ -81,24 +79,6 @@ class Feed extends React.Component {
       unitGroup.forEach((unitId, index) => {
         //render if there are something in the data
         if( !(unitId in this.state.unitsBasic)) return; //skip if the info of the unit not yet fetch
-        // for mobile device, use one special Nail
-        let cssVW = window.innerWidth;
-        if(cssVW < 860) {
-          nailsDOM.push(
-            <div
-              key={"key_NodeFeed_new_" + index}
-              className={classnames(stylesNail.boxNail, stylesNail.custNailWide)}>
-              <NailFeedMobile
-                {...this.props}
-                leftimg={false}
-                unitId={unitId}
-                linkPath={this.props.location.pathname + ((this.props.location.pathname == '/') ? 'unit' : '/unit')}
-                unitBasic={this.state.unitsBasic[unitId]}
-                marksBasic={this.state.marksBasic} />
-            </div>
-          );
-          return;
-        };
         // for laptop / desktop, change nail by cycles
         let remainder3 = index % 3,
         remainder2 = index % 2; // cycle, but every 3 units has a wide, left, right in turn.
@@ -107,26 +87,13 @@ class Feed extends React.Component {
           <div
             key={"key_NodeFeed_new_"+index}
             className={classnames(stylesNail.boxNail)}>
-            <NailFeed
-              {...this.props}
-              unitId={unitId}
-              narrowWidth={false}
-              linkPath={this.props.location.pathname + ((this.props.location.pathname == '/') ? 'unit' : '/unit')}
-              unitBasic={this.state.unitsBasic[unitId]}
-              marksBasic={this.state.marksBasic}/>
+
           </div>
         ): (
           <div
             key={"key_NodeFeed_new_"+index}
             className={classnames(stylesNail.boxNail, stylesNail.custNailWide)}>
-            <NailFeedWide
-              {...this.props}
-              leftimg={ remainder2 ? true : false}
-              unitId={unitId}
-              narrowWidth={false}
-              linkPath={this.props.location.pathname + ((this.props.location.pathname == '/') ? 'unit' : '/unit')}
-              unitBasic={this.state.unitsBasic[unitId]}
-              marksBasic={this.state.marksBasic}/>
+
           </div>
         ));
       });
