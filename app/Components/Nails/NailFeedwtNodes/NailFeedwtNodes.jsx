@@ -165,7 +165,7 @@ const contentBoxImg = (self)=>{
         <ImgPreview
           blockName={''}
           previewSrc={ imgSrcCover }
-          _handleClick_ImgPreview_preview={()=>{self.nailImgBox.current.click()}}/>
+          _handleClick_ImgPreview_preview={()=>{}}/>
       </Link>
     </div>
   )

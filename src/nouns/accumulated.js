@@ -5,39 +5,50 @@ const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const _DB_units = require('../../db/models/index').units;
 const _DB_attribution = require('../../db/models/index').attribution;
-
+const _DB_unitsCalendar = require('../../db/models/index').units_calendar;
 const {_res_success} = require('../utils/resHandler.js');
 const {
   _handle_ErrCatched,
-  forbbidenError,
   internalError,
-  validationError
 } = require('../utils/reserrHandler.js');
 
 async function _handle_GET_node_FeedList(req, res){
-
   const userId = req.extra.tokenUserId;
-  const nodeId = req.query.nodeId;
 
   try{
     //now, we to prepared created time of last Unit res to client in last req.
     //but it is possible, the 'date' in query are not a 'date', and param from query could only be parse as 'string', we need to turn it into time
+    const nodeId = req.query.nodeId;
     let unitBase = new Date(req.query.listUnitBase);
     const lastUnitTime = !isNaN(unitBase) ? unitBase : new Date(); // basically, undefined listUnitBase means first landing to the page
+    const reqDayRange = !!req.query.dayRange ? req.query.dayRange : 'all';
+    const currentTime = new Date();
+    const currentDate = new Date(currentTime.toDateString());
 
-    let nodeAttri = await _DB_attribution.findAll({
+    let unitsInRange = await _DB_unitsCalendar.findAll({
       where: {
-        id_noun: nodeId,
+        assignedDate: (reqDayRange == 'today') ? currentDate : {[Op.lt]: currentDate},
         createdAt: {[Op.lt]: lastUnitTime},
+        '$nodeAttribution.id_unit$': Sequelize.col("id_unit"),
+        '$nodeAttribution.id_noun$': nodeId
+      },
+      include: { //this is worked by comprehensive setting for 'association' --- foreign key between 2 including table(even a foreign key to self )
+        model: _DB_attribution,
+        as: 'nodeAttribution',
+        required: false, // LEFT JOIN
       },
       order: [ //make sure the order of arr are from latest
-        Sequelize.literal('`createdAt` DESC') //and here, using 'literal' is due to some wierd behavior of sequelize
+        Sequelize.literal('`createdAt` DESC') //and here, using 'literal' is due to some wierd behavior of sequelize,
       ],
       limit: 12
     })
     .catch((err)=>{ throw new internalError(err ,131); });
 
-    let unitsIdList = nodeAttri.map((row, index)=>{ return row.id_unit;});
+    let unitsAssignedDate = {}, unitsIdAssignedDate;
+    let unitsIdList = unitsInRange.map((row, index)=>{
+      unitsIdAssignedDate[row.id_unit] = row.assignedDate;
+      return row.id_unit;
+    });
     //and we have to select from units for getting exposedId
     let unitsExposedList = await _DB_units.findAll({
         where: {
@@ -50,12 +61,16 @@ async function _handle_GET_node_FeedList(req, res){
         ]
       })
       .then((results)=>{
-        let exposedIdlist = results.map((row, index)=>{ return row.exposedId;});
+        let exposedIdlist = results.map((row, index)=>{
+          unitsAssignedDate[row.exposedId] = unitsIdAssignedDate[row.id];
+          return row.exposedId;
+        });
         return exposedIdlist;
       })
       .catch((err)=>{ throw new internalError(err ,131); });
 
     let sendingData={
+      unitsAssignedDate: {},
       unitsList: [],
       scrolled: true, // true if theere is any qualified Unit not yet res
       temp: {}
@@ -63,6 +78,7 @@ async function _handle_GET_node_FeedList(req, res){
 
     if(nodeAttri.length < 12 ) sendingData.scrolled = false;
     sendingData.unitsList = unitsExposedList;
+    sendingData.unitsAssignedDate = unitsAssignedDate;
 
     _res_success(res, sendingData, "GET: nouns/accumulated, complete.");
 

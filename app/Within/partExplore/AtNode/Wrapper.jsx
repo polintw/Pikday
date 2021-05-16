@@ -7,7 +7,6 @@ import {connect} from "react-redux";
 import classnames from 'classnames';
 import styles from "./styles.module.css";
 import Feed from './Feed/Feed.jsx';
-import NavFeed from './NavFeed/NavFeed.jsx';
 import UnitScreen from '../../../Unit/UnitScreen/UnitScreen.jsx';
 import {
   handleNounsList,
@@ -67,10 +66,6 @@ class Wrapper extends React.Component {
                 (", " + this.props.nounsBasic[this.nodeAtId].prefix)) : (null)
               }
             </span>
-          </div>
-          <div
-            className={classnames(styles.boxRow)}>
-            <NavFeed {...this.props}/>
           </div>
           <div
             className={classnames(styles.boxRow)}>

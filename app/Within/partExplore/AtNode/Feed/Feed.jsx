@@ -6,13 +6,13 @@ import {connect} from "react-redux";
 import classnames from 'classnames';
 import styles from "./styles.module.css";
 import stylesNail from "../../../stylesNail.module.css";
+import NailFeedwtNone from '../../../../Components/Nails/NailFeedwtNone/NailFeedwtNone.jsx';
+import NailFeedwtDate from '../../../../Components/Nails/NailFeedwtDate/NailFeedwtDate.jsx';
 import FeedEmpty from './FeedEmpty.jsx';
-
+import {_axios_get_nodeAccumulatedList} from '../axios.js';
 import {axios_get_UnitsBasic} from '../../../../utils/fetchHandlers.js';
 import {
   handleNounsList,
-  handleUsersList,
-  handlePathProjectsList
 } from "../../../../redux/actions/general.js";
 import {
   cancelErr,
@@ -24,10 +24,12 @@ class Feed extends React.Component {
     super(props);
     this.state = {
       axios: false,
-      feedList: [],
+      feedListToday: [],
+      feedListPast: [],
       unitsBasic: {},
-      marksBasic: {},
-      scrolled: true
+      unitsAssignedDate: {},
+      scrolledToday: true,
+      scrolledPast: true
     };
     this.refScroll = React.createRef();
     this.axiosSource = axios.CancelToken.source();
@@ -35,7 +37,6 @@ class Feed extends React.Component {
     this._check_Position = this._check_Position.bind(this);
     this._render_FeedNails = this._render_FeedNails.bind(this);
     this._render_FooterHint = this._render_FooterHint.bind(this);
-    this._axios_get_nodeAccumulatedList = this._axios_get_nodeAccumulatedList.bind(this);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot){
@@ -43,13 +44,21 @@ class Feed extends React.Component {
     let lastUrlParams = new URLSearchParams(prevProps.location.search); //we need value in URL query
     let lastNodeAtId = lastUrlParams.get('nodeid');
     if(this.nodeAtId != lastNodeAtId){
-      this._set_feedUnits();
+      this._set_feedUnits('today');
+    };
+    // check a special condition: feedListToday was empty & the scrolledToday just turn into false,
+    // in case the very beginning, and the _check_Position() can not work.
+    if(
+      prevState.scrolledToday != this.state.scrolledToday &&
+      this.state.feedListToday.length == 0
+    ){
+      this._set_feedUnits('past');
     }
   }
 
   componentDidMount(){
     // must set the nodeAtId first, before _set_feedUnits
-    this._set_feedUnits();
+    this._set_feedUnits('today');
     window.addEventListener("scroll", this._check_Position);
   }
 
@@ -62,7 +71,10 @@ class Feed extends React.Component {
 
   _render_FooterHint(){
     // by feed length, we gave users some message about the thing they could do
-    if (this.state.feedList.length> 0){
+    if (
+      this.state.feedListToday.length > 0 ||
+      this.state.feedListPast.length> 0
+    ){
       return (
         <div>
           <span
@@ -70,7 +82,6 @@ class Feed extends React.Component {
             style={{margin: "8px 0", display: 'inline-block' }}>
             {this.props.i18nUIString.catalog['descript_AroundIndex_footer']}
           </span>
-
         </div>
       );
     }
@@ -79,36 +90,46 @@ class Feed extends React.Component {
     }
   }
 
-  _render_FeedNails(){
+  _render_FeedNails(dayRange){
     let groupsDOM = [];
     const _nailsGroup = (unitGroup, groupIndex)=>{
       let nailsDOM = [];
       unitGroup.forEach((unitId, index) => {
         //render if there are something in the data
         if( !(unitId in this.state.unitsBasic)) return; //skip if the info of the unit not yet fetch
-        // for laptop / desktop, change nail by cycles
-        let remainder3 = index % 3,
-        remainder2 = index % 2; // cycle, but every 3 units has a wide, left, right in turn.
 
-        nailsDOM.push (remainder3 ? ( // 0 would be false, which means index % 3 =0
+        nailsDOM.push (
           <div
-            key={"key_NodeFeed_new_"+index}
-            className={classnames(stylesNail.boxNail)}>
-
+            key={"key_NodeFeed_new_" + listByDayRange + "_"+ index}
+            className={classnames(styles.boxModuleItem)}>
+              <div
+                className={classnames(stylesNail.boxNail, stylesNail.custFocusNailWide)}>
+                {
+                  (dayRange == "today") ? (
+                    <NailFeedwtNone
+                      {...this.props}
+                      unitId={unitId}
+                      linkPath={this.props.location.pathname + ((this.props.location.pathname == '/') ? 'unit' : '/unit')}
+                      unitBasic={this.state.unitsBasic[unitId]} />
+                  ) : (
+                    <NailFeedwtDate
+                      {...this.props}
+                      unitId={unitId}
+                      linkPath={this.props.location.pathname + ((this.props.location.pathname == '/') ? 'unit' : '/unit')}
+                      unitBasic={this.state.unitsBasic[unitId]}
+                      assignedDate={this.state.unitsAssignedDate[unitId]}/>
+                  )
+                }
+              </div>
           </div>
-        ): (
-          <div
-            key={"key_NodeFeed_new_"+index}
-            className={classnames(stylesNail.boxNail, stylesNail.custNailWide)}>
-
-          </div>
-        ));
+        );
       });
 
       return nailsDOM;
     };
 
-    this.state.feedList.forEach((unitGroup, index)=>{
+    let listByDayRange = (dayRange == "today") ? "feedListToday" : "feedListPast";
+    this.state[listByDayRange].forEach((unitGroup, index)=>{
       groupsDOM.push(
         <div
           key={"key_AtNode_FeedGroup"+index}
@@ -130,16 +151,19 @@ class Feed extends React.Component {
 
     return (
       <div className={styles.comAtNodeFeed}>
-        <div
-          style={{flex: "1"}}>
+        <div>
+          <div>
+            {this._render_FeedNails('today')}
+          </div>
           {
-            (this.state.feedList.length > 0) &&
+            (this.state.feedListPast.length > 0) &&
             <div>
-              {this._render_FeedNails()}
+              {this._render_FeedNails('past')}
             </div>
           }
           {
-            ((this.state.feedList.length == 0) &&
+            ((this.state.feedListPast.length == 0) &&
+              this.state.feedListToday.length == 0 &&
               !this.state.scrolled &&
               !this.state.axios
             ) &&
@@ -173,19 +197,22 @@ class Feed extends React.Component {
     if(!this.state.axios &&
       boxScrollBottom < (2.5*windowHeightInner) &&
       boxScrollBottom > windowHeightInner && // safety check, especially for the very beginning, or nothing in the list
-      this.state.scrolled // checkpoint from the backend, no items could be res if !scrolled
+      (this.state.scrolledToday || this.state.scrolledPast) // checkpoint from the backend, no items could be res if !scrolled
     ){
       //base on the concept that bottom of boxScroll should always lower than top of viewport,
       //and do not need to fetch if you have see the 'real' bottom.
-      this._set_feedUnits();
+      this._set_feedUnits( this.state.scrolledToday ? 'today' : 'past');
     }
   }
 
-  _set_feedUnits(lastUnitTime){
+  _set_feedUnits(dayRange, lastUnitTime){
     // feeds was selected by the last unit get last round
-    if(!lastUnitTime && this.state.feedList.length > 0){ //only set the lastUnitTime again after the list had alreadyhad something
+    let listByDayRange = (dayRange == "today") ? "feedListToday" : "feedListPast";
+    if(
+      !lastUnitTime && (this.state[listByDayRange].length > 0)
+    ){ //only set the lastUnitTime again after the list had alreadyhad something
       let group, groupLength;
-      let list = this.state.feedList;
+      let list = this.state[listByDayRange];
       group = list[list.length-1];
       groupLength = group.length;
       lastUnitTime = this.state.unitsBasic[group[groupLength-1]].createdAt;
@@ -193,45 +220,43 @@ class Feed extends React.Component {
     const self = this;
     this.setState({axios: true});
 
-    this._axios_get_nodeAccumulatedList({
+    _axios_get_nodeAccumulatedList(this.axiosSource.token, {
       nodeId: this.nodeAtId,
-      listUnitBase: lastUnitTime
+      listUnitBase: lastUnitTime,
+      dayRange: dayRange
     })
     .then((resObj)=>{
       if(resObj.main.unitsList.length > 0){
         self.setState((prevState, props)=>{
-          let copyList = prevState.feedList.slice();
+          let copyList = prevState[listByDayRange].slice();
           copyList.push(resObj.main.unitsList);
-          return {
-            feedList: copyList,
-            scrolled: resObj.main.scrolled
-          }
+          let stateObj = {};
+          stateObj[listByDayRange] = copyList;
+          stateObj[(dayRange == "today") ? "scrolledToday" : "scrolledPast" ] = resObj.main.scrolled;
+          stateObj['unitsAssignedDate'] = {...prevState.unitsAssignedDate, ...resObj.main.unitsAssignedDate};
+          return stateObj;
         });
 
         return axios_get_UnitsBasic(self.axiosSource.token, resObj.main.unitsList);
       }
       else{
-        self.setState({scrolled: resObj.main.scrolled}) // don't forget set scrolled to false to indicate the list was end
+        let stateObj = {};
+        stateObj[(dayRange == "today") ? "scrolledToday" : "scrolledPast" ] = resObj.main.scrolled;
+        self.setState(stateObj) // don't forget set scrolled to false to indicate the list was end
         return { //just a way to deal with the next step, stop further request
           main: {
             nounsListMix: [],
-            usersList: [],
-            pathsList: [],
             unitsBasic: {},
-            marksBasic: {}
           }}};
     })
     .then((resObj)=>{
       //after res of axios_Units: call get nouns & users
       self.props._submit_NounsList_new(resObj.main.nounsListMix);
-      self.props._submit_UsersList_new(resObj.main.usersList);
-      self.props._submit_PathsList_new(resObj.main.pathsList);
       //and final, update the data of units to state
       self.setState((prevState, props)=>{
         return ({
           axios: false,
           unitsBasic: {...prevState.unitsBasic, ...resObj.main.unitsBasic},
-          marksBasic: {...prevState.marksBasic, ...resObj.main.marksBasic}
         });
       });
     })
@@ -246,24 +271,6 @@ class Feed extends React.Component {
     });
   }
 
-  _axios_get_nodeAccumulatedList(obj){
-    return axios({
-      method: 'get',
-      url: '/router/nouns/accumulated',
-      params: obj,
-      headers: {
-        'Content-Type': 'application/json',
-        'charset': 'utf-8',
-        'token': window.localStorage['token']
-      },
-      cancelToken: this.axiosSource.token
-    }).then(function (res) {
-      let resObj = JSON.parse(res.data); //still parse the res data prepared to be used below
-      return resObj;
-    }).catch(function (thrown) {
-      throw thrown;
-    });
-  }
 }
 
 const mapStateToProps = (state)=>{
@@ -275,8 +282,6 @@ const mapStateToProps = (state)=>{
 const mapDispatchToProps = (dispatch) => {
   return {
     _submit_NounsList_new: (arr) => { dispatch(handleNounsList(arr)); },
-    _submit_UsersList_new: (arr) => { dispatch(handleUsersList(arr)); },
-    _submit_PathsList_new: (arr) => { dispatch(handlePathProjectsList(arr)); },
   }
 }
 

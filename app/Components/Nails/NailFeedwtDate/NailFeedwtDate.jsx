@@ -7,23 +7,43 @@ import {connect} from "react-redux";
 import classnames from 'classnames';
 import styles from "./styles.module.css";
 import ImgPreview from '../../ImgPreview.jsx';
+import DateConverter from '../../DateConverter.jsx';
 import {
   domain
 } from '../../../../config/services.js';
 
-class NailFeedwtNodes extends React.Component {
+class NailFeedwtDate extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       onFrame: false,
+      onNodeLink: false
     };
     this.nailImgBox = React.createRef();
     this._handleEnter_nailFrame = this._handleEnter_nailFrame.bind(this);
     this._handleLeave_nailFrame = this._handleLeave_nailFrame.bind(this);
+    this._render_nails_Date = this._render_nails_Date.bind(this);
     this._render_ContentBox = this._render_ContentBox.bind(this);
     this.style={
 
     }
+  }
+
+  _render_nails_Date(){
+    let showedTime = new Date(this.props.assignedDate);
+    return (
+      <div
+        className={classnames(styles.boxNodes)}>
+        <span
+          className={classnames(
+            "fontSubtitle_h5", "colorEditBlack")}>
+            {"on "}
+          </span>
+          <DateConverter
+            styles={{color: '#545454'}}
+            datetime={showedTime}/>
+      </div>
+    );
   }
 
   componentDidMount() {
@@ -54,6 +74,7 @@ class NailFeedwtNodes extends React.Component {
   _render_ContentBox(){
     let contentBoxDOM = [];
     contentBoxDOM.push(contentBoxImg(this));
+    contentBoxDOM.push(contentBoxMarks(this));
     return contentBoxDOM;
   }
 
@@ -95,6 +116,18 @@ const contentBoxImg = (self)=>{
     </div>
   )
 };
+const contentBoxMarks = (self)=>{
+  return (
+    <div
+      key={"key_NailBoxMarks_"+self.props.unitId}
+      className={classnames(styles.boxContentMobile)}>
+      <div
+        className={classnames(styles.boxTitle)}>
+        {self._render_nails_Date()}
+      </div>
+    </div>
+  )
+};
 
 const mapStateToProps = (state)=>{
   return {
@@ -106,4 +139,4 @@ const mapStateToProps = (state)=>{
 export default withRouter(connect(
   mapStateToProps,
   null
-)(NailFeedwtNodes));
+)(NailFeedwtDate));
