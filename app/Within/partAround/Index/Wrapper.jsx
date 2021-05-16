@@ -63,7 +63,7 @@ class Wrapper extends React.Component {
         axios: false,
         lastVisit: lastVisitRes.main.lastTime
       });
-      axios_visit_Index(this.axiosSource.token);
+      axios_visit_Index(self.axiosSource.token);
     })
     .catch(function (thrown) {
       self.setState({axios: false});

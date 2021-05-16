@@ -4,7 +4,7 @@ const winston = require('../../config/winston.js');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const _DB_units = require('../../db/models/index').units;
-const _DB_unitsCalendar = require('../../../db/models/index').units_calendar;
+const _DB_unitsCalendar = require('../../db/models/index').units_calendar;
 const {_res_success} = require('../utils/resHandler.js');
 const {
   _handle_ErrCatched,
@@ -21,7 +21,7 @@ async function _handle_GET_accumulated_shareDaily(req, res){
     const lastUnitTime = !isNaN(unitBase) ? unitBase : new Date(); // basically, undefined listUnitBase means first landing to the page
 
     // first, pick path info if request for path project
-    let unitsByDate = await _DB_unitsCalendar.findAll({
+    let unitsCalendar = await _DB_unitsCalendar.findAll({
       where: {
         id_author: userId,
         author_identity: "user",
@@ -34,13 +34,13 @@ async function _handle_GET_accumulated_shareDaily(req, res){
     });
 
     let assignedDate = {};
-    let unitsList = unitsByDate.map((row, index)=>{
+    let unitsListByDate = unitsCalendar.map((row, index)=>{
       assignedDate[row.id_unit] = row.assignedDate;
       return row.id_unit;
     });
     let unitsData = await _DB_units.findAll({
       where: {
-        id: unitsList
+        id: unitsListByDate
       }
     })
     .then((result)=> {
@@ -54,27 +54,25 @@ async function _handle_GET_accumulated_shareDaily(req, res){
       });
       return unitsDataObj;
     });
-
-    let unitsObjList = [];
-    unitsList.forEach((unitId, index) => {
+    let unitsObjList = [], unitsList =[]; // date sending back
+    unitsListByDate.forEach((unitId, index) => {
       unitsObjList.push(
         {
           unitId: unitsData[unitId].exposedId,
-          
+          assignedDate: assignedDate[unitId]
         }
-      )
+      );
+      unitsList.push(unitsData[unitId].exposedId);
     });
 
-
-
     let sendingData = {
-      unitsList: [],
+      unitsList: unitsList,
+      unitsObjList: unitsObjList,
       scrolled: true, // true if theere is any qualified Unit not yet res
       temp: {}
     };
 
-    if (unitsExposedList.length < reqListLimit) sendingData.scrolled = false;
-    sendingData.unitsList = unitsExposedList;
+    if (unitsObjList.length < 12) sendingData.scrolled = false;
 
     _res_success(res, sendingData, "GET: /share/daily, complete.");
 

@@ -7,13 +7,11 @@ import classnames from 'classnames';
 import styles from "./styles.module.css";
 import stylesNail from "../../../stylesNail.module.css";
 import FeedEmpty from './FeedEmpty.jsx';
-
+import NailFeedwtNone from '../../../../Components/Nails/NailFeedwtNone/NailFeedwtNone.jsx';
 import {_axios_get_accumulatedList} from '../axios.js';
 import {axios_get_UnitsBasic} from '../../../../utils/fetchHandlers.js';
 import {
   handleNounsList,
-  handleUsersList,
-  handlePathProjectsList
 } from "../../../../redux/actions/general.js";
 import {
   cancelErr,
@@ -27,7 +25,6 @@ class Feed extends React.Component {
       axios: false,
       feedList: [],
       unitsBasic: {},
-      marksBasic: {},
       scrolled: true
     };
     this.refScroll = React.createRef();
@@ -38,26 +35,7 @@ class Feed extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot){
-    // if change the node bymodifying the nodeid in search, the page would only update
-    let lastUrlParams = new URLSearchParams(prevProps.location.search); //we need value in URL query
-    let lastNodeAtId = lastUrlParams.has('filterNode') ? lastUrlParams.get('filterNode'): null;
-    let currentPathProjectify = this.props.location.pathname.includes('/pathProject');
-    let lastPathProjectify = prevProps.location.pathname.includes('/pathProject');
-    if(
-      (this.filterNode != lastNodeAtId) || // filter node change
-      (currentPathProjectify != lastPathProjectify) // or left pathProject
-    ){
-      this.setState((prevState, props)=>{
-        return {
-          feedList: [],
-          unitsBasic: {},
-          marksBasic: {},
-          scrolled: true
-        };
-      }, ()=>{
-        this._set_feedUnits();
-      });
-    }
+
   }
 
   componentDidMount(){
@@ -73,44 +51,94 @@ class Feed extends React.Component {
   }
 
   _render_FeedNails(){
-    let groupsDOM = [];
-    const _nailsGroup = (unitGroup, groupIndex)=>{
-      let nailsDOM = [];
-      unitGroup.forEach((unitTimeObj, index) => {
-        //render if there are something in the data
-        if( !(unitId in this.state.unitsBasic)) return; //skip if the info of the unit not yet fetch
-
-        nailsDOM.push (
+    const _render_Nail = (loopDate, loopMonth)=>{
+      let targetUnitId = this.state.feedList[latestUnitInfo.groupIndex][latestUnitInfo.indexInGroup].unitId;
+      if( !(targetUnitId in this.state.unitsBasic)) return null; //skip if the info of the unit not yet fetch
+      return (
+        <div
+          key={"key_Calendar_Feed_"+targetUnitId}
+          className={classnames(stylesNail.boxNail)}>
+          <div>
+            <span>
+              {loopMonth}
+            </span>
+            <span>{". "}</span>
+            <span>
+              {loopDate}
+            </span>
+          </div>
           <div
-            key={"key_NodeFeed_new_"+index}
-            className={classnames(stylesNail.boxNail)}>
-            <div
-              className={classnames(stylesNail.boxNail, stylesNail.custFocusNailWide)}>
-              <NailFeedwtNodes
-                {...this.props}
-                unitId={unitId}
-                linkPath={this.props.location.pathname + ((this.props.location.pathname == '/') ? 'unit' : '/unit')}
-                unitBasic={this.state.unitsBasic[unitId]} />
+            className={classnames(stylesNail.boxNail, stylesNail.custFocusNailWide)}>
+            <NailFeedwtNone
+              {...this.props}
+              unitId={targetUnitId}
+              linkPath={this.props.location.pathname + ((this.props.location.pathname == '/') ? 'unit' : '/unit')}
+              unitBasic={this.state.unitsBasic[targetUnitId]} />
+          </div>
+        </div>
+      );
+    };
+
+    let groupsDOM = [];
+    const currentTime = new Date(); // start from 'now'
+    let currentTimeWeekEarly = new Date();
+    currentTimeWeekEarly.setDate(currentTime.getDate() -7);
+    let currentLoopDate = new Date(currentTime.toDateString());
+    let latestUnitDate = false; // default a bool 'false' to control while() loop
+    let latestUnitInfo = { // count info inside loop
+      groupIndex: 0,
+      indexInGroup: 0
+    };
+    // before all start, set the first one to the latestUnitDate
+    if(this.state.feedList.length > 0){
+      latestUnitDate = new Date(this.state.feedList[0][0].assignedDate); // 'assignedDate' is a time obj directly from db
+    };
+    while(
+      (latestUnitDate && (latestUnitDate.getTime() - 86400000) < currentLoopDate.getTime()) || // we have unit can render
+      currentLoopDate > currentTimeWeekEarly // at least 7 day even no unit at all
+    ){
+      let loopDate = currentLoopDate.getDate();
+      let loopMonth = currentLoopDate.getMonth() + 1;
+      if(latestUnitDate.toDateString() == currentLoopDate.toDateString()){
+        groupsDOM.push(
+          <div
+            key={"key_Shareds_FeedGroup_"+latestUnitInfo.groupIndex + '_'+ latestUnitInfo.indexInGroup}>
+            {_render_Nail(loopDate, loopMonth)}
+          </div>
+        );
+      }
+      else if( currentLoopDate.getDate() > currentTime.getDate() - 30 ){ // 30 day the most for blank date
+        groupsDOM.push(
+          <div
+            key={"key_Shareds_FeedGroup_"+ loopMonth + "_" + loopDate}>
+            <div>
+              <span>
+                {loopMonth}
+              </span>
+              <span>{". "}</span>
+              <span>
+                {loopDate}
+              </span>
             </div>
           </div>
         );
-      });
-
-      return nailsDOM;
-    };
-
-    this.state.feedList.forEach((unitGroup, index)=>{
-      groupsDOM.push(
-        <div
-          key={"key_Shareds_FeedGroup"+index}
-          className={classnames(
-            styles.boxModule,
-            styles.boxModuleSmall,
-          )}>
-          {_nailsGroup(unitGroup, index)}
-        </div>
-      );
-    });
+      };
+      if(latestUnitDate.toDateString() == currentLoopDate.toDateString()){ // check first before loopdate was reset
+        if( // not yet to the last unit
+          latestUnitInfo.groupIndex != (this.state.feedList.length -1) ||
+          latestUnitInfo.indexInGroup != (this.state.feedList[latestUnitInfo.groupIndex].length -1)
+        ){
+          let nextGroupify = (latestUnitInfo.indexInGroup == this.state.feedList[latestUnitInfo.groupIndex].length -1) ? true : false;
+          latestUnitInfo = {
+            groupIndex: nextGroupify ? latestUnitInfo.groupIndex +1 : latestUnitInfo.groupIndex,
+            indexInGroup: nextGroupify ? 0 : latestUnitInfo.indexInGroup +1
+          };
+          // we now assure there 'is' a next unit, set the new latestUnitDate
+          latestUnitDate = new Date(this.state.feedList[latestUnitInfo.groupIndex][latestUnitInfo.indexInGroup].assignedDate);
+        };
+      };
+      currentLoopDate.setDate(currentLoopDate.getDate() -1 );
+    }
 
     return groupsDOM;
   }
@@ -120,7 +148,11 @@ class Feed extends React.Component {
       <div className={styles.comSharedsFeed}>
         {
           (this.state.feedList.length > 0) &&
-          <div>
+          <div
+            className={classnames(
+              styles.boxModule,
+              styles.boxModuleSmall,
+            )}>
             {this._render_FeedNails()}
           </div>
         }
@@ -168,7 +200,7 @@ class Feed extends React.Component {
       let list = this.state.feedList;
       group = list[list.length-1];
       groupLength = group.length;
-      lastUnitTime = this.state.unitsBasic[group[groupLength-1]].createdAt;
+      lastUnitTime = this.state.unitsBasic[group[groupLength-1].unitId].createdAt;
     };
 
     const self = this;
@@ -178,16 +210,16 @@ class Feed extends React.Component {
     };
     _axios_get_accumulatedList(this.axiosSource.token, paramsObj)
     .then((resObj)=>{
-      if(resObj.main.unitsList.length > 0){
+      // resObj: { unitsObjList: [{}], unitsList: [], scrolled: bool }
+      if(resObj.main.unitsObjList.length > 0){
         self.setState((prevState, props)=>{
           let copyList = prevState.feedList.slice();
-          copyList.push(resObj.main.unitsList);
+          copyList.push(resObj.main.unitsObjList);
           return {
             feedList: copyList,
             scrolled: resObj.main.scrolled
           }
         });
-
         return axios_get_UnitsBasic(self.axiosSource.token, resObj.main.unitsList);
       }
       else{
@@ -195,23 +227,18 @@ class Feed extends React.Component {
         return { //just a way to deal with the next step, stop further request
           main: {
             nounsListMix: [],
-            usersList: [],
-            pathsList: [],
             unitsBasic: {},
-            marksBasic: {}
-          }}};
+          }}
+        };
     })
     .then((resObj)=>{
       //after res of axios_Units: call get nouns & users
       self.props._submit_NounsList_new(resObj.main.nounsListMix);
-      self.props._submit_UsersList_new(resObj.main.usersList);
-      self.props._submit_PathsList_new(resObj.main.pathsList);
       //and final, update the data of units to state
       self.setState((prevState, props)=>{
         return ({
           axios: false,
           unitsBasic: {...prevState.unitsBasic, ...resObj.main.unitsBasic},
-          marksBasic: {...prevState.marksBasic, ...resObj.main.marksBasic}
         });
       });
     })
@@ -237,8 +264,6 @@ const mapStateToProps = (state)=>{
 const mapDispatchToProps = (dispatch) => {
   return {
     _submit_NounsList_new: (arr) => { dispatch(handleNounsList(arr)); },
-    _submit_UsersList_new: (arr) => { dispatch(handleUsersList(arr)); },
-    _submit_PathsList_new: (arr) => { dispatch(handlePathProjectsList(arr)); },
   }
 }
 
