@@ -170,8 +170,6 @@ const i18nUIString_EN = {
   "tagTitle_Unit_Inspired": "Inspired by this article",
   "message_Unit_Inspired": "Inspired",
   "message_Unit_InspiredModal": "Sent to author",
-  "tagTitle_Unit_LinkCopy": "Copy link",
-  "message_Unit_LinkCopy": "Copied to clipboard",
   "title_UnitEntity_Subcate_list": "Mark your name if you've visited the scene!",
   "descript_UnitEntity_Subcate_list": "We use and only use name and profile pic of your Facebook account to mark you down on this achieved list!",
   "descript_UnitEntity_Subcate_listEmpty": "No one has reached this scene yet!",
@@ -194,6 +192,7 @@ const i18nUIString_EN = {
   "guidingCreateShare_outboundLinkView": "Input a url address if you want to show a link!",
   "subTitle_CreateShare_AssignTypes": ["Your Homeland", "Your Residence", "or, search one"],
   "message_CreateShare_basicRequireWarn": "Make sure you've already upload 1 image and pick at least 1 corner to which you want to contribute.",
+  "message_CreateShare_dailyAssigned": "Make sure you've already selected a day you desired by the buttons at the right-bottom corner.",
   "message_Unit_Editing_AssignNotAllowed": "We're sorry. Your contribution Can't be changed once released since it's linked either to the markup or location.", //Original:"the corner linked to could Not be changed after first release."
   "message_Unit_EraseConfirm": ["No one can see this Share after erase, including you. ", "Are you sure you want to erase this Share?"], //Original:"No one would see this Shared after erase, including you. ", "Are you sure your going to erase this Shared?"
   "message_Unit_EraseRes": ["This Share has beed erased successfully."],//Changed "Shared" to "Share"

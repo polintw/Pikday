@@ -124,6 +124,7 @@ class CreateShare extends React.Component {
       beneathBase64: stateObj.beneathSrc,
       nodesSet: stateObj.nodesSet,
       submitTime: submitTime,
+      assignedDate: 
     };
     //all pure JS object or structure,
     //we don't need to do any JSON.stringify() here, because the axios would serve automatical transformation
@@ -136,7 +137,7 @@ class CreateShare extends React.Component {
   _axios_post_Share_new(newObj){
     const self = this;
     self.props._set_unitSubmitting(true);
-    axios.post('/router/share/create', newObj, {
+    axios.post('/router/share/create/daily', newObj, {
       headers: {
         'Content-Type': 'application/json',
         'charset': 'utf-8',

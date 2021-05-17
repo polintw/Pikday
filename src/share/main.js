@@ -11,10 +11,9 @@ const {
   validationError
 } = require('../utils/reserrHandler.js');
 
-const editExecutive = require('./editing.js');
 const eraseExecutive = require('./erase.js');
 const staticsExecutive = require('./statics/execute.js');
-const createExecutive = require('./create/plain.js');
+const createExecutive = require('./create/daily.js');
 const accumulatedExecutive = require('./accumulated.js');
 const nodesExecutive = require('./nodes.js');
 
@@ -61,8 +60,6 @@ main.use('/:id', function(req, res, next){
 
   validation();
 })
-
-main.use('/:id/editing', editExecutive)
 
 main.use('/:id/erase', eraseExecutive)
 

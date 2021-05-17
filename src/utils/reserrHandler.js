@@ -257,6 +257,15 @@ function _handle_ErrCatched(e, req, res){
       clientSet['console'] = '';
       return res.status(e.status).json(clientSet);
       break;
+    case 122:
+      //403
+      //currently used by sharedsPOST, when the daily shared reached the top limit
+      winston.warn(`${e.status} - ${"code 122, "+e.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
+      clientSet['code'] = 122;
+      clientSet['message'] = "You have uploaded once on the date.";
+      clientSet['console'] = '';
+      return res.status(e.status).json(clientSet);
+      break;
     case 123:
       //403,
       // used by sharedsPOST, in validation, the img data passed was not valid

@@ -12,6 +12,7 @@ import AssignNodes from './NodesEditor/AssignNodes.jsx';
 import AssignSwitch from './NodesEditor/AssignSwitch.jsx';
 import Submit from './components/Submit/Submit.jsx';
 import ImgImport from './components/ImgImport.jsx';
+import BtnDayRange from './components/BtnDayRange/BtnDayRange.jsx';
 import {
   setMessageBoolean,
 } from "../../redux/actions/general.js";
@@ -26,6 +27,7 @@ class EditingPanel extends React.Component {
       coverSrc: !!this.props.unitSet?this.props.unitSet.coverSrc:null,
       coverMarks: !!this.props.unitSet?this.props.unitSet.coverMarks:{list:[], data:{}},
       nodesSet: !!this.props.unitSet?this.props.unitSet.nodesSet:[],
+      assignedDate: null,
       //beneath, is remaining for future use, and kept the parent comp to process submitting
       beneathSrc: null,
       beneathMarks: {list:[],data:{}},
@@ -34,6 +36,7 @@ class EditingPanel extends React.Component {
     this._set_Mark_Complete = this._set_Mark_Complete.bind(this);
     this._set_statusEditing = this._set_statusEditing.bind(this);
     this._set_nodesEditView = this._set_nodesEditView.bind(this);
+    this._set_assignedDate = this._set_assignedDate.bind(this);
     this._submit_new_node = this._submit_new_node.bind(this);
     this._submit_newShare = this._submit_newShare.bind(this);
     this._submit_deleteNodes= this._submit_deleteNodes.bind(this);
@@ -99,6 +102,10 @@ class EditingPanel extends React.Component {
     // beneath was an old 'wraning dialog' version
     if(!newObj["coverSrc"] || newObj['nodesSet'].length < 1) { // the 'img' & 'node assigned to' are required
       this.props._set_warningDialog([{text: this.props.i18nUIString.catalog['message_CreateShare_basicRequireWarn'],style:{}}], 'warning');
+      return;
+    }
+    else if(!newObj['assignedDate']){ // not yet assigned a date
+      this.props._set_warningDialog([{text: this.props.i18nUIString.catalog['message_CreateShare_dailyAssigned'],style:{}}], 'warning');
       return;
     }else if(this.props.unitSubmitting){
       this.props._set_warningDialog([{text: "submit is processing, please hold on ...",style:{}}], 'warning');
@@ -184,28 +191,35 @@ class EditingPanel extends React.Component {
               className={classnames(styles.boxFrame)}>
               {this._render_importOrCover()}
             </div>
-            <div
-              className={classnames(styles.boxNodesList)}>
+            <div>
               <div
-                className={classnames(styles.boxSubtitle)}>
-                <span
-                  className={classnames("fontContent", "colorEditLightBlack")}>
-                  {this.props.i18nUIString.catalog["guidingCreateShare_AssignGroup"]}
-                </span>
+                className={classnames(styles.boxNodesList)}>
+                <div
+                  className={classnames(styles.boxSubtitle)}>
+                  <span
+                    className={classnames("fontContent", "colorEditLightBlack")}>
+                    {this.props.i18nUIString.catalog["guidingCreateShare_AssignGroup"]}
+                  </span>
 
-              </div>
-              <div
-                className={classnames(styles.boxAssignedNodes)}>
-                <div style={{display: 'flex', flex: '1'}}>
-                  <AssignNodes
-                    nodesSet={this.state.nodesSet}
-                    nodeDelete={false}
-                    _submit_deleteNodes={this._submit_deleteNodes} />
-                  <AssignSwitch
-                    nodesSet={this.state.nodesSet}
-                    _set_nodesEditView={this._set_nodesEditView}/>
                 </div>
-
+                <div
+                  className={classnames(styles.boxAssignedNodes)}>
+                  <div style={{display: 'flex', flex: '1'}}>
+                    <AssignNodes
+                      nodesSet={this.state.nodesSet}
+                      nodeDelete={false}
+                      _submit_deleteNodes={this._submit_deleteNodes} />
+                    <AssignSwitch
+                      nodesSet={this.state.nodesSet}
+                      _set_nodesEditView={this._set_nodesEditView}/>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <BtnDayRange
+                  {...this.props}
+                  assignedDate={this.state.assignedDate}
+                  _set_assignedDate={this._set_assignedDate}/>
               </div>
             </div>
           </div>
@@ -245,6 +259,12 @@ class EditingPanel extends React.Component {
         nodesShift: viewStr
       };
     })
+  }
+
+  _set_assignedDate(assignedDate){
+    this.setState({
+      assignedDate: assignedDate
+    });
   }
 
 }

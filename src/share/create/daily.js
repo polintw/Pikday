@@ -3,7 +3,7 @@ const execute = express.Router();
 const fs = require('fs');
 const path = require("path");
 const sharp = require('sharp');
-const {validateShared} = require('./validation.js');
+const {validateDailyShared} = require('./validation.js');
 const projectRootPath = require("../../../projectRootPath");
 const winston = require('../../../config/winston.js');
 const {
@@ -15,6 +15,7 @@ const _DB_attribution = require('../../../db/models/index').attribution;
 const _DB_nodes_activity = require('../../../db/models/index').nodes_activity;
 const _DB_units_nodesAssign = require('../../../db/models/index').units_nodes_assign;
 const _DB_unitsStatInteract = require('../../../db/models/index').units_stat_interact;
+const _DB_unitsCalendar = require('../../../db/models/index').units_calendar;
 const {
   _handle_ErrCatched,
   internalError
@@ -26,7 +27,7 @@ const {
 const resizeThumb = (base64Buffer)=>{
   return sharp(base64Buffer)
       .rotate()
-      .resize({width: 640, height: 640, fit: 'inside'})  // px, define it to nHD 640 x 360
+      .resize({width: 256, height: 256, fit: 'inside'})  // px, define it to 256 x 144 under 16:9 aspect ratio
       .jpeg({
           quality: 64
         })
@@ -47,7 +48,7 @@ async function shareHandler_POST(req, res){
 
   //First of all, validating the data passed
   try{
-    await validateShared(modifiedBody, userId)
+    await validateDailyShared(modifiedBody, userId);
   }
   catch(error){
     _handle_ErrCatched(error, req, res);
@@ -123,7 +124,6 @@ async function shareHandler_POST(req, res){
       'id_primer': null,
       'author_identity': authorIdentityObj.identity,
       'used_authorId': ("usedId" in authorIdentityObj) ? authorIdentityObj.usedId : null,
-      'outboundLink_main': (!!modifiedBody.outboundLinkMain && typeof(modifiedBody.outboundLinkMain)=="string" ) ? modifiedBody.outboundLinkMain : null,
     };
     /*
     three things related to new unit id, but not too complicated completed in this block
@@ -138,22 +138,51 @@ async function shareHandler_POST(req, res){
 
       return createdUnit;
     })
-    .then((createdUnit)=> {
+  })
+  .then((createdUnit)=> {
+    // both creation need createdUnit.id were handled here.
+    const _handleStatInteract = ()=>{
       return _DB_unitsStatInteract.create({
-        id_unit: createdUnit.id
+       id_unit: createdUnit.id
+     })
+     .then((createdStatInteract)=>{
+       return;
+     })
+     .catch((err)=>{
+       throw err
+     });
+    };
+    // then the special one for this api: insert into units_calendar!
+    const _handleUnitsCalendar = ()=>{
+      // we should have validated the req in validation process,
+      // so go create() directly
+      return _DB_unitsCalendar.create({
+        id_unit: createdUnit.id,
+        id_author: userId,
+        author_identity: authorIdentityObj.identity,
+        assignedDate: modifiedBody.assignedDate
       })
-      .then((createdStatInteract)=>{
+      .then((createdUnitsCalendar)=>{
         return;
       })
       .catch((err)=>{
         throw err
       });
+    };
+
+
+    return Promise.all([
+      new Promise((resolve, reject)=>{_handleStatInteract().then(()=>{resolve();});}),
+      new Promise((resolve, reject)=>{_handleUnitsCalendar().then(()=>{resolve();});})
+    ]);
+    .then((results)=>{
+      return;
     })
     .catch((err)=>{
-      throw err
+      throw err;
     });
-
   }).then(()=>{
+    // handle the nodesSet to attribution & nodesAssign
     const handlerNodesSet = ()=>{
       /*
       the nodes passed to here were already validated, could used directly
@@ -199,8 +228,7 @@ async function shareHandler_POST(req, res){
       .catch((err)=>{
         throw err
       });
-
-    }
+    };
 
     return Promise.all([
       new Promise((resolve, reject)=>{handlerNodesSet().then(()=>{resolve();}).catch((err)=>{reject(err);});}).catch((err)=> {throw err})
@@ -277,8 +305,8 @@ async function shareHandler_POST(req, res){
 
 }
 
-execute.post('/', function(req, res){
-  if(process.env.NODE_ENV == 'development') winston.verbose('POST: /share/create');
+execute.post('/daily', function(req, res){
+  if(process.env.NODE_ENV == 'development') winston.verbose('POST: /share/create/daily');
   shareHandler_POST(req, res);
 })
 
