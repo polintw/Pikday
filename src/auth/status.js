@@ -4,8 +4,6 @@ const jwt = require('jsonwebtoken');
 const {verify_key} = require('../../config/jwt.js');
 const winston = require('../../config/winston.js');
 const _DB_users = require('../../db/models/index').users;
-const _DB_paths = require('../../db/models/index').paths;
-const _DB_usersPaths = require('../../db/models/index').users_paths;
 const {
   internalError,
   authorizedError,
@@ -46,14 +44,6 @@ status.use(function(req, res) {
         /*
         finally confirm a user with a valid token exist, go for valid response
         */
-        let userPath = await _DB_usersPaths.findOne({
-          where: {id_user: userId}
-        }), pathInfo;
-        if(!!userPath){ // there 'is' a pathProject
-          pathInfo = await _DB_paths.findOne({
-            where: {id: userPath.id_path}
-          });
-        };
         let sendingData={
           userInfo: {
             account: userInfo.account,
@@ -61,8 +51,6 @@ status.use(function(req, res) {
             firstName: userInfo.first_name,
             lastName: userInfo.last_name,
             id: userInfo.id,
-            pathProject: !!userPath ? pathInfo.name: null,
-            pathName: !!userPath ? pathInfo.pathName : null
           },
           temp: {}
         };

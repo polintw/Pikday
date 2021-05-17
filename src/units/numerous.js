@@ -13,9 +13,7 @@ const {
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const _DB_units = require('../../db/models/index').units;
-const _DB_marks = require('../../db/models/index').marks;
 const _DB_attribution = require('../../db/models/index').attribution;
-const _DB_marksContent = require('../../db/models/index').marks_content;
 
 function _handle_GET_unitsByList(req, res){
   const userId = req.extra.tokenUserId;
@@ -33,9 +31,6 @@ function _handle_GET_unitsByList(req, res){
     }).then((result)=>{
       let sendingData={
         unitsBasic: {},
-        marksBasic: {},
-        usersList: [],
-        pathsList: [],
         nounsListMix: [],
         temp: {
           chart: {},
@@ -44,27 +39,12 @@ function _handle_GET_unitsByList(req, res){
       }
 
       result.forEach((row, index)=>{
-        if(row.author_identity == "user") sendingData.usersList.push(row.id_author)
-        else if(row.author_identity == "pathProject"){
-          sendingData.pathsList.push(row.used_authorId);
-        };
         sendingData.unitsBasic[row.exposedId] = {
           unitsId: row.exposedId,
-          authorId: (row.author_identity == 'user') ? row.id_author: row.used_authorId,
-          authorIdentity: row.author_identity,
           pic_layer0: row.url_pic_layer0,
           pic_layer1: row.url_pic_layer1,
           createdAt: row.createdAt,
-          outboundLink: (!!row.outboundLink_main && (row.outboundLink_main.length > 0)) ? row.outboundLink_main : null,
-          marksList: [],
           nounsList: []
-        };
-        // set coordinates(set saperately due to null in some units.)
-        if(!!row.latitude_img) {
-          sendingData.unitsBasic[row.exposedId]["coordinates"] = {
-            latitude: row.latitude_img,
-            longitude: row.longitude_img
-          };
         };
         //Now it's Important! We have to build a 'map' between unitid & exposedId
         sendingData.temp['chart'][row.id] = row.exposedId;
@@ -73,19 +53,15 @@ function _handle_GET_unitsByList(req, res){
 
       return sendingData;
     }).then((sendingData)=>{
-      let conditionsMarks = {
-        where: {id_unit: sendingData.temp.unitpm}, //select from table by internal unit id
-        attributes: ['id','id_unit','layer']
-      },
       conditionAttri = {
         where: {id_unit: sendingData.temp.unitpm},
         attributes: ['id_unit', 'id_noun'],
       };
-      let marksSelection = Promise.resolve(_DB_marks.findAll(conditionsMarks).catch((err)=>{throw err}));
+
       let attriSelection = Promise.resolve(_DB_attribution.findAll(conditionAttri).catch((err)=>{throw err}));
 
-      return Promise.all([attriSelection, marksSelection])
-      .then(([resultsAttri, resultsMarks])=>{
+      return Promise.all([attriSelection])
+      .then(([resultsAttri])=>{
         /*
         Remember composed all unitsBasic related data by exposedId
         */
@@ -96,52 +72,9 @@ function _handle_GET_unitsByList(req, res){
           if(sendingData.nounsListMix.indexOf(row.id_noun)< 0) sendingData.nounsListMix.push(row.id_noun);
         });
 
-        resultsMarks.forEach((row, index)=> {
-          let currentExposedId = sendingData.temp['chart'][row.id_unit];
-          sendingData.unitsBasic[currentExposedId]["marksList"].push(row.id);
-          sendingData.marksBasic[row.id] = {
-            layer: row.layer
-          }
-        });
-        return sendingData;
-      });
-    }).then((sendingData) => {
-      //compose editorContent for each mark in this section.
-      return _DB_marksContent.findAll({
-        where: {
-          id_unit: sendingData.temp.unitpm
-          }
-      })
-      .then((resultsMarksContent)=>{
-        resultsMarksContent.forEach((row, index)=>{
-          //editorContent was in form: {blocks:[], entityMap:{}}
-          sendingData.marksBasic[row.id_mark]['editorContent'] = {
-            blocks: [],
-            entityMap: JSON.parse(row.contentEntityMap)
-          };
-          /*
-          and Notive, every col here still remain in 'string', so parse them.
-          */
-          let blockLigntening=JSON.parse(row.contentBlocks_Light),
-              textByBlocks=JSON.parse(row.text_byBlocks),
-              inlineStyleRangesByBlocks=JSON.parse(row.inlineStyleRanges_byBlocks),
-              entityRangesByBlocks=JSON.parse(row.entityRanges_byBlocks),
-              dataByBlocks=JSON.parse(row.data_byBlocks);
-
-          blockLigntening.forEach((blockBasic, index) => {
-            blockBasic['text'] = textByBlocks[blockBasic.key]
-            blockBasic['inlineStyleRanges'] = inlineStyleRangesByBlocks[blockBasic.key]
-            blockBasic['entityRanges'] = entityRangesByBlocks[blockBasic.key]
-            blockBasic['data'] = dataByBlocks[blockBasic.key]
-
-            sendingData.marksBasic[row.id_mark]['editorContent'].blocks.push(blockBasic);
-          });
-        });
-
+        // return sendingData; remaining from old version
         resolve(sendingData);
-      })
-      .catch((err)=>{throw err})
-
+      });
     }).catch((err)=>{ //catch the error came from the whole
       reject(err);
     });

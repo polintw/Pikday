@@ -7,10 +7,7 @@ const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const _DB_users = require('../../../db/models/index').users;
 const _DB_units = require('../../../db/models/index').units;
-const _DB_paths = require('../../../db/models/index').paths;
 const _DB_nouns = require('../../../db/models/index').nouns;
-const _DB_marks = require('../../../db/models/index').marks;
-const _DB_marksContent = require('../../../db/models/index').marks_content;
 const _DB_unitsStatInteract = require('../../../db/models/index').units_stat_interact;
 const _DB_attribution =  require('../../../db/models/index').attribution;
 
@@ -26,22 +23,6 @@ const {
 } = require('../../utils/reserrHandler.js');
 
 const _submitUsersUnits = require('./updateUsersUnits.js');
-
-async function _select_pathAuthor(sendingData){
-  return await _DB_paths.findOne({
-    where: { id: sendingData['authorBasic']['authorId'] }
-  }).then((result) => {
-    if (result) {
-      sendingData['authorBasic']['account'] = result.name;
-      sendingData['authorBasic']['pageLink'] = result.pathName;
-      return (sendingData);
-    } else {
-      return (sendingData);
-    }
-  }).catch((error) => {
-    throw new internalError("throw by /units/plain/_unit_mount, " + error, 131);//'throw' at this level, stop the process
-  })
-}
 
 function _handle_unit_Mount(req, res){
   //This api allow empty token,
@@ -91,128 +72,29 @@ function _handle_unit_Mount(req, res){
         return thrown; //do not count for a 'true' error
       })
     };
-    const _unit_Marks = (sendingData)=>{
-      return _DB_marks.findAll({
-        where: {id_unit: sendingData.temp.internalId}
-      }).then((results)=>{
-        if (results.length > 0) { //something or [] (empty)
-          results.forEach(function(row, index){
-            let obj = {
-              top: row.portion_top,
-              left: row.portion_left,
-              serial: row.serial,
-              layer: row.layer
-            };
-            let markKey = row.id;
-            sendingData['marksObj'][markKey]=obj;
-
-          })
-          return (sendingData);
-        } else {
-          return (sendingData);
-        }
-
-      }).then((sendingData) => {
-        //compose editorContent for each mark in this section.
-        return _DB_marksContent.findAll({
-          where: {
-            id_unit: sendingData.temp.internalId
-            }
-        })
-        .then((resultsMarksContent)=>{
-          resultsMarksContent.forEach((row, index)=>{
-            //editorContent was in form: {blocks:[], entityMap:{}}
-            sendingData.marksObj[row.id_mark]['editorContent'] = {
-              blocks: [],
-              entityMap: JSON.parse(row.contentEntityMap)
-            };
-            /*
-            and Notive, every col here still remain in 'string', so parse them.
-            */
-            let blockLigntening=JSON.parse(row.contentBlocks_Light),
-                textByBlocks=JSON.parse(row.text_byBlocks),
-                inlineStyleRangesByBlocks=JSON.parse(row.inlineStyleRanges_byBlocks),
-                entityRangesByBlocks=JSON.parse(row.entityRanges_byBlocks),
-                dataByBlocks=JSON.parse(row.data_byBlocks);
-
-            blockLigntening.forEach((blockBasic, index) => {
-              blockBasic['text'] = textByBlocks[blockBasic.key]
-              blockBasic['inlineStyleRanges'] = inlineStyleRangesByBlocks[blockBasic.key]
-              blockBasic['entityRanges'] = entityRangesByBlocks[blockBasic.key]
-              blockBasic['data'] = dataByBlocks[blockBasic.key]
-
-              sendingData.marksObj[row.id_mark]['editorContent'].blocks.push(blockBasic);
-            });
-          });
-
-          return sendingData;
-        })
-        .catch((err)=>{throw err});
-
-      }).catch((error)=>{
-        throw new internalError("throw by /units/plain/_unit_mount, "+error ,131);//'throw' at this level, stop the process
-      })
-    };
 
     return _DB_units.findOne({
       where: {exposedId: reqExposedId}
     }).then((result)=>{
       let sendingData = {
         temp: {internalId: ''},
-        marksObj: {},
-        refsArr: [],
         nouns: {
           list: [],
           basic: {},
         },
-        authorBasic: {},
         createdAt: "",
         identity: "visitor", // default as a 'no token' visitor
-        primerify: false,
-        outBoundLink: {main:''},
-        imgLocation: {longitude: null, latitude: null}
       }
-      if (!!result) { //make sure there is a unit with the id (would be 'null' if not exist)
-        sendingData['authorBasic']['authorId'] = (result.author_identity== 'user') ?  result.id_author: result.used_authorId;
-        sendingData['authorBasic']['authorIdentity'] = result.author_identity; // 'user' or 'pathProject'
-        sendingData['outBoundLink'] = { main: result.outboundLink_main };
-        sendingData['imgLocation'] = {
-          longitude: result.longitude_img,
-          latitude: result.latitude_img
-        };
-        sendingData['createdAt'] = result.createdAt;
-        sendingData['temp']['internalId'] = result.id; //the id used as 'id_unit' among database.
-        if(userId == result.id_author){
-          sendingData['identity'] = "author"
-        }
-        else if(req.extra.tokenify){ //at least has a token
-          sendingData['identity'] = "viewer"
-        }
-        sendingData['primerify'] = !!result.id_primer? true:false; // this api was a 'token free', Do NOT append another id here.
+      sendingData['createdAt'] = result.createdAt;
+      sendingData['temp']['internalId'] = result.id; //the id used as 'id_unit' among database.
+      if(userId == result.id_author){
+        sendingData['identity'] = "author"
+      }
+      else if(req.extra.tokenify){ //at least has a token
+        sendingData['identity'] = "viewer"
+      }
 
-        return (sendingData);
-      } else { //like the id is wrong or even not exist
-        //reject directly, skipping all the process afterward
-        reject(new notFoundError("this unit does not exist. please use a valid link.", 34));
-      }
-    }).then((sendingData)=>{
-      if (sendingData['authorBasic']['authorIdentity'] == 'pathProject'){ return _select_pathAuthor(sendingData)};
-      // condition else
-      return _DB_users.findOne({
-        where: {id: sendingData['authorBasic']['authorId']},
-        attributes: ['account','first_name','last_name']
-      }).then((result)=>{
-        if (result) {
-          sendingData['authorBasic']['account'] = result.account;
-          sendingData['authorBasic']['firstName'] = result.first_name;
-          sendingData['authorBasic']['lastName'] = result.last_name;
-          return(sendingData);
-        } else {
-          return(sendingData);
-        }
-      }).catch((error)=>{
-        throw new internalError("throw by /units/plain/_unit_mount, "+error ,131);//'throw' at this level, stop the process
-      })
+      return (sendingData);
     }).then((sendingData)=>{
       let tempData = {
         nouns: {
@@ -223,8 +105,6 @@ function _handle_unit_Mount(req, res){
         sendingData: sendingData
       }
       return _unit_Nouns(tempData);
-    }).then((sendingData)=>{
-      return _unit_Marks(sendingData);
 
     }).then((sendingData)=>{
       let cpInJSON = JSON.stringify(sendingData); // part of data (i.e unitId) would be used later in internal process, so keep it by copy

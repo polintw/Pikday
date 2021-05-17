@@ -10,9 +10,6 @@ import {connect} from "react-redux";
 import classnames from 'classnames';
 import styles from "./styles.module.css";
 import Around from './partAround/Around.jsx';
-import {
-  fetchBelongRecords
-} from '../redux/actions/general.js'
 import NavWithin from '../Components/NavWithin/NavWithin.jsx';
 import NavOptions from '../Components/NavOptions/NavOptions.jsx';
 import ModalBox from '../Components/ModalBox.jsx';
@@ -69,8 +66,6 @@ class WithinAround extends React.Component {
     Here is the highest level next only to status() in root, fetching data or any info needed
     */
     if( !window.localStorage['token'] ) return;
-    //beneath are the process difinately need a token
-    this.props._fetch_belongRecords();
   }
 
   componentWillUnmount() {
@@ -174,7 +169,7 @@ const mapStateToProps = (state)=>{
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    _fetch_belongRecords: () => {dispatch(fetchBelongRecords())},
+
   }
 }
 

@@ -50,32 +50,8 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'cascade',
       onUpdate: 'cascade'
     });
-    units.hasMany(models.marks, {
-      foreignKey:"id_unit",
-      sourceKey: "id",
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
-    });
-    units.hasMany(models.marks_content, {
-      foreignKey:"id_unit",
-      sourceKey: "id",
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
-    });
     units.hasMany(models.attribution, {
       foreignKey:"id_unit",
-      sourceKey: "id",
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
-    });
-    units.hasMany(models.responds, {
-      foreignKey:"id_unit",
-      sourceKey: "id",
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
-    });
-    units.hasMany(models.responds, {
-      foreignKey:"id_primer",
       sourceKey: "id",
       onDelete: 'cascade',
       onUpdate: 'cascade'

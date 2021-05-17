@@ -122,13 +122,8 @@ class CreateShare extends React.Component {
     const newShareObj = {
       coverBase64: stateObj.coverSrc,
       beneathBase64: stateObj.beneathSrc,
-      joinedMarks: Object.assign({}, stateObj.coverMarks.data, stateObj.beneathMarks.data),
-      joinedMarksList: stateObj.coverMarks.list.concat(stateObj.beneathMarks.list),
       nodesSet: stateObj.nodesSet,
       submitTime: submitTime,
-      outboundLinkMain: stateObj.outboundLinkMain,
-      authorIdentity: stateObj.authorIdentity,
-      exifGps: stateObj.exifGps
     };
     //all pure JS object or structure,
     //we don't need to do any JSON.stringify() here, because the axios would serve automatical transformation

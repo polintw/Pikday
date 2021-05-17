@@ -79,19 +79,7 @@ class UnitScreen extends React.Component {
     .then(([unitRes, imgsBase64])=>{
       self.setState({axios: false});
       let resObj = JSON.parse(unitRes.data);
-      //we compose the marksset here, but sould consider done @ server
-      let keysArr = Object.keys(resObj.main.marksObj);//if any modified or update, keep the "key" as string
-      let [coverMarks, beneathMarks] = [{list:[],data:{}}, {list:[],data:{}}];
-      // due to some historical reason, the marks in unitCurrent has a special format
-      keysArr.forEach(function(key, index){
-        if(resObj.main.marksObj[key].layer==0){
-          coverMarks.data[key]=resObj.main.marksObj[key];
-          coverMarks.list[resObj.main.marksObj[key].serial] = key; //let the list based on order of marks, same as beneath
-        }else{
-          beneathMarks.data[key]=resObj.main.marksObj[key]
-          beneathMarks.list[resObj.main.marksObj[key].serial] = key;
-        }
-      });
+
       // api GET unit data was totally independent, even the nodesBasic & userBasic
       //But we still update the info to redux state, for other comp. using
       let nodesBasic = {};
@@ -107,20 +95,8 @@ class UnitScreen extends React.Component {
         nouns: resObj.main.nouns,
         createdAt: resObj.main.createdAt
         /*
-        These properties are not used after revision in 2021 May.
+        Properties are not used after revision in 2021 May.
         Keep to wait for re opened in the future.
-
-        beneathSrc: imgsBase64.beneath,
-        identity: resObj.main.identity,
-        authorBasic: resObj.main.authorBasic,
-        primerify: resObj.main.primerify,
-        coverMarksList:coverMarks.list,
-        coverMarksData:coverMarks.data,
-        beneathMarksList:beneathMarks.list,
-        beneathMarksData:beneathMarks.data,
-        refsArr: resObj.main.refsArr,
-        outBoundLink: resObj.main.outBoundLink,
-        imgLocation: resObj.main.imgLocation,
         */
       });
 

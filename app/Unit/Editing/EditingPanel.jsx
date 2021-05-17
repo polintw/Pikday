@@ -34,7 +34,6 @@ class EditingPanel extends React.Component {
     this._set_Mark_Complete = this._set_Mark_Complete.bind(this);
     this._set_statusEditing = this._set_statusEditing.bind(this);
     this._set_nodesEditView = this._set_nodesEditView.bind(this);
-    this._set_new_warningDialog = this._set_new_warningDialog.bind(this);
     this._submit_new_node = this._submit_new_node.bind(this);
     this._submit_newShare = this._submit_newShare.bind(this);
     this._submit_deleteNodes= this._submit_deleteNodes.bind(this);
@@ -113,26 +112,7 @@ class EditingPanel extends React.Component {
     newObj.coverMarks.list.forEach((markKey, index)=>{
       newObj.coverMarks.data[markKey].layer = 0;
     });
-    /*
-    and, in order to use a new dialog system,
-    we now create a new Promise to handle a synchronize reaction
-        */
-    new Promise((resolve, reject)=>{
-      // beneath was a newer dialog system, depend on dialog comp up to page level
-      if(!!this.props.userInfo.pathName && this.props.unitView != "editing"){
-        this._set_new_warningDialog('identity', ()=>{
-          resolve();
-        }, ()=>{ reject(); });
-      }
-      else resolve();
-    })
-    .then(()=>{
-      this.props._set_Submit(newObj);
-    })
-    .catch((error)=>{
-      // only return
-      return;
-    });
+    this.props._set_Submit(newObj);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot){
@@ -267,39 +247,6 @@ class EditingPanel extends React.Component {
     })
   }
 
-  _set_new_warningDialog(source, positiveCB, negativeCB){
-    let messageArr;
-    switch (source) {
-      case "identity":
-        messageArr= [{
-          text:  this.props.i18nUIString.catalog['message_UnitEdit_Submit_identityWarn'],
-          style:{display: 'block' }
-        }, {
-          text: this.state.authorIdentity=="userAccount" ? this.props.userInfo.account: this.props.userInfo.pathProject,
-          style:{color: '#ff8168', fontWeight: 'bold'}
-        }, {
-          text: "?",
-          style:{}
-        }];
-        break;
-      default:
-        messageArr=[{text: '', style: {}}];
-    };
-
-    this.props._submit_BooleanDialog({
-      render: true,
-      customButton: null,
-      message: messageArr,
-      handlerPositive: ()=>{
-        this.props._submit_BooleanDialog(messageDialogInit.boolean);
-        positiveCB();
-      },
-      handlerNegative: ()=>{
-        this.props._submit_BooleanDialog(messageDialogInit.boolean);
-        negativeCB();
-      }
-    });
-  }
 }
 
 const mapStateToProps = (state)=>{
@@ -308,7 +255,6 @@ const mapStateToProps = (state)=>{
     unitView: state.unitView,
     i18nUIString: state.i18nUIString,
     unitSubmitting: state.unitSubmitting,
-    belongsByType: state.belongsByType
   }
 }
 

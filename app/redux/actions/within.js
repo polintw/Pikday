@@ -1,5 +1,4 @@
 import {
-  SET_INDEXLISTS,
   SUBMIT_FEEDASSIGN,
   SUBMIT_CHAINLIST,
   SUBMIT_SHAREDSLIST,
@@ -10,10 +9,6 @@ import {
 import {
   uncertainErr
 } from "../../utils/errHandlers.js";
-
-export function setIndexList(listsObj){ //mainly used to reset all when unmount
-  return {type: SET_INDEXLISTS, lists: listsObj}
-}
 
 export function submitFeedAssigned(listsObj, reset){
   return (dispatch, getState) => {

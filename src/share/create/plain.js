@@ -10,13 +10,9 @@ const {
   userImg
 } = require('../../../config/path.js');
 const _DB_units = require('../../../db/models/index').units;
-const _DB_marks = require('../../../db/models/index').marks;
 const _DB_nouns = require('../../../db/models/index').nouns;
-const _DB_responds = require('../../../db/models/index').responds;
-const _DB_marksContent = require('../../../db/models/index').marks_content;
 const _DB_attribution = require('../../../db/models/index').attribution;
 const _DB_nodes_activity = require('../../../db/models/index').nodes_activity;
-const _DB_usersPaths = require('../../../db/models/index').users_paths;
 const _DB_units_nodesAssign = require('../../../db/models/index').units_nodes_assign;
 const _DB_unitsStatInteract = require('../../../db/models/index').units_stat_interact;
 const {
@@ -58,32 +54,9 @@ async function shareHandler_POST(req, res){
     return ; //close the process
   }
   // before a proemise, we detect the identity author used by a async f()
-  let authorIdentity = modifiedBody.authorIdentity,
+  let authorIdentity = "userAccount",
       authorIdentityObj = {};
-  try{
-    if(authorIdentity != 'userAccount'){ // now should be the 'pathName' of pathProject
-      let usersPath = await _DB_usersPaths.findOne({
-        where: {
-          id_user: userId,
-          pathName: authorIdentity
-        }
-      });
-      if(!usersPath){ // 'null', then change identity to user self from now on
-        authorIdentity == 'userAccount';
-        authorIdentityObj['identity'] = 'user';
-      }
-      else{
-        // valid modifiedBody.authorIdentity, so keep 'authorIdentity' passed from client
-        authorIdentityObj['identity'] = 'pathProject';
-        authorIdentityObj['usedId'] = usersPath.id_path;
-      };
-    }
-  }
-  catch(error){
-    _handle_ErrCatched(error, req, res);
-    return ; //close the process
-  }
-
+  authorIdentityObj['identity'] = 'user';
 
   new Promise((resolve, reject)=>{
     //add it into shares as a obj value
@@ -152,65 +125,28 @@ async function shareHandler_POST(req, res){
       'used_authorId': ("usedId" in authorIdentityObj) ? authorIdentityObj.usedId : null,
       'outboundLink_main': (!!modifiedBody.outboundLinkMain && typeof(modifiedBody.outboundLinkMain)=="string" ) ? modifiedBody.outboundLinkMain : null,
     };
-    if(!!modifiedBody.exifGps.latitude_img) unitProfile['latitude_img'] = parseFloat(modifiedBody.exifGps.latitude_img); // to keep it untouched if latitude there was not latitude data
-    if(!!modifiedBody.exifGps.longitude_img) unitProfile['longitude_img'] = parseFloat(modifiedBody.exifGps.longitude_img);
     /*
     three things related to new unit id, but not too complicated completed in this block
     1. create new record & get unit id
     2. create responds if any primer
     3. create stat_interact by new id
     */
-    return new Promise ((resolveLoc, rejectLoc)=>{
-      if(!!modifiedBody.primer){
-        return _DB_units.findOne({
-          where: {exposedId: modifiedBody.primer}
-        })
-        .then((resultPrimer)=>{
-          resolveLoc(resultPrimer)
-        })
-        .catch((err)=>{
-          rejectLoc(err);
-        });
-      }
-      else resolveLoc(false);
+    return _DB_units.create(unitProfile)
+    .then((createdUnit)=>{
+      modifiedBody['id_unit'] = createdUnit.id;
+      modifiedBody['id_unit_exposed'] = createdUnit.exposedId;
+
+      return createdUnit;
     })
-    .then((primer)=>{
-      if(!!primer){
-        unitProfile['id_primer'] = primer.id;
-      }
-
-      return _DB_units.create(unitProfile)
-      .then((createdUnit)=>{
-        modifiedBody['id_unit'] = createdUnit.id;
-        modifiedBody['id_unit_exposed'] = createdUnit.exposedId;
-
-        if(!!primer){
-          return _DB_responds.create({
-            id_unit: createdUnit.id,
-            id_primer: primer.id,
-            id_author: userId,
-            primer_author: primer.id_author,
-            primer_createdAt: primer.createdAt,
-          })
-          .then((createdRespond)=>{
-            return createdUnit;
-          })
-          .catch((err)=>{
-            throw err
-          });
-        }
-        else return createdUnit;
+    .then((createdUnit)=> {
+      return _DB_unitsStatInteract.create({
+        id_unit: createdUnit.id
       })
-      .then((createdUnit)=> {
-        return _DB_unitsStatInteract.create({
-          id_unit: createdUnit.id
-        })
-        .then((createdStatInteract)=>{
-          return;
-        })
-        .catch((err)=>{
-          throw err
-        });
+      .then((createdStatInteract)=>{
+        return;
+      })
+      .catch((err)=>{
+        throw err
       });
     })
     .catch((err)=>{
@@ -218,34 +154,6 @@ async function shareHandler_POST(req, res){
     });
 
   }).then(()=>{
-    //this block, write into the table: marks(and get id_mark back), attribution, and units_nodes_assign.
-    //And Notice! we need id_mark for marks_content, so update to it happened in next step.
-    let marksArr = modifiedBody.joinedMarksList.map((markKey, index)=>{
-      let markObj = modifiedBody.joinedMarks[markKey];
-
-      return {
-        id_unit: modifiedBody.id_unit,
-        id_author: userId,
-        layer: markObj.layer,
-        portion_top: markObj.top,
-        portion_left: markObj.left,
-        serial: markObj.serial
-      };
-    });
-
-    const creationMarks = ()=>{
-      return _DB_marks.bulkCreate(marksArr)
-      .then((createdInst)=>{
-        let idList = createdInst.map((newRow, index)=>{
-          return newRow.id
-        })
-
-        return idList;
-      })
-      .catch((err)=>{
-        throw err
-      });
-    };
     const handlerNodesSet = ()=>{
       /*
       the nodes passed to here were already validated, could used directly
@@ -295,65 +203,9 @@ async function shareHandler_POST(req, res){
     }
 
     return Promise.all([
-      new Promise((resolve, reject)=>{creationMarks().then((marksIdList)=>{resolve(marksIdList);});}),
       new Promise((resolve, reject)=>{handlerNodesSet().then(()=>{resolve();}).catch((err)=>{reject(err);});}).catch((err)=> {throw err})
     ])
     .then((results)=>{
-      let marksIdList = results[0];
-      //replace the 'key' used for marks in modifiedBody
-      let newIdMarksList=[], newIdMarksObj={};
-      newIdMarksList = modifiedBody.joinedMarksList.map((originKey, index)=>{
-        newIdMarksObj[marksIdList[index]] = modifiedBody.joinedMarks[originKey];
-        return marksIdList[index];
-      });
-
-      modifiedBody['newIdMarksList'] = newIdMarksList;
-      modifiedBody['newIdMarksObj'] = newIdMarksObj;
-
-      return;
-    })
-    .catch((err)=>{
-      throw err;
-    });
-
-  }).then(()=>{
-    //now in this section, update into the marks_content
-    //it's the final records need to be saved before res to the client
-    let insertArr = modifiedBody.newIdMarksList.map((markId, index) => {
-      const contentObj = modifiedBody.newIdMarksObj[markId].editorContent;
-      let blockLigntening=[],
-          textByBlocks={},
-          inlineStyleRangesByBlocks={},
-          entityRangesByBlocks={},
-          dataByBlocks={};
-
-      contentObj.blocks.forEach((block, index) => {
-        textByBlocks[block.key] = block.text;
-        inlineStyleRangesByBlocks[block.key] = block.inlineStyleRanges;
-        entityRangesByBlocks[block.key] = block.entityRanges;
-        dataByBlocks[block.key] = block.data;
-
-        let blockNew = Object.assign({}, block); //make a shalloe copy of current block.
-        delete blockNew.text; //delete the text only in the copy one.
-        delete blockNew.inlineStyleRanges;
-        delete blockNew.entityRanges;
-        delete blockNew.data;
-        blockLigntening.push(blockNew);
-      });
-
-      return {
-        id_mark : markId,
-        id_unit : modifiedBody.id_unit,
-        contentEntityMap: JSON.stringify(Object.assign({}, contentObj.entityMap)),
-        contentBlocks_Light: JSON.stringify(blockLigntening),
-        text_byBlocks: JSON.stringify(textByBlocks),
-        inlineStyleRanges_byBlocks: JSON.stringify(inlineStyleRangesByBlocks),
-        entityRanges_byBlocks: JSON.stringify(entityRangesByBlocks),
-        data_byBlocks: JSON.stringify(dataByBlocks),
-      };
-    });
-
-    return _DB_marksContent.bulkCreate(insertArr).then((createdInst)=>{
       return;
     })
     .catch((err)=>{

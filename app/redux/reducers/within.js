@@ -12,7 +12,6 @@ import {
   UPDATE_PATHSBASIC
 } from '../types/typesGeneral.js';
 import {
-  SET_INDEXLISTS,
   SUBMIT_FEEDASSIGN,
   SUBMIT_CHAINLIST,
   SUBMIT_SHAREDSLIST,
@@ -76,11 +75,6 @@ function pageWithin(state = initialGeneral, action){
     case SET_BELONGSBYTYPE:
       return Object.assign({}, state, {
         belongsByType: {...state.belongsByType, ...action.typeObj}
-      })
-      break;
-    case SET_INDEXLISTS:
-      return Object.assign({}, state, {
-        indexLists: {...state.indexLists, ...action.lists}
       })
       break;
     case SUBMIT_FEEDASSIGN:

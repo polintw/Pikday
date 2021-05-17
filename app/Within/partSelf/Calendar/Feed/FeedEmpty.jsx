@@ -93,7 +93,6 @@ class FeedEmpty extends React.Component {
 const mapStateToProps = (state)=>{
   return {
     i18nUIString: state.i18nUIString,
-    belongsByType: state.belongsByType
   }
 }
 

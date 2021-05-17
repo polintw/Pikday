@@ -1,7 +1,5 @@
 import React from 'react';
 import {
-  Link,
-  Switch,
   Route,
   withRouter
 } from 'react-router-dom';
@@ -15,12 +13,6 @@ import {
 import NavFeed from "./NavFeed/NavFeed.jsx";
 import IndexShare from './IndexShare/IndexShare.jsx';
 import UnitScreen from '../../../Unit/UnitScreen/UnitScreen.jsx';
-import {
-  initAround
-} from '../../../redux/states/statesWithin.js';
-import {
-  setIndexList,
-} from "../../../redux/actions/within.js";
 import {
   cancelErr,
   uncertainErr
@@ -36,7 +28,6 @@ class Wrapper extends React.Component {
     this.axiosSource = axios.CancelToken.source();
     this._createdRespond = this._createdRespond.bind(this);
     this._construct_UnitInit = this._construct_UnitInit.bind(this);
-    this._render_Newly = this._render_Newly.bind(this);
   }
 
   _construct_UnitInit(match, location){
@@ -80,18 +71,16 @@ class Wrapper extends React.Component {
     if(this.state.axios){
       this.axiosSource.cancel("component will unmount.")
     }
-    //clear & reset to init when Unmount, make sure the list would not render anything when retrun to index
-    this.props._set_IndexLists(initAround.indexLists);
   }
 
   render(){
     return(
       <div>
         {
-          (this.props.userInfo.accountStatus == "newly") ? //should knew before React mount
+          /*(this.props.userInfo.accountStatus == "newly") ? //should knew before React mount
           (
             this._render_Newly()
-          ):(
+          ):*/(
             <div
               className={classnames(styles.comAroundWrapper)}>
               <div
@@ -134,43 +123,6 @@ class Wrapper extends React.Component {
     )
   }
 
-  _render_Newly(){
-    return this.props.belongsByType.fetched ? // already recieved the res of belonstype
-    (
-      ( (!("homeland" in this.props.belongsByType) || (!this.props.belongsByType['homeland'])) && //no set homeland
-        (!("residence" in this.props.belongsByType) || (!this.props.belongsByType["residence"])) // no set residence
-      ) ? (
-        <div
-          className={classnames(styles.comAroundWrapper)}>
-
-          <div
-            className={classnames(styles.boxFooter)}
-            style={{marginBottom: '6vh'}}></div>
-        </div>
-      ) : (
-        <div
-          className={classnames(styles.comAroundWrapper)}>
-          <div
-            className={classnames(styles.boxRow, styles.boxRowTop)}>
-
-          </div>
-          <div
-            className={classnames(styles.boxRow)}>
-
-          </div>
-          <div
-            className={classnames(styles.boxRow)}
-            style={{margin: '4px 0 0'}}>
-
-          </div>
-          <div
-            className={classnames(styles.boxFooter)}
-            style={{marginBottom: '6vh'}}></div>
-        </div>
-      )
-    ) :
-    null;
-  }
 }
 
 
@@ -178,14 +130,12 @@ const mapStateToProps = (state)=>{
   return {
     userInfo: state.userInfo,
     i18nUIString: state.i18nUIString,
-    belongsByType: state.belongsByType,
-    indexLists: state.indexLists,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    _set_IndexLists: (obj) => { dispatch(setIndexList(obj)); },
+
   }
 }
 

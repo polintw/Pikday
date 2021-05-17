@@ -115,8 +115,8 @@ class Submit extends React.Component {
               className={classnames(
                 'centerAlignChild',
                 stylesFont.fontSubmit,
-                {[stylesFont.colorStandard]: (!this.state.onEnterSubmit || !submitPermit)},
-                {[stylesFont.colorWhite]: (this.state.onEnterSubmit && submitPermit)}
+                {["colorStandard"]: (!this.state.onEnterSubmit || !submitPermit)},
+                {["colorWhite"]: (this.state.onEnterSubmit && submitPermit)}
               )}>
               {this.props.i18nUIString.catalog["submit_unitPublish"]}
             </span>
