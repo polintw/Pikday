@@ -24,14 +24,18 @@ async function validateDailyShared(modifiedBody, userId) {
   };
 
   // checking if the user had uploaded any pic to the assignedDate
-  let assignedDate = new Date(modifiedBody.assignedDate);
+  let now = new Date();
+  let assignedDate = new Date(modifiedBody.assignedDate); // make sure using the date obj
   let userInUnitCalendar = await _DB_unitsCalendar.findOne({
     where: {
       id_author: userId,
       assignedDate: assignedDate
     }
   });
-  if(!!userInUnitCalendar) { // there 'is' a non-null result
+  if(
+    !!userInUnitCalendar || // there 'is' a non-null result
+    (now.getTime() - assignedDate.getTime() > 259200000) // early than 72 hours(not an reasonable case)
+  ) {
     throw new forbbidenError("User attempt to upload more than limit a day to api create/daily.", 122);
     return;
   };
@@ -76,6 +80,5 @@ async function validateDailyShared(modifiedBody, userId) {
 
 
 module.exports = {
-  validateShared,
-  validateSharedEdit
+  validateDailyShared,
 };

@@ -78,11 +78,7 @@ class IndexShare extends React.Component {
       search: lastState.search,
       state: lastState.state
     });
-    this.props.history.push({
-      pathname: '/self/calendar',
-      search: '',
-      state: {from: this.props.location}
-    });
+    window.location.assign('/self/calendar')
   }
 }
 

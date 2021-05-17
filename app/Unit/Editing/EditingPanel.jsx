@@ -119,6 +119,9 @@ class EditingPanel extends React.Component {
     newObj.coverMarks.list.forEach((markKey, index)=>{
       newObj.coverMarks.data[markKey].layer = 0;
     });
+    // turn assignedDate from 'string' into dateObject
+    newObj.assignedDate = new Date(newObj.assignedDate);
+    // and go for submit
     this.props._set_Submit(newObj);
   }
 
@@ -262,8 +265,10 @@ class EditingPanel extends React.Component {
   }
 
   _set_assignedDate(assignedDate){
-    this.setState({
-      assignedDate: assignedDate
+    this.setState((prevState, props)=>{
+      return {
+        assignedDate: !!assignedDate ? assignedDate : null
+      };
     });
   }
 

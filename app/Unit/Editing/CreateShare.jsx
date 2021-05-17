@@ -17,6 +17,7 @@ import {
 } from "../../utils/errHandlers.js";
 
 const initState = {
+  localClickCheck: false,
   warningDialog: false,
   confirmDialog: false,
   dialogMessage: null,
@@ -124,7 +125,7 @@ class CreateShare extends React.Component {
       beneathBase64: stateObj.beneathSrc,
       nodesSet: stateObj.nodesSet,
       submitTime: submitTime,
-      assignedDate: 
+      assignedDate: stateObj.assignedDate
     };
     //all pure JS object or structure,
     //we don't need to do any JSON.stringify() here, because the axios would serve automatical transformation
@@ -146,13 +147,16 @@ class CreateShare extends React.Component {
       cancelToken: this.axiosSource.token
     }).then(function (res) {
       let resObj = JSON.parse(res.data); //still parse the res data prepared to be used below
-      //first, let redux state back, because this would last if the window not reload
-      self.props._set_unitSubmitting(false);
-      //then second call this, perhaps unmount the component so need to be called after redux state reset
-      //pass the res data which including id of unit
-      self.props._submit_Share_New(resObj.main);
-      //local state was final, as a last defense in case the user click the submit during a very small 'window'
-      self.setState(initState);
+      // for User Experience, wait for a second before the following steps, to make a 'distance' to the created time in DB
+      setTimeout(()=> {
+        //first, let redux state back, because this would last if the window not reload
+        self.props._set_unitSubmitting(false);
+        //then local state, by reset incl. state.localClickCheck to close the EditingModal first than path change
+        self.setState(initState);
+        //then second call this, perhaps unmount the component so need to be called after redux state reset
+        //pass the res data which including id of unit
+        self.props._submit_Share_New(resObj.main);        
+      }, 1000);
     }).catch(function (thrown) {
       self.props._set_unitSubmitting(false);
       if (axios.isCancel(thrown)) {

@@ -186,7 +186,6 @@ const i18nUIString_EN = {
   "title_shareUpload_typewriter": ['S','h','a','r','e', '!'],
   "guidingCreateShare_ImgGps": "GPS",
   "guidingCreateShare_AssignGroup": "Assigned corners",
-  "guidingCreateShare_AssignNull": "Haven't register any ",//Changed "please" to "Please"
   "guidingCreateShare_NodesView": "Choose at least one corner you'd like to link to by:",
   "guidingCreateShare_NodesView_selectHint": "No selection yet.",
   "guidingCreateShare_outboundLinkView": "Input a url address if you want to show a link!",

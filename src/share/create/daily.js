@@ -170,11 +170,10 @@ async function shareHandler_POST(req, res){
       });
     };
 
-
     return Promise.all([
       new Promise((resolve, reject)=>{_handleStatInteract().then(()=>{resolve();});}),
       new Promise((resolve, reject)=>{_handleUnitsCalendar().then(()=>{resolve();});})
-    ]);
+    ])
     .then((results)=>{
       return;
     })
