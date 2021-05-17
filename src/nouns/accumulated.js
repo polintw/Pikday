@@ -29,13 +29,13 @@ async function _handle_GET_node_FeedList(req, res){
       where: {
         assignedDate: (reqDayRange == 'today') ? currentDate : {[Op.lt]: currentDate},
         createdAt: {[Op.lt]: lastUnitTime},
-        '$nodeAttribution.id_unit$': Sequelize.col("id_unit"),
-        '$nodeAttribution.id_noun$': nodeId
       },
       include: { //this is worked by comprehensive setting for 'association' --- foreign key between 2 including table(even a foreign key to self )
         model: _DB_attribution,
-        as: 'nodeAttribution',
-        required: false, // LEFT JOIN
+        // required: no set, as INNER JOIN
+        where: {
+          id_noun: nodeId
+        }
       },
       order: [ //make sure the order of arr are from latest
         Sequelize.literal('`createdAt` DESC') //and here, using 'literal' is due to some wierd behavior of sequelize,
@@ -44,7 +44,7 @@ async function _handle_GET_node_FeedList(req, res){
     })
     .catch((err)=>{ throw new internalError(err ,131); });
 
-    let unitsAssignedDate = {}, unitsIdAssignedDate;
+    let unitsAssignedDate = {}, unitsIdAssignedDate = {};
     let unitsIdList = unitsInRange.map((row, index)=>{
       unitsIdAssignedDate[row.id_unit] = row.assignedDate;
       return row.id_unit;
@@ -54,7 +54,6 @@ async function _handle_GET_node_FeedList(req, res){
         where: {
           id: unitsIdList
         },
-        attributes: ['exposedId'],
         order: [ //make sure the order of arr are from latest
           Sequelize.literal('`createdAt` DESC') //and here, using 'literal' is due to some wierd behavior of sequelize,
           //it would make an Error if we provide col name by 'arr'
@@ -76,7 +75,7 @@ async function _handle_GET_node_FeedList(req, res){
       temp: {}
     };
 
-    if(nodeAttri.length < 12 ) sendingData.scrolled = false;
+    if(unitsExposedList.length < 12 ) sendingData.scrolled = false;
     sendingData.unitsList = unitsExposedList;
     sendingData.unitsAssignedDate = unitsAssignedDate;
 
