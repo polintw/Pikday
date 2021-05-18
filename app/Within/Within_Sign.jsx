@@ -28,7 +28,7 @@ class Within_Sign extends React.Component {
         width: '100%',
         height: '100%',
         position: 'fixed',
-        backgroundColor: '#FCFCFC'
+        backgroundColor: '#FDFDFC'
       },
     }
   }

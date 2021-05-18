@@ -2,8 +2,10 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   min-height: 92vh; /* from height of NavOptions on small screen */
   box-sizing: border-box;
+  padding: 18vh 0 0;
 }
 
 .boxRow {
@@ -31,18 +33,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 80%;
 }
 
 .boxIndexTitle {
+  margin-bottom: 3rem;
   text-align: center;
 }
 
 .boxIndexShare {
-  
+  width: 100%;
+  max-width: 335px;
 }
 
 @media screen and (max-width:860px) {
   .boxFooter {
+    width: 100%;
     margin-bottom: 24vh;
   }
 }

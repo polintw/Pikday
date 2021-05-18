@@ -5,6 +5,7 @@
 .comNavFeed {
   display: flex;
   align-items: baseline;
+  justify-content: center;
 }
 
 .boxLinkLeft {
@@ -29,7 +30,7 @@
 }
 
 .spanLinkMouse {
-  border-bottom: solid 0.75px #b8b8b8;
+  border-bottom: solid 0.75px #545454;
   cursor: pointer;
 }
 

@@ -2,8 +2,21 @@
   width: 100%;
   position: relative;
   box-sizing: border-box;
-  border: solid 2px #a3a3a3;
   border-radius: 8px;
+  text-align: center;
+  padding: 11px 7% 10px;
+}
+
+.btnBorderSmall {
+  border: solid 2px #b8b8b8;
+}
+
+.btnBorderSmallNoSpace {
+  border: solid 2px #d8d8d8;
+}
+
+.btnBorderWide {
+  border: solid 2px #b8b8b8;
 }
 
 .comMouseEnter {

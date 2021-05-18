@@ -90,7 +90,7 @@ class Wrapper extends React.Component {
                   className={classnames(styles.boxIndexTitle)}>
                   <span
                     className={classnames(
-                      "fontTitleBig", "colorSignBlack")}>
+                      "fontTitleBig", "colorSignBlack", "weightBold")}>
                     {this.props.i18nUIString.catalog['title_AroundIndex_']}
                   </span>
                 </div>
@@ -101,13 +101,12 @@ class Wrapper extends React.Component {
                 </div>
               </div>
               <div
-                className={classnames(styles.boxRow)}>
+                className={classnames(styles.boxRow)}
+                style={{padding: '8vh 0 0'}}>
                 <NavFeed {...this.props}/>
-
               </div>
               <div
                 className={classnames(styles.boxRow, styles.boxFooter)}/>
-
             </div>
           )
         }

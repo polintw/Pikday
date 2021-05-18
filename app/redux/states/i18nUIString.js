@@ -185,7 +185,7 @@ const i18nUIString_EN = {
 
   "title_shareUpload_typewriter": ['S','h','a','r','e', '!'],
   "title_upload_daily": "Upload your day",
-  "title_upload_daily_noSpace": "Your daily pic has been uploaded",
+  "title_upload_daily_noSpace": "You've uploaded your daily pics",
   "guidingCreateShare_ImgGps": "GPS",
   "guidingCreateShare_AssignGroup": "Assigned corners",
   "guidingCreateShare_NodesView": "Choose at least one corner you'd like to link to by:",

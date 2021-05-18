@@ -54,7 +54,7 @@ class BtnUploadDaily extends React.Component {
         <div
           className={classnames(
             "smallDisplayNone",
-            styles.comBtnUploadDaily,
+            styles.comBtnUploadDaily, styles.btnBorder,
             {[styles.comMouseEnterWideScreen]: (this.state.onCreateWideScreen && this.state.spaceRemain)}
           )}
           onMouseEnter={this._handleEnter_UploadWideScreen}
@@ -66,7 +66,7 @@ class BtnUploadDaily extends React.Component {
                 styles.boxWriter)}>
                 <span
                   className={classnames(
-                    styles.spanWriter, 'fontTitle',
+                    styles.spanWriter, 'fontNodesEqual', 'lineHeight15',
                     {
                       [styles.spanWriterTyping]: (this.state.spaceRemain && this.state.onCreateWideScreen),
                       ['colorStandard']: (this.state.spaceRemain && this.state.onCreateWideScreen),
@@ -93,7 +93,11 @@ class BtnUploadDaily extends React.Component {
           className={classnames(
             "smallDisplayBox",
             styles.comBtnUploadDaily,
-            {[styles.comMouseEnter]: (this.state.onCreate && this.state.spaceRemain)}
+            {
+              [styles.comMouseEnter]: (this.state.onCreate && this.state.spaceRemain),
+              [styles.btnBorderSmall]: this.state.spaceRemain,
+              [styles.btnBorderSmallNoSpace]: !this.state.spaceRemain
+            }
           )}
           onTouchStart={this._handleEnter_Upload}
           onTouchEnd={this._handleLeave_Upload}
@@ -106,11 +110,13 @@ class BtnUploadDaily extends React.Component {
                 styles.boxWriter)}>
                 <span
                   className={classnames(
-                    styles.spanWriter, 'fontTitle',
+                    styles.spanWriter, 'lineHeight15',
                     {
                       ['colorWhite']: (this.state.spaceRemain && this.state.onCreate),
                       ['colorGrey']: (this.state.spaceRemain && !this.state.onCreate),
-                      ['colorWhiteGrey']: !this.state.spaceRemain
+                      ['colorWhiteGrey']: !this.state.spaceRemain,
+                      ['fontNodesEqual']: this.state.spaceRemain,
+                      ['fontSubtitle']: !this.state.spaceRemain
                     }
                   )}>
                   {

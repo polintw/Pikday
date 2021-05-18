@@ -42,10 +42,11 @@ class NavFeed extends React.Component {
             onTouchStart={this._handleEnter_link}
             onTouchEnd={this._handleLeave_link}
             onMouseEnter={this._handleEnter_link}
-            onMouseLeave={this._handleLeave_link}>
+            onMouseLeave={this._handleLeave_link}
+            style={{ padding: '0 8px' }}>
             <span
               className={classnames(
-                "fontContentPlain", "weightBold",
+                "fontSubtitle", "weightBold",
                 {
                   [styles.spanLinkMouse]: (this.state.onNavLink == 'calendar'),
                   ["colorLightGrey"]: (this.state.onNavLink != 'calendar'),
@@ -63,10 +64,10 @@ class NavFeed extends React.Component {
             onTouchEnd={this._handleLeave_link}
             onMouseEnter={this._handleEnter_link}
             onMouseLeave={this._handleLeave_link}
-            style={{ padding: '0 5px' }}>
+            style={{ padding: '0 8px' }}>
             <span
               className={classnames(
-                "fontContentPlain", "weightBold",
+                "fontSubtitle", "weightBold",
                 {
                   [styles.spanLinkMouse]: (this.state.onNavLink == 'today'),
                   ["colorLightGrey"]: (this.state.onNavLink != 'today'),
@@ -84,10 +85,10 @@ class NavFeed extends React.Component {
             onTouchEnd={this._handleLeave_link}
             onMouseEnter={this._handleEnter_link}
             onMouseLeave={this._handleLeave_link}
-            style={{ padding: '0 5px' }}>
+            style={{ padding: '0 8px' }}>
             <span
               className={classnames(
-                "fontContentPlain", "weightBold",
+                "fontSubtitle", "weightBold",
                 {
                   [styles.spanLinkMouse]: (this.state.onNavLink == 'yesterday'),
                   ["colorLightGrey"]: (this.state.onNavLink != 'yesterday'),
