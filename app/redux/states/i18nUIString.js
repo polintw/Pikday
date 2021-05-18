@@ -210,44 +210,15 @@ const i18nUIString_EN = {
   "guiding_FeedAssigned_noneAssigned_justSubmit": "Good to have your contrubution.",
   "guiding_FeedAssigned_noneAssigned_norContri": "It could be you contributing somthing to your corners!", //Original:"It could be you contributing somthing for your corners!"
 
-  "message_Chain_noShareds": "You'll see the list of your publications here.",
-  "message_Chain_noSharedsCourage": "Wait for your first Shared!",//Original:"Trying submitting an observation about your corners."
-  "message_Chain_byChainInfo": [
-    "Contribution ",
-    "Responded by ",
-    "Responded to ",
-    "Your Last Read ",
-    "Responded to it ",
-    "Submit ",
-    "Respond to Yours ",
-    "succesfully ",
-    "You inspired ",
-    "new user by this contribution"
-  ],
-  "message_Chain_toNodes": ["to ", " and several"],
-  "hint_Chain_waitForRespond": ["Your contribution would be delivered to your fellows.", "And any new respond to your contribution would be emphasized here."],
-  "hint_Chain_InspiredDetail": [", and", " more users", " inspired.", " were", " was", "That's"],
-  "guidingBelongs_EmptyMap_noSet": ["Set your", ", and take a look for the distribution of your fellows."], //Changed "taking" to "take"
-  "guidingBelongs_EmptyMap_": "You were the first user among this corner!",
-  "descript_BelongTypeInteract": ["going to renew your ", " ?"],
-  "category__Belong_usersCount": ["Fellows stay at", "Fellows from"],
-  "hint_BelongsMap_Nav": "fellows by ",
-  "link_BelongsMap_Nav": [ "As homeland", "Stay here"],
-  "messageBelongChoiceinBool": ["site ", "  as your  ", "  place?"],
-  "title_BelongSet_": "Your Corners",
-  "descript_BelongSet_SearchBytType": ["Search one fit your "],
+  "title_AroundIndex_": "What's the scene to your day today?",
   "descript_AroundIndex_footer": "You've reached the edge of Cornerth.!",
   "guiding_AroundIndex_Share": "A new finding?", //Original:"how's your corners"
   'descript_AroundIndex_footer_BelongHint': "Start browsing by setting your current stay or homeland!",
-
-  "descript_Nail_noMark": "(expand image...)",
 
   "title_DayFeed_dayrange": {
     "today" : "Today",
     "yesterday": "Yesterday"
   },
-
-  "title_Nodes": "Nodes map",
 
   "title_NavAtNode_": "Accumulations",
   "subtitle_NavAtNode_Num": ['stay', "from"],

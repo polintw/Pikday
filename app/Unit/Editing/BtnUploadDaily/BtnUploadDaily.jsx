@@ -49,12 +49,13 @@ class BtnUploadDaily extends React.Component {
 
   render(){
     return(
-      <div>
+      <div
+        style={{width: '100%'}}>
         <div
           className={classnames(
             "smallDisplayNone",
             styles.comBtnUploadDaily,
-            {[styles.comMouseEnter]: this.state.onCreateWideScreen}
+            {[styles.comMouseEnterWideScreen]: (this.state.onCreateWideScreen && this.state.spaceRemain)}
           )}
           onMouseEnter={this._handleEnter_UploadWideScreen}
           onMouseLeave={this._handleLeave_UploadWideScreen}>
@@ -65,8 +66,13 @@ class BtnUploadDaily extends React.Component {
                 styles.boxWriter)}>
                 <span
                   className={classnames(
-                    styles.spanWriter, 'fontTitleBig', 'colorStandard',
-                    {[styles.spanWriterTyping]: this.state.onCreateWideScreen}
+                    styles.spanWriter, 'fontTitle',
+                    {
+                      [styles.spanWriterTyping]: (this.state.spaceRemain && this.state.onCreateWideScreen),
+                      ['colorStandard']: (this.state.spaceRemain && this.state.onCreateWideScreen),
+                      ['colorGrey']: (this.state.spaceRemain && !this.state.onCreateWideScreen),
+                      ['colorWhiteGrey']: !this.state.spaceRemain
+                    }
                   )}>
                   {
                     this.state.spaceRemain ? ( this.state.onCreateWideScreen ? this.state.typeWriterText :
@@ -76,15 +82,18 @@ class BtnUploadDaily extends React.Component {
                 </span>
               </div>
           }
-          <CreateShare
-            {...this.props}
-            forceCreate={this.state.editingOpen}/>
+          {
+            (this.state.spaceFetched && this.state.spaceRemain) &&
+            <CreateShare
+              {...this.props}
+              forceCreate={this.state.editingOpen}/>
+          }
         </div>
         <div
           className={classnames(
             "smallDisplayBox",
             styles.comBtnUploadDaily,
-            {[styles.comMouseEnter]: this.state.onCreate}
+            {[styles.comMouseEnter]: (this.state.onCreate && this.state.spaceRemain)}
           )}
           onTouchStart={this._handleEnter_Upload}
           onTouchEnd={this._handleLeave_Upload}
@@ -97,7 +106,12 @@ class BtnUploadDaily extends React.Component {
                 styles.boxWriter)}>
                 <span
                   className={classnames(
-                    styles.spanWriter, 'fontTitleBig', 'colorStandard',
+                    styles.spanWriter, 'fontTitle',
+                    {
+                      ['colorWhite']: (this.state.spaceRemain && this.state.onCreate),
+                      ['colorGrey']: (this.state.spaceRemain && !this.state.onCreate),
+                      ['colorWhiteGrey']: !this.state.spaceRemain
+                    }
                   )}>
                   {
                     this.state.spaceRemain ? this.props.i18nUIString.catalog['title_upload_daily'] :
@@ -106,9 +120,12 @@ class BtnUploadDaily extends React.Component {
                 </span>
               </div>
           }
-          <CreateShare
-            {...this.props}
-            forceCreate={this.state.editingOpen}/>
+          {
+            (this.state.spaceFetched && this.state.spaceRemain) &&
+            <CreateShare
+              {...this.props}
+              forceCreate={this.state.editingOpen}/>
+          }
         </div>
       </div>
     )

@@ -35,7 +35,7 @@ class NavOptions extends React.Component {
         <div
           id={"NavOptions_Self_small"}
           className={classnames(
-            styles.selfCom_NavOptions_svg_, 'colorEditBlack', 'fontSubtitle',
+            styles.selfCom_NavOptions_svg_, 'colorDescripBlack', 'fontSubtitle',
           )}
           onClick={(e)=>{e.preventDefault(); e.stopPropagation(); this.props.history.goBack()}}>
           {this.props.i18nUIString.catalog['submit_back']}
@@ -44,7 +44,7 @@ class NavOptions extends React.Component {
         <div
           id={"NavOptions_Self_small"}
           className={classnames(
-            styles.selfCom_NavOptions_svg_, 'colorEditLightBlack',
+            styles.selfCom_NavOptions_svg_, 'colorDescripBlack',
           )}
           onClick={this._handleClick_navToolBox}>
           <AccountPalette

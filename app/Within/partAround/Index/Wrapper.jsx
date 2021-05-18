@@ -84,16 +84,21 @@ class Wrapper extends React.Component {
             <div
               className={classnames(styles.comAroundWrapper)}>
               <div
-                className={classnames(styles.boxRow)}>
-                <div>
-                  {"What's the scene to your day today?"}
+                className={classnames(
+                  styles.boxRow, styles.boxMainContent)}>
+                <div
+                  className={classnames(styles.boxIndexTitle)}>
+                  <span
+                    className={classnames(
+                      "fontTitleBig", "colorSignBlack")}>
+                    {this.props.i18nUIString.catalog['title_AroundIndex_']}
+                  </span>
                 </div>
                 <div
                   className={classnames(styles.boxIndexShare)}>
                   <IndexShare
                     {...this.props}/>
                 </div>
-
               </div>
               <div
                 className={classnames(styles.boxRow)}>

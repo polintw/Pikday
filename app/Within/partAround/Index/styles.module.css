@@ -1,6 +1,8 @@
 .comAroundWrapper {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  min-height: 92vh; /* from height of NavOptions on small screen */
   box-sizing: border-box;
 }
 
@@ -23,6 +25,20 @@
 
 .spanFooterHint {
   margin: 8px 0;
+}
+
+.boxMainContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.boxIndexTitle {
+  text-align: center;
+}
+
+.boxIndexShare {
+  
 }
 
 @media screen and (max-width:860px) {

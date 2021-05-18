@@ -15,8 +15,6 @@ class IndexShare extends React.Component {
       mouseEnter: false
     };
     this._submit_Share_New = this._submit_Share_New.bind(this);
-    this._handleEnter_Share = this._handleEnter_Share.bind(this);
-    this._handleLeave_Share = this._handleLeave_Share.bind(this);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot){
@@ -33,41 +31,14 @@ class IndexShare extends React.Component {
 
   render(){
     return(
-      <div>
-        <div
-          className={classnames(
-            styles.boxGuiding,
-            {[styles.boxGuidingMouseOn]: this.state.mouseEnter}
-          )}>
-          {
-            !this.state.mouseEnter &&
-            <span
-              className={classnames(
-                styles.spanShareGuiding,
-                "fontContent", "colorStandard")}>
-              {this.props.i18nUIString.catalog["guiding_AroundIndex_Share"]}</span>
-          }
-        </div>
-        <div
-          className={classnames(styles.boxShareUpload)}
-          onMouseEnter={this._handleEnter_Share}
-          onMouseLeave={this._handleLeave_Share}>
-          <BtnUploadDaily
-            {...this.props}
-            _submit_Share_New={this._submit_Share_New}
-            _refer_von_Create={this.props._refer_von_cosmic}/>
-        </div>
-
+      <div
+        className={classnames(styles.comShareUpload)}>
+        <BtnUploadDaily
+          {...this.props}
+          _submit_Share_New={this._submit_Share_New}
+          _refer_von_Create={this.props._refer_von_cosmic}/>
       </div>
     )
-  }
-
-  _handleEnter_Share(e){
-    this.setState({mouseEnter: true})
-  }
-
-  _handleLeave_Share(e){
-    this.setState({mouseEnter: false})
   }
 
   _submit_Share_New(){
