@@ -14,10 +14,10 @@ const {
 const eraseExecutive = require('./erase.js');
 const staticsExecutive = require('./statics/execute.js');
 const createExecutive = require('./create/daily.js');
-const accumulatedExecutive = require('./accumulated.js');
+const dailyExecutive = require('./daily.js');
 const nodesExecutive = require('./nodes.js');
 
-main.use('/accumulated', accumulatedExecutive)
+main.use('/daily', dailyExecutive)
 
 main.use('/nodes', nodesExecutive)
 

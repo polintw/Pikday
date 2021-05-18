@@ -184,6 +184,8 @@ const i18nUIString_EN = {
   "guiding_UnitSubcate_End_": "Share to more people if you think the author did a good job!",
 
   "title_shareUpload_typewriter": ['S','h','a','r','e', '!'],
+  "title_upload_daily": "Upload your day",
+  "title_upload_daily_noSpace": "Your daily pic has been uploaded",
   "guidingCreateShare_ImgGps": "GPS",
   "guidingCreateShare_AssignGroup": "Assigned corners",
   "guidingCreateShare_NodesView": "Choose at least one corner you'd like to link to by:",

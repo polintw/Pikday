@@ -6,7 +6,7 @@ import {
 import {connect} from "react-redux";
 import classnames from 'classnames';
 import styles from "./styles.module.css";
-import ShareUpload from '../../../../Components/ShareUpload/ShareUpload.jsx';
+import BtnUploadDaily from '../../../../Unit/Editing/BtnUploadDaily/BtnUploadDaily.jsx';
 
 class IndexShare extends React.Component {
   constructor(props){
@@ -52,7 +52,7 @@ class IndexShare extends React.Component {
           className={classnames(styles.boxShareUpload)}
           onMouseEnter={this._handleEnter_Share}
           onMouseLeave={this._handleLeave_Share}>
-          <ShareUpload
+          <BtnUploadDaily
             {...this.props}
             _submit_Share_New={this._submit_Share_New}
             _refer_von_Create={this.props._refer_von_cosmic}/>

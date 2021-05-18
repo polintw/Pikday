@@ -11,7 +11,7 @@ const {
   internalError,
 } = require('../utils/reserrHandler.js');
 
-async function _handle_GET_accumulated_shareDaily(req, res){
+async function _handle_GET_shareDaily_accumulated(req, res){
   const userId = req.extra.tokenUserId; //use userId passed from pass.js
 
   try {
@@ -74,7 +74,7 @@ async function _handle_GET_accumulated_shareDaily(req, res){
 
     if (unitsObjList.length < 12) sendingData.scrolled = false;
 
-    _res_success(res, sendingData, "GET: /share/daily, complete.");
+    _res_success(res, sendingData, "GET: /share/daily/accumulated, complete.");
 
   }
   catch (error) {
@@ -83,14 +83,50 @@ async function _handle_GET_accumulated_shareDaily(req, res){
   }
 }
 
-execute.get('/daily', function(req, res){
-  if(process.env.NODE_ENV == 'development') winston.verbose('GET: /share/daily ');
-  _handle_GET_accumulated_shareDaily(req, res);
+async function _handle_GET_shareDaily_space(req, res){
+  const userId = req.extra.tokenUserId; //use userId passed from pass.js
+
+  try {
+    // check if the user has reach the daily limit
+    const reqD = new Date(parseInt(req.query.localTime));
+    let allowedDate = new Date(reqD.toDateString());
+    allowedDate.setDate(allowedDate.getDate() - 1); // allowed to 'yesterday'
+    // then select by allowedDate
+    let unitsCalendar = await _DB_unitsCalendar.findAll({
+      where: {
+        id_author: userId,
+        author_identity: "user",
+        assignedDate: {[Op.gte]: allowedDate}
+      },
+      order: [ //make sure the order of arr are from latest
+        Sequelize.literal('`createdAt` DESC') //and here, using 'literal' is due to some wierd behavior of sequelize,
+      ],
+    });
+
+    let sendingData = {
+      remainDate: [], // remained date, prepared
+      temp: {}
+    };
+    if(unitsCalendar.length >= 2) sendingData.remainDate = false
+    else sendingData.remainDate = true;
+
+    _res_success(res, sendingData, "GET: /share/daily/space, complete.");
+
+  }
+  catch (error) {
+    _handle_ErrCatched(error, req, res);
+    return;
+  }
+}
+
+execute.get('/accumulated', function(req, res){
+  if(process.env.NODE_ENV == 'development') winston.verbose('GET: /share/daily/accumulated ');
+  _handle_GET_shareDaily_accumulated(req, res);
 })
 
-execute.get('/', function(req, res){
-  if(process.env.NODE_ENV == 'development') winston.verbose('GET: /share/accumulated ');
-  _res_success(res, {temp: {}}, "GET: /paths/accumulated, complete.");
+execute.get('/space', function(req, res){
+  if(process.env.NODE_ENV == 'development') winston.verbose('GET: /share/daily/space ');
+  _handle_GET_shareDaily_space(req, res);
 })
 
 module.exports = execute;
