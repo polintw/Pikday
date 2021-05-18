@@ -76,20 +76,6 @@ class ServiceLinks extends React.Component {
               {"Privacy"}</a>
         </div>
         <div className={classnames('tagServiceLink')}>
-            <a
-              href="/a/terms"
-              method="terms"
-              className={classnames(
-                'plainLinkButton',
-                'fontServiceLink',
-                'colorGrey'
-              )}
-              style={{borderBottom: this.state.mouseOn=='terms' ? "solid 0.75px #ababab" : "solid 0.75px transparent"}}
-              onMouseEnter={this._handleEnter_Link}
-              onMouseLeave={this._handleLeave_Link}>
-              {"Terms"}</a>
-        </div>
-        <div className={classnames('tagServiceLink')}>
           <a
             href="/a/contact"
             method="contact"

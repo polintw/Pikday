@@ -143,7 +143,6 @@ const i18nUIString_EN = {
   "link_Fellows": 'Fellows',
   "link_Options_selfLink": "Shareds",
   "link_Options_public": "Public view",
-  "Cornerth_inc": "Cornerth. ",
   "AllRights": "All Rights Reserved.",
   "tab_Steps": 'Steps',
   "tab_Routes": 'Routes',

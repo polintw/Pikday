@@ -32,7 +32,8 @@ class NavWithin extends React.Component {
         {this.props.logotop}
         <div
           className={classnames(styles.boxLogo)}
-          onClick={(e)=>{e.preventDefault(); e.stopPropagation(); this.props._refer_to('', '/')}}>
+          onClick={(e)=>{e.preventDefault(); e.stopPropagation(); this.props._refer_to('', '/')}}
+          style={{display: 'none'} /* No logo now, so se hide the box first.*/ }>
 
         </div>
         <div
@@ -45,7 +46,6 @@ class NavWithin extends React.Component {
               'fontTitleSmall',
               'colorDescripBlack'
             )}>
-            <span>{this.props.i18nUIString.catalog["Cornerth_inc"]}</span>
             <span>{this.props.i18nUIString.catalog["AllRights"]}</span>
           </div>
         </div>

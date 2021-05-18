@@ -171,7 +171,7 @@ class UnitScreen extends React.Component {
           onClose={()=>{this._close_modal_Unit();}}
           style={{
             position: "fixed",
-            backgroundColor: (paramUnitView=="related" || paramUnitView=="respond") ? 'rgba(51, 51, 51, 0.85)': 'rgba(51, 51, 51, 0.3)' }}>
+            backgroundColor: 'rgba(51, 51, 51, 0.85)' }}>
             <div
               id={"unitSignFrame"}
               className={classnames(styles.boxUnitSignFrame)}/>

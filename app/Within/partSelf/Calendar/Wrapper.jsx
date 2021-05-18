@@ -15,15 +15,39 @@ class Wrapper extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-
+      savedPosition: null
     };
+    this.wrapperWithinSelf = React.createRef();
     this.axiosSource = axios.CancelToken.source();
     this._construct_UnitInit = this._construct_UnitInit.bind(this);
     this._render_FooterHint = this._render_FooterHint.bind(this);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot){
-
+    if(
+      this.props.location.pathname != prevProps.location.pathname &&
+      this.props.location.pathname.includes('/unit')
+    ){
+      let savedPosition = window.scrollY;
+      this.setState((prevState, props)=>{
+        return {
+          savedPosition: savedPosition
+        };
+      }, ()=>{
+        this.wrapperWithinSelf.current.style.display='none';
+      });
+    }
+    else if(
+      this.props.location.pathname != prevProps.location.pathname &&
+      prevProps.location.pathname.includes('/unit') &&
+      !this.props.location.pathname.includes('/unit')
+    ){
+      this.wrapperWithinSelf.current.style={};
+      window.scroll(0, prevState.savedPosition);
+      this.setState({
+        savedPosition: null
+      });
+    };
   }
 
   componentDidMount(){
@@ -46,6 +70,7 @@ class Wrapper extends React.Component {
     return(
       <div>
         <div
+          ref={this.wrapperWithinSelf}
           className={classnames(styles.comSelfWrapper)}>
           <div
             className={classnames(styles.boxTopTitle)}>
