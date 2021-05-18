@@ -116,7 +116,7 @@ class WithinSelf extends React.Component {
               <div
                 className={classnames(
                   styles.boxNavCosmic,
-                  styles.smallDisplayNone)}>
+                  "smallDisplayNone")}>
                   <NavWihtinSelf/>
                 </div>
             </NavWithin>

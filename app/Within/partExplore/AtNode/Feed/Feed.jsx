@@ -103,7 +103,7 @@ class Feed extends React.Component {
             key={"key_NodeFeed_new_" + listByDayRange + "_"+ index}
             className={classnames(styles.boxModuleItem)}>
               <div
-                className={classnames(stylesNail.boxNail, stylesNail.custFocusNailWide)}>
+                className={classnames(stylesNail.boxNail)}>
                 {
                   (dayRange == "today") ? (
                     <NailFeedwtNone

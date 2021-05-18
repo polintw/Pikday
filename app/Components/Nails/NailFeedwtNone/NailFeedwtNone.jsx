@@ -11,7 +11,7 @@ import {
   domain
 } from '../../../../config/services.js';
 
-class NailFeedwtNodes extends React.Component {
+class NailFeedwtNone extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -44,6 +44,8 @@ class NailFeedwtNodes extends React.Component {
           {[styles.frameOnMouse]: this.state.onFrame}
         )}
         onClick={(e)=>{if( !this.props.linkPath ){e.preventDefault();};/*a optional control, mean the parent want to take the refer control*/ }}
+        onTouchStart={this._handleEnter_nailFrame}
+        onTouchEnd={this._handleLeave_nailFrame}
         onMouseEnter={this._handleEnter_nailFrame}
         onMouseLeave={this._handleLeave_nailFrame}>
         {this._render_ContentBox()}
@@ -77,8 +79,10 @@ const contentBoxImg = (self)=>{
   return (
     <div
       key={"key_NailBoxImg_"+self.props.unitId}
-      className={classnames(styles.boxContent)}
-      style={{minWidth: "30.8vw"}}>
+      className={classnames(
+        styles.boxContent,
+        {[styles.boxContentMouseOn]: self.state.onFrame}
+      )}>
       <Link
         ref={self.nailImgBox}
         to={{
@@ -106,4 +110,4 @@ const mapStateToProps = (state)=>{
 export default withRouter(connect(
   mapStateToProps,
   null
-)(NailFeedwtNodes));
+)(NailFeedwtNone));

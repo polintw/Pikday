@@ -57,18 +57,24 @@ class Feed extends React.Component {
       return (
         <div
           key={"key_Calendar_Feed_"+targetUnitId}
-          className={classnames(stylesNail.boxNail)}>
-          <div>
-            <span>
+          className={classnames(styles.boxDateandNail)}>
+          <div
+            className={classnames(styles.boxCalendarNailDate)}>
+            <span
+              className={classnames("fontNodesEqual", "weightBold", "colorEditBlack")}>
               {loopMonth}
             </span>
-            <span>{". "}</span>
-            <span>
+            <span
+              className={classnames("fontNodesEqual", "weightBold", "colorEditBlack")}>
+              {". "}</span>
+            <span
+              className={classnames("fontNodesEqual", "weightBold", "colorEditBlack")}>
               {loopDate}
             </span>
           </div>
           <div
-            className={classnames(stylesNail.boxNail, stylesNail.custFocusNailWide)}>
+            className={classnames(stylesNail.boxNail)}
+            style={{margin: '8px 0 0'}}>
             <NailFeedwtNone
               {...this.props}
               unitId={targetUnitId}
@@ -111,14 +117,24 @@ class Feed extends React.Component {
         groupsDOM.push(
           <div
             key={"key_Shareds_FeedGroup_"+ loopMonth + "_" + loopDate}>
-            <div>
-              <span>
-                {loopMonth}
-              </span>
-              <span>{". "}</span>
-              <span>
-                {loopDate}
-              </span>
+            <div
+              className={classnames(
+                styles.boxDateandNail, styles.boxDatewtNoNail)}
+              style={{margin: '12px 0 8px'}}>
+              <div
+                className={classnames(styles.boxCalendarNailDate)}>
+                <span
+                  className={classnames("fontContent", "weightBold", "colorLightGrey")}>
+                  {loopMonth}
+                </span>
+                <span
+                  className={classnames("fontContent", "weightBold", "colorLightGrey")}>
+                  {". "}</span>
+                <span
+                  className={classnames("fontContent", "weightBold", "colorLightGrey")}>
+                  {loopDate}
+                </span>
+              </div>
             </div>
           </div>
         );

@@ -48,7 +48,7 @@ class Wrapper extends React.Component {
         <div
           className={classnames(styles.comSelfWrapper)}>
           <div
-            className={classnames(styles.boxRow)}>
+            className={classnames(styles.boxTopTitle)}>
             <NavTitle {...this.props}/>
           </div>
           <div

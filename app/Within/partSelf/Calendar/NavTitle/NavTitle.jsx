@@ -54,12 +54,12 @@ class NavTitle extends React.Component {
           <div
             className={classnames(styles.rowTitleText)}>
             <span
-              className={classnames("fontTitle", "colorEditBlack", "weightBold")}>
+              className={classnames("fontTitle", "colorSignBlack", "weightBold")}>
               {this.props.i18nUIString.catalog['title_Calendar']}
             </span>
           </div>
           <span
-            className={classnames("fontContent", "colorEditBlack")}>
+            className={classnames("fontSubtitle_h5", "colorAssistGold")}>
             {this._render_Greet()}
           </span>
         </div>

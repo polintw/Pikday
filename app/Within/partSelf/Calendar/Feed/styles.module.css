@@ -17,6 +17,20 @@
   justify-content: space-between;
 }
 
+.boxDateandNail {
+  display: flex;
+  flex-direction: column;
+  margin: 8px 0;
+}
+
+.boxDatewtNoNail {
+  box-shadow: 0 3px 4px -4px #b3b3b3, 0 -3px 4px -4px #b3b3b3;
+}
+
+.boxCalendarNailDate {
+  margin: 10px 0 8px;
+}
+
 .boxDescript {
   width: 100%;
   text-align: center;
@@ -70,5 +84,10 @@
 
   .boxModuleSmall {
     justify-content: center;
+  }
+
+  .boxDateandNail {
+    width: 94.24vw;
+    max-width: 390px;
   }
 }

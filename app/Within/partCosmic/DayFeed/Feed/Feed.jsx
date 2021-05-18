@@ -93,7 +93,7 @@ class Feed extends React.Component {
             key={"key_NodeFeed_new_"+index}
             className={classnames(styles.boxModuleItem)}>
               <div
-                className={classnames(stylesNail.boxNail, stylesNail.custFocusNailWide)}>
+                className={classnames(stylesNail.boxNail)}>
                 <NailFeedwtNodes
                   {...this.props}
                   unitId={unitId}
