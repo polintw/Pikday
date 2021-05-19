@@ -71,7 +71,7 @@ class Sign extends React.Component {
                     'fontTitleSmall',
                     'colorDescripBlack'
                   )}>
-                  <span>{this.props.i18nUIString.catalog["Cornerth_inc"]}</span>
+                  <span>{this.props.i18nUIString.catalog["text_Inc"]}</span>
                   <span>{this.props.i18nUIString.catalog["AllRights"]}</span>
                 </div>
               </div>

@@ -18,6 +18,9 @@
 .btnBorderWide {
   border: solid 2px #b8b8b8;
 }
+.btnBorderWideNoSpace {
+  border: solid 2px #d8d8d8;
+}
 
 .comMouseEnter {
   border: solid 2px transparent;

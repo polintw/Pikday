@@ -54,8 +54,12 @@ class BtnUploadDaily extends React.Component {
         <div
           className={classnames(
             "smallDisplayNone",
-            styles.comBtnUploadDaily, styles.btnBorderWide,
-            {[styles.comMouseEnterWideScreen]: (this.state.onCreateWideScreen && this.state.spaceRemain)}
+            styles.comBtnUploadDaily,
+            {
+              [styles.comMouseEnterWideScreen]: (this.state.onCreateWideScreen && this.state.spaceRemain),
+              [styles.btnBorderWide]: this.state.spaceRemain,
+              [styles.btnBorderWideNoSpace]: !this.state.spaceRemain
+            }
           )}
           onMouseEnter={this._handleEnter_UploadWideScreen}
           onMouseLeave={this._handleLeave_UploadWideScreen}>

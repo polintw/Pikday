@@ -150,6 +150,7 @@ class NavOptions extends React.Component {
       <div
         className={classnames(styles.comNavOption)}>
         <div
+          className={classnames("smallDisplayBox")}
           style={{width: '100%', padding: "0 1.38vw", boxSizing: 'border-box'}}>
           {this._render_NavSmallScreen()}
         </div>

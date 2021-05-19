@@ -143,6 +143,7 @@ const i18nUIString_EN = {
   "link_Fellows": 'Fellows',
   "link_Options_selfLink": "Shareds",
   "link_Options_public": "Public view",
+  "text_Inc": "Piksight. ",
   "AllRights": "All Rights Reserved.",
   "tab_Steps": 'Steps',
   "tab_Routes": 'Routes',

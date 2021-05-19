@@ -30,7 +30,7 @@ class SwitchClose extends React.Component {
   render(){
     return(
       <div
-        style={{display: 'inline-block', width: '20px'}}
+        style={{display: 'inline-block', width: '20px', cursor: "pointer"}}
         onClick={(event)=>{ event.stopPropagation(); event.preventDefault(); this.props._handle_Close();}}
         onTouchStart={this._handleEnter_Icon}
         onTouchEnd={this._handleLeave_Icon}
