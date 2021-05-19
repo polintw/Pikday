@@ -90,19 +90,13 @@ class NodesView extends React.Component {
       <div
         className={classnames(styles.comNodesView)}>
         <div
-          className={classnames(styles.boxNodesEditTitle, "fontSubtitle", "colorEditBlack")}>
+          className={classnames(styles.boxNodesEditTitle, "fontSubtitle", "colorEditBlack", "weightBold")}>
           {this.props.i18nUIString.catalog["guidingCreateShare_NodesView"]}
         </div>
         <div
           className={classnames(styles.boxForm)}>
 
-          <div className={classnames(styles.boxRow)}>
-            <div className={classnames(styles.boxRowTitle)}>
-              <span className={classnames('fontSubtitle_h5', 'colorEditBlack')}>
-                {this.props.i18nUIString.catalog["subTitle_CreateShare_AssignTypes"][2]}
-              </span>
-            </div>
-            <div className={classnames(styles.seperationRowVertiLine)}/>
+          <div className={classnames(styles.boxSearchRow)}>
             <div
               className={classnames(
                 {[styles.boxNodeSearch]: !this.state.freeSelection})}>

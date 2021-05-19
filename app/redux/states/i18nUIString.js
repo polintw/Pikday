@@ -185,12 +185,11 @@ const i18nUIString_EN = {
   "title_shareUpload_typewriter": ['S','h','a','r','e', '!'],
   "title_upload_daily": "Upload a pik",
   "title_upload_daily_noSpace": "You've uploaded your daily pics",
-  "guidingCreateShare_ImgGps": "GPS",
-  "guidingCreateShare_AssignGroup": "Assigned corners",
-  "guidingCreateShare_NodesView": "Choose at least one corner you'd like to link to by:",
+
+  "subtitle_Create_assignedNodes": "Nodes assigned",
+  "subtitle_Create_dateAssigned": "Today or yesterday: ",
+  "guidingCreateShare_NodesView": "Choose an area, city, or country related to you or your pik:",
   "guidingCreateShare_NodesView_selectHint": "No selection yet.",
-  "guidingCreateShare_outboundLinkView": "Input a url address if you want to show a link!",
-  "subTitle_CreateShare_AssignTypes": ["Your Homeland", "Your Residence", "or, search one"],
   "message_CreateShare_basicRequireWarn": "Make sure you've already upload 1 image and pick at least 1 corner to which you want to contribute.",
   "message_CreateShare_dailyAssigned": "Make sure you've already selected a day you desired by the buttons at the right-bottom corner.",
   "message_Unit_Editing_AssignNotAllowed": "We're sorry. Your contribution Can't be changed once released since it's linked either to the markup or location.", //Original:"the corner linked to could Not be changed after first release."

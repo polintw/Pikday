@@ -1,9 +1,7 @@
 import React from 'react';
 import { connect } from "react-redux";
 import classnames from 'classnames';
-import {
-  baseHorizonRatial
-} from '../../props.js';
+import styles from "./styles.module.css";
 
 class ImgLayerEditing extends React.Component {
   constructor(props){
@@ -18,16 +16,9 @@ class ImgLayerEditing extends React.Component {
   render(){
     return(
       <div
-        ref={this.Com_ImgLayer_box}
-        className={'boxAbsoluteFull'}>
+        ref={this.Com_ImgLayer_box}>
         <img
-          className={'boxImgPosition'}
-          style={{
-              maxWidth: '100%',
-              maxHeight: '100%',
-              right: baseHorizonRatial+'%',
-              transform: 'translate('+baseHorizonRatial+'%,-50%)'
-            }}
+          className={classnames('boxImgPosition', styles.boxImg)}
           ref={this.Com_ImgLayer_img}
           src={this.props.imgSrc}
           onLoad={this._set_imgSize}/>

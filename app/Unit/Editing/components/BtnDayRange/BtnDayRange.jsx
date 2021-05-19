@@ -101,6 +101,16 @@ class BtnDayRange extends React.Component {
                 ["colorGrey"]: (!chosenify && (this.state.onBtn != currentRangeString)), // the rest condition
               }
             )}>
+            {". "}
+          </span>
+          <span
+            className={classnames(
+              styles.spanListItem, "fontSubtitle_h5",
+              {
+                ['colorWhite']: (chosenify || (this.state.onBtn == currentRangeString) ), // chosen or mouse on
+                ["colorGrey"]: (!chosenify && (this.state.onBtn != currentRangeString)), // the rest condition
+              }
+            )}>
             {
               (i == 0) ? todayDate : yesterdayDate
             }

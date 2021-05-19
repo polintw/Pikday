@@ -194,14 +194,15 @@ class EditingPanel extends React.Component {
               className={classnames(styles.boxFrame)}>
               {this._render_importOrCover()}
             </div>
-            <div>
+            <div
+              className={classnames(styles.boxOptionsRow)}>
               <div
                 className={classnames(styles.boxNodesList)}>
                 <div
                   className={classnames(styles.boxSubtitle)}>
                   <span
                     className={classnames("fontContent", "colorEditLightBlack")}>
-                    {this.props.i18nUIString.catalog["guidingCreateShare_AssignGroup"]}
+                    {this.props.i18nUIString.catalog["subtitle_Create_assignedNodes"]}
                   </span>
 
                 </div>
@@ -219,10 +220,19 @@ class EditingPanel extends React.Component {
                 </div>
               </div>
               <div>
-                <BtnDayRange
-                  {...this.props}
-                  assignedDate={this.state.assignedDate}
-                  _set_assignedDate={this._set_assignedDate}/>
+                <div
+                  className={classnames(styles.boxSubtitle)}>
+                  <span
+                    className={classnames("fontContent", "colorEditLightBlack")}>
+                    {this.props.i18nUIString.catalog["subtitle_Create_assignedNodes"]}
+                  </span>
+                </div>
+                <div>
+                  <BtnDayRange
+                    {...this.props}
+                    assignedDate={this.state.assignedDate}
+                    _set_assignedDate={this._set_assignedDate}/>
+                </div>
               </div>
             </div>
           </div>

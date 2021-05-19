@@ -113,7 +113,7 @@ class CreateShare extends React.Component {
 
   _set_EditingClose_clear(){
     if(this.props.unitSubmitting) {this._set_warningDialog([{text: 'still submitting, please hold on.',style:{}}], 'warning');}
-    else this._set_confirmDialog([{text:'Your change will NOT be saved, do you still want to leave?',style:{}}], 'close'); //Original:'current input would not be saved after leaving, are you sure going to leave?'
+    else this._set_confirmDialog([{text:'Your change will NOT be saved.',style:{}}, {text: 'Are you sure you want to quit?', style:{display: 'block'}}], 'close'); //Original:'current input would not be saved after leaving, are you sure going to leave?'
   }
 
   _set_Submit(stateObj){
@@ -155,7 +155,7 @@ class CreateShare extends React.Component {
         self.setState(initState);
         //then second call this, perhaps unmount the component so need to be called after redux state reset
         //pass the res data which including id of unit
-        self.props._submit_Share_New(resObj.main);        
+        self.props._submit_Share_New(resObj.main);
       }, 1000);
     }).catch(function (thrown) {
       self.props._set_unitSubmitting(false);

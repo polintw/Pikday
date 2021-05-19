@@ -26,6 +26,7 @@ class Wrapper extends React.Component {
       lastVisit: false,
     };
     this.axiosSource = axios.CancelToken.source();
+    this.wrapperAround = React.createRef();
     this._createdRespond = this._createdRespond.bind(this);
     this._construct_UnitInit = this._construct_UnitInit.bind(this);
   }
@@ -40,7 +41,20 @@ class Wrapper extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot){
-
+    let urlParams = new URLSearchParams(this.props.location.search); //we need value in URL query
+    let prevUrlParmas = new URLSearchParams(prevProps.location.search);
+    if(
+      urlParams.has('creating') &&
+      !prevUrlParmas.has("creating")
+    ){
+      this.wrapperAround.current.style.display='none';
+    }
+    else if(
+      !urlParams.has('creating') &&
+      prevUrlParmas.has("creating")
+    ){
+      this.wrapperAround.current.style={};
+    };
   }
 
   componentDidMount(){
@@ -82,6 +96,7 @@ class Wrapper extends React.Component {
             this._render_Newly()
           ):*/(
             <div
+              ref={this.wrapperAround}
               className={classnames(styles.comAroundWrapper)}>
               <div
                 className={classnames(

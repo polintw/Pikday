@@ -30,6 +30,7 @@
   box-sizing: border-box;
   margin-bottom: 2.54vh;
   border-radius: 4px;
+  box-shadow: 0 0 10px 0 rgb(0 0 0 / 30%);
   overflow: hidden;
 }
 
