@@ -16,7 +16,7 @@ const _DB_units = require('../../db/models/index').units;
 const _DB_attribution = require('../../db/models/index').attribution;
 
 function _handle_GET_unitsByList(req, res){
-  const userId = req.extra.tokenUserId;
+  const userId = req.extra.tokenify ? req.extra.tokenUserId: '';
 
   new Promise((resolve, reject)=>{
     //in this api, units list was passed from client,

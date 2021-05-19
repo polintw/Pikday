@@ -51,8 +51,7 @@ class WithinSign extends React.Component {
             //this.props.location.pathname=="/signup" ) ? // only Sign in /up was at the top
             this.props.location.pathname.includes('/resend') ||
             this.props.location.pathname.includes('/confirm') ||
-            this.props.location.pathname.includes('/signup/success') ||
-            this.props.location.search.includes('invitation')
+            this.props.location.pathname.includes('/signup/success')
             ) ?
             {flexDirection: 'column-reverse'}:
             {}}>

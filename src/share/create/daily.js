@@ -124,6 +124,7 @@ async function shareHandler_POST(req, res){
       'id_primer': null,
       'author_identity': authorIdentityObj.identity,
       'used_authorId': ("usedId" in authorIdentityObj) ? authorIdentityObj.usedId : null,
+      'source': 'daily_pikonly'
     };
     /*
     three things related to new unit id, but not too complicated completed in this block
