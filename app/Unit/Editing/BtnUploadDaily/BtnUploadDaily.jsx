@@ -114,8 +114,9 @@ class BtnUploadDaily extends React.Component {
                     {
                       ['colorWhite']: (this.state.spaceRemain && this.state.onCreate),
                       ['colorGrey']: (this.state.spaceRemain && !this.state.onCreate),
-                      ['colorWhiteGrey']: !this.state.spaceRemain,
                       ['fontNodesEqual']: this.state.spaceRemain,
+                      ['weightBold']: this.state.spaceRemain,
+                      ['colorWhiteGrey']: !this.state.spaceRemain,
                       ['fontSubtitle']: !this.state.spaceRemain
                     }
                   )}>

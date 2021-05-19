@@ -35,7 +35,7 @@
 }
 
 .boxIndexTitle {
-  margin-bottom: 3rem;
+  margin-bottom: 5rem;
   text-align: center;
 }
 
@@ -50,11 +50,11 @@
   }
 
   .boxNavFeed {
-    padding: 12vh 0 0;
+    padding: 8vh 0 0;
   }
 
   .boxFooter {
-    margin-bottom: 18vh;    
+    margin-bottom: 18vh;
   }
 }
 
@@ -69,7 +69,7 @@
   }
 
   .boxNavFeed {
-    padding: 8vh 0 0;
+    padding: 5vh 0 0;
   }
 
 }

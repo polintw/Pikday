@@ -46,11 +46,12 @@ class NavFeed extends React.Component {
             style={{ padding: '0 8px' }}>
             <span
               className={classnames(
-                "fontSubtitle", "weightBold",
+                "fontSubtitle",
                 {
                   [styles.spanLinkMouse]: (this.state.onNavLink == 'calendar'),
                   ["colorLightGrey"]: (this.state.onNavLink != 'calendar'),
                   ["colorEditBlack"]: (this.state.onNavLink == 'calendar'),
+                  ["weightBold"]: (this.state.onNavLink == 'calendar')
                 }
               )}>
               {this.props.i18nUIString.catalog["title_Index_NavFeed_"][0] }
@@ -67,11 +68,12 @@ class NavFeed extends React.Component {
             style={{ padding: '0 8px' }}>
             <span
               className={classnames(
-                "fontSubtitle", "weightBold",
+                "fontSubtitle",
                 {
                   [styles.spanLinkMouse]: (this.state.onNavLink == 'today'),
                   ["colorLightGrey"]: (this.state.onNavLink != 'today'),
                   ["colorEditBlack"]: (this.state.onNavLink == 'today'),
+                  ["weightBold"]: (this.state.onNavLink == 'today')
                 }
               )}>
               {this.props.i18nUIString.catalog["title_Index_NavFeed_"][1] }
@@ -88,11 +90,12 @@ class NavFeed extends React.Component {
             style={{ padding: '0 8px' }}>
             <span
               className={classnames(
-                "fontSubtitle", "weightBold",
+                "fontSubtitle",
                 {
                   [styles.spanLinkMouse]: (this.state.onNavLink == 'yesterday'),
                   ["colorLightGrey"]: (this.state.onNavLink != 'yesterday'),
                   ["colorEditBlack"]: (this.state.onNavLink == 'yesterday'),
+                  ["weightBold"]: (this.state.onNavLink == 'yesterday')
                 }
               )}>
               {this.props.i18nUIString.catalog["title_Index_NavFeed_"][2] }

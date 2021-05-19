@@ -178,10 +178,10 @@ class UnitScreen extends React.Component {
             <div
               id={"unitFrame"}
               ref={this.boxUnitFrame}
-              className={classnames(styles.boxUnitFrame)}>
+              className={classnames(styles.boxUnitFrame)}
+              onClick={this._close_modal_Unit}>
               <div
-                className={classnames(styles.boxUnitContent)}
-                onClick={this._close_modal_Unit}>
+                className={classnames(styles.boxUnitContent)}>
                 <Theater
                   {...this.props}
                   _reset_UnitMount={this._reset_UnitMount}

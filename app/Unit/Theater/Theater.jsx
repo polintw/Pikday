@@ -9,6 +9,7 @@ import classnames from 'classnames';
 import styles from './styles.module.css';
 import Layers from './Layers.jsx';
 import LayersSmall from './LayersSmall.jsx';
+import SwitchClose from './components/SwitchClose.jsx';
 
 class Theater extends React.Component {
   constructor(props){
@@ -57,7 +58,11 @@ class Theater extends React.Component {
         <div
           className={classnames(styles.boxLayerSwitch)}
           onClick={(event) => { if(cssVW > 860 ) event.stopPropagation(); }}>
-          {'close'}
+          <div
+            className={classnames(styles.boxSwitchClose)}>
+            <SwitchClose
+              _handle_Close={this.props._close_theaterHeigher}/>
+          </div>
         </div>
       </div>
     )
