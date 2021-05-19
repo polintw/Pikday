@@ -18,7 +18,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 2rem;
+  padding-top: 28px;
   margin-bottom: 36vh;
 }
 
@@ -30,6 +30,6 @@
 
 
   .boxFooter {
-    margin-bottom: 24vh;
+    margin-bottom: 19vh;
   }
 }

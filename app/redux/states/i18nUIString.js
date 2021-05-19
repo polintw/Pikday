@@ -210,9 +210,7 @@ const i18nUIString_EN = {
   "guiding_FeedAssigned_noneAssigned_norContri": "It could be you contributing somthing to your corners!", //Original:"It could be you contributing somthing for your corners!"
 
   "title_AroundIndex_": "What's the scene to your day today?",
-  "descript_AroundIndex_footer": "You've reached the edge of Cornerth.!",
-  "guiding_AroundIndex_Share": "A new finding?", //Original:"how's your corners"
-  'descript_AroundIndex_footer_BelongHint': "Start browsing by setting your current stay or homeland!",
+  "descript_AroundIndex_footer": "You've reached the edge of Piksight.!",
 
   "title_DayFeed_dayrange": {
     "today" : "Today",

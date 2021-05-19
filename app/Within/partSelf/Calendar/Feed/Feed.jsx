@@ -122,6 +122,9 @@ class Feed extends React.Component {
                 styles.boxDateandNail, styles.boxDatewtNoNail)}
               style={{margin: '12px 0 8px'}}>
               <div
+                className={classnames(
+                  styles.boxCalendarNoNailBack)}/>
+              <div
                 className={classnames(styles.boxCalendarNailDate)}>
                 <span
                   className={classnames("fontContent", "weightBold", "colorLightGrey")}>

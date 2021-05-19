@@ -31,9 +31,9 @@ class NavWithin extends React.Component {
         className={classnames(styles.comNavWithin)}>
         {this.props.logotop}
         <div
-          className={classnames(styles.boxLogo)}
-          onClick={(e)=>{e.preventDefault(); e.stopPropagation(); this.props._refer_to('', '/')}}
-          style={{display: 'none'} /* No logo now, so se hide the box first.*/ }>
+          className={classnames(
+            styles.boxLogo, "smallDisplayNone") /* No logo now, but keep it in the big screen for flex-box.*/ }
+          onClick={(e)=>{e.preventDefault(); e.stopPropagation(); this.props._refer_to('', '/')}}>
 
         </div>
         <div

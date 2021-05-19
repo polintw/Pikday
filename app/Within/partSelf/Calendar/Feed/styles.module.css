@@ -20,11 +20,21 @@
 .boxDateandNail {
   display: flex;
   flex-direction: column;
+  position: relative;
   margin: 8px 0;
 }
 
 .boxDatewtNoNail {
-  box-shadow: 0 3px 4px -4px #b3b3b3, 0 -3px 4px -4px #b3b3b3;
+  overflow: hidden;
+}
+
+.boxCalendarNoNailBack {
+  width: 67%;
+  height: 100%;
+  position: absolute;
+  top: -4px;
+  left: 0;
+  box-shadow: 0 3px 4px -4px #b3b3b3;
 }
 
 .boxCalendarNailDate {
@@ -75,6 +85,14 @@
 
 .spanBtnInvite {
   white-space: nowrap;
+}
+
+@media screen and (min-width:860px) {
+  .boxDatewtNoNail {
+    width: 342px;
+    min-width: 30.8vw;
+  }
+
 }
 
 @media screen and (max-width:860px) {
