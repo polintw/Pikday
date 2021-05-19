@@ -41,7 +41,7 @@ class Wrapper extends React.Component {
         </div>
         <div
           className={classnames(
-            styles.boxContentWidth, styles.boxFrame,
+            styles.boxContentImgWidth, styles.boxFrame,
             {[styles.boxFrameAuthor]: (this.props.unitCurrent.identity == "author")}
             )}>
           <ImgsFrame

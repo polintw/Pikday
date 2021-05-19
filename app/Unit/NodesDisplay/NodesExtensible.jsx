@@ -40,7 +40,7 @@ class NodesExtensible extends React.Component {
       // insert "|" between
       if(i != 0) nounsArr.push(
         <span
-          className={classnames("colorEditBlack", "fontTitle")}
+          className={classnames("colorWhite", "fontTitle")}
           style={{display: 'flex',alignItems:'center',marginRight: '1rem', cursor: 'default'}}>{","}</span>
       ); //end of "if"
       let nodeId = self.props.nouns.list[i];
@@ -55,7 +55,7 @@ class NodesExtensible extends React.Component {
           onMouseLeave={this._handleLeave_node}>
           <span
             className={classnames(
-              styles.spanNodeItem, "colorEditLightBlack",
+              styles.spanNodeItem, "colorWhite",
               {
                 ["fontTitle"]: (cssVW > 860),
                 ["fontNodesEqual"]: (cssVW <=860),

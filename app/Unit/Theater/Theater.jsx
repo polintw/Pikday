@@ -57,7 +57,7 @@ class Theater extends React.Component {
         <div
           className={classnames(styles.boxLayerSwitch)}
           onClick={(event) => { if(cssVW > 860 ) event.stopPropagation(); }}>
-
+          {'close'}
         </div>
       </div>
     )

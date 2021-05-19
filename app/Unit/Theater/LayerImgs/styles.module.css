@@ -12,6 +12,10 @@
   width: 90%;
 }
 
+.boxContentImgWidth {
+  width: 90%; /* as boxContentWidth */
+}
+
 .boxTitle {
   display: flex;
   justify-content: space-between;
@@ -114,7 +118,6 @@
   position: relative;
   box-sizing: border-box;
   border-radius: 4px;
-  background-color: rgba(217, 232, 255, 0.15);
 }
 
 .boxImgLayer {
@@ -140,7 +143,16 @@
     display: none;
   }
 
+  .boxContentWidth {
+    width: 94.24%; /* width to Wrapper/Feed on small screen */
+  }
+
+  .boxContentImgWidth {
+    width: 100%;
+  }
+
   .boxFrame {
+    height: unset;
     overflow: visible;
   }
 
@@ -175,13 +187,12 @@
     align-items: center;
     width: 100%;
     height: unset;
-    min-height: 60vh;
     position: relative;
     top: unset;
     left: unset;
   }
 
   .boxImg {
-    max-height: 48vh;
+    max-height: unset;
   }
 }
