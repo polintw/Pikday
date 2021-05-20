@@ -224,7 +224,7 @@ class EditingPanel extends React.Component {
                   className={classnames(styles.boxSubtitle)}>
                   <span
                     className={classnames("fontContent", "colorEditLightBlack")}>
-                    {this.props.i18nUIString.catalog["subtitle_Create_assignedNodes"]}
+                    {this.props.i18nUIString.catalog["subtitle_Create_dateAssigned"]}
                   </span>
                 </div>
                 <div>

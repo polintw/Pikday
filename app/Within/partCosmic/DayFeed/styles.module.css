@@ -1,17 +1,18 @@
-.comFocus {
+.comWrapperDayFeed {
   display: flex;
   flex-direction: column;
   position: relative;
   box-sizing: border-box;
-  padding-top: 2.8vh;
 }
 
 .boxRow {
   position: relative;
+  margin: 12px 0;
 }
 
-.boxTitle {
-  margin: 8px 0;
+.boxTopTitle {
+  position: relative;
+  margin: 6.3vh 0 2.5vh;
 }
 
 .boxDecoBottom {
@@ -24,12 +25,5 @@
 }
 
 @media screen and (max-width:860px) {
-  .smallDisplayBox {
-    display: block;
-  }
-
-  .smallDisplayNone {
-    display: none;
-  }
 
 }

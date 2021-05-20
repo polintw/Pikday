@@ -68,8 +68,7 @@ class Feed extends React.Component {
       return (
         <div>
           <span
-            className={classnames("fontTitleSmall", "colorLightGrey")}
-            style={{margin: "8px 0", display: 'inline-block' }}>
+            className={classnames(styles.spanFooterHint, "fontTitleSmall", "colorLightGrey")}>
             {this.props.i18nUIString.catalog['descript_AroundIndex_footer']}
           </span>
         </div>
@@ -93,7 +92,8 @@ class Feed extends React.Component {
             key={"key_NodeFeed_new_"+index}
             className={classnames(styles.boxModuleItem)}>
               <div
-                className={classnames(stylesNail.boxNail)}>
+                className={classnames(stylesNail.boxNail)}
+                style={{margin: '0 0 8px'}}>
                 <NailFeedwtNodes
                   {...this.props}
                   unitId={unitId}
@@ -110,11 +110,7 @@ class Feed extends React.Component {
     this.state.feedList.forEach((unitGroup, index)=>{
       groupsDOM.push(
         <div
-          key={"key_PathProject_FeedGroup"+index}
-          className={classnames(
-            styles.boxModule,
-            styles.boxModuleSmall,
-          )}>
+          key={"key_PathProject_FeedGroup"+index}>
           {_nailsGroup(unitGroup, index)}
         </div>
       );
@@ -129,7 +125,12 @@ class Feed extends React.Component {
         <div>
           {
             (this.state.feedList.length > 0) &&
-            <div>
+            <div
+              className={classnames(
+                styles.boxModule,
+                styles.boxModuleSmall,
+                styles.boxRow
+              )}>
               {this._render_FeedNails()}
             </div>
           }
@@ -142,6 +143,7 @@ class Feed extends React.Component {
               className={classnames(
                 styles.boxModule,
                 styles.boxModuleSmall,
+                styles.boxRow
               )}>
               <FeedEmpty
                 {...this.props}/>
@@ -150,7 +152,7 @@ class Feed extends React.Component {
 
           <div ref={this.refScroll}/>
           <div
-            className={classnames(styles.boxFooter)}>
+            className={classnames(styles.boxRow, styles.boxFooter)}>
             {this._render_FooterHint()}
           </div>
         </div>

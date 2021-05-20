@@ -32,6 +32,7 @@ class Feed extends React.Component {
     this._set_feedUnits = this._set_feedUnits.bind(this);
     this._check_Position = this._check_Position.bind(this);
     this._render_FeedNails = this._render_FeedNails.bind(this);
+    this._render_FooterHint = this._render_FooterHint.bind(this);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot){
@@ -162,6 +163,23 @@ class Feed extends React.Component {
     return groupsDOM;
   }
 
+  _render_FooterHint(){
+    // by feed length, we gave users some message about the thing they could do
+    if (this.state.feedList.length> 0){
+      return (
+        <div>
+          <span
+            className={classnames(styles.spanFooterHint, "fontTitleSmall", "colorLightGrey")}>
+            {this.props.i18nUIString.catalog['descript_AroundIndex_footer']}
+          </span>
+        </div>
+      );
+    }
+    else{ // most reason to:no feed at all
+      return null;
+    }
+  }
+
   render(){
     return (
       <div className={styles.comSharedsFeed}>
@@ -171,6 +189,7 @@ class Feed extends React.Component {
             className={classnames(
               styles.boxModule,
               styles.boxModuleSmall,
+              styles.boxRow
             )}>
             {this._render_FeedNails()}
           </div>
@@ -184,6 +203,7 @@ class Feed extends React.Component {
             className={classnames(
               styles.boxModule,
               styles.boxModuleSmall,
+              styles.boxRow
             )}>
             <FeedEmpty
               {...this.props}/>
@@ -191,6 +211,10 @@ class Feed extends React.Component {
         }
 
         <div ref={this.refScroll}/>
+        <div
+          className={classnames(styles.boxRow, styles.boxFooter)}>
+          {this._render_FooterHint()}
+        </div>
       </div>
     )
   }

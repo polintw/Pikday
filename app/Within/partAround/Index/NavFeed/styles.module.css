@@ -34,15 +34,6 @@
   cursor: pointer;
 }
 
-.spanBaseNode {
-  display: inline-block;
-  border-bottom: solid 0.75px transparent;
-}
-
-.spanBaseNodeMouse {
-  border-bottom: solid 0.75px #545454;
-}
-
 @media screen and (max-width:860px) {
   .boxGatheringBase  {
     justify-content: space-between;

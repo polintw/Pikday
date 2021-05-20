@@ -189,7 +189,7 @@ const i18nUIString_EN = {
 
   "subtitle_Create_assignedNodes": "Nodes assigned",
   "subtitle_Create_dateAssigned": "Today or yesterday: ",
-  "guidingCreateShare_NodesView": "Choose an area, city, or country related to you or your pik:",
+  "guidingCreateShare_NodesView": "Choose an area, city, or country refer to you or your pik:",
   "guidingCreateShare_NodesView_selectHint": "No selection yet.",
   "message_CreateShare_basicRequireWarn": "Make sure you've already upload 1 image and pick at least 1 corner to which you want to contribute.",
   "message_CreateShare_dailyAssigned": "Make sure you've already selected a day you desired by the buttons at the right-bottom corner.",
@@ -219,11 +219,10 @@ const i18nUIString_EN = {
 
   "title_NavAtNode_": "Accumulations",
   "subtitle_NavAtNode_Num": ['stay', "from"],
-  "guiding_AtNode_noAccumulated": "Waiting for the first contribution!",
+  "guiding_AtNode_noAccumulated": "Waiting for the first share to the day.",
   "guiding_noAccumulated_waitAuthor": "Good content is always worth waiting!",
-  "guiding_noAccumulated_shareInvitation": "Create your first Shared!",
-  "guiding_noAccumulated_pathShareInvitation": "Start your theme by create a Shared!",
-  "guiding_noAccumulated_selfPageExplain": ["Here you're seeing the public page displaying your publications.", "Here is your personal page with full control!" ],
+  "guiding_noAccumulated_shareInvitation": "Start your Calendar by upload the scene to your day today!",
+  "guiding_noAccumulated_selfPageExplain": "Here you're seeing the page displaying your daily records.",
   "guiding_noAccumulated_nodeFilter": "Corners used would show up here after first Shared!",
 
   "hint_PathProject_FilterNode": "Filter accumulations by nodes beneath",

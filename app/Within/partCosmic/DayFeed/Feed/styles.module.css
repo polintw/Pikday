@@ -4,7 +4,12 @@
 
 .comFeedEmpty {
   width: 100%;
-  padding-top: 6rem;
+  padding-top: 10.1vh;
+}
+
+.boxRow {
+  position: relative;
+  margin: 12px 0;
 }
 
 .boxTitle {
@@ -19,37 +24,9 @@
 
 .boxModuleItem {
   display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.boxFocusNailSubtitle {
-  display: flex;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  height: 100%; 
-  padding-right: 2.76vw;
-}
-
-.boxSubtitleFlex {
-  display: flex;
   flex-direction: column;
-  align-items: center;
-}
-
-.boxFocusNailSubtitleUp {
-  margin-bottom: 1rem;
-  text-align: center;
-}
-
-.boxFocusNailSubtitleLow {
-  text-align: center;
-}
-
-.boxDescript {
-  width: 100%;
-  text-align: center;
+  position: relative;
+  margin: 8px 0;
 }
 
 .boxEmptyDescript {
@@ -62,13 +39,8 @@
   flex-direction: column;
   align-items: center;
   position: relative;
-  padding-top: 4.4rem;
-  margin-bottom: 35.6vh;
-}
-
-.spanFocusSubtitleConnect {
-  display: inline-block;
-  margin-left: 1rem;
+  padding-top: 28px;
+  margin-bottom: 36vh;
 }
 
 .spanBaseNode {
@@ -80,38 +52,23 @@
   border-bottom: solid 0.75px #545454;
 }
 
-@media screen and (max-width:860px) {
-  .comPathProjectFeed {
-    flex-direction: column;
-  }
+.spanFooterHint {
+  margin: 8px 0;
+}
 
+@media screen and (max-width:860px) {
   .boxModuleSmall {
     justify-content: center;
   }
 
   .boxModuleItem {
-    flex-direction: column;
-    align-items: flex-start;
+    width: 94.24vw;
+    max-width: 390px;
   }
 
-  .boxFocusNailSubtitle {
-    justify-content: flex-start;
-    height: unset;
-    margin: 8px 0;
-    padding-left: 1.38vw;
+  .boxFooter {
+    margin-bottom: 19vh;
+    padding-top: 40px;
   }
 
-  .boxSmallNoFlex {
-    display: unset;
-    align-items: unset;
-  }
-
-  .boxFocusNailSubtitleUp {
-    margin-bottom: unset;
-    text-align: unset;
-  }
-
-  .boxFocusNailSubtitleLow {
-    text-align: unset;
-  }
 }

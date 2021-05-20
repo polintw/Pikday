@@ -19,7 +19,11 @@ class NavTitle extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot){
-
+    if(this.props.location.pathname != prevProps.location.pathname){ // make sure the btn return default when toggle between /yesterday & /today.
+      this.setState({
+        onDaySwitch: false
+      });
+    }
   }
 
   componentDidMount() {
@@ -39,28 +43,27 @@ class NavTitle extends React.Component {
 
     return(
       <div
-        className={classnames(
-          styles.boxTitle, styles.comNavTitle)}>
+        className={classnames(styles.comNavTitle)}>
         <div>
           <span
             className={classnames(
-              "fontTitle", "lineHeight15", "weightBold", "colorEditBlack")}>
+              "fontTitle", "lineHeight15", "weightBold", "colorSignBlack")}>
             { this.props.i18nUIString.catalog["title_DayFeed_dayrange"][this.props.dayrange] }
           </span>
-          <span>
+          <span
+            className={classnames(
+              styles.spanAlias,
+              "fontSubtitle_h5", "colorEditBlack")}>
             {"to people"}
           </span>
         </div>
-        <div>
-          <div>
-            <span
-              className={classnames(
-                "fontSubtitle_h5", "colorEditBlack")}>
-                {"on "}
-              </span>
-              <DateConverter
-                styles={{color: '#545454'}}
-                datetime={showedTime}/>
+        <div
+          className={classnames(styles.boxRowSubtitle)}>
+          <div
+            className={classnames(styles.boxSubtitleDate)}>
+            <DateConverter
+              styles={{fontSize: '1.6rem', lineHeight: '1.5', color: '#f3b55a'}}
+              datetime={showedTime}/>
           </div>
           <div>
             <Link
@@ -70,13 +73,18 @@ class NavTitle extends React.Component {
               onTouchEnd={this._handleLeave_daySwitch}
               onMouseEnter={this._handleEnter_daySwitch}
               onMouseLeave={this._handleLeave_daySwitch}
-              style={{ padding: '0 5px' }}>
+              style={{ position: 'relative', padding: '0 12px' }}>
+              {
+                this.state.onDaySwitch &&
+                <div
+                  className={classnames(styles.boxLinkSwitchMouseOn)}/>
+              }
               <span
                 className={classnames(
-                  "fontSubtitle_h5", "weightBold", styles.spanDaySwitch,
+                  "fontSubtitle_h5", styles.spanDaySwitch,
                   {
                     [styles.spanDaySwitchMouseon]: (this.state.onDaySwitch),
-                    ["colorWhiteGrey"]: !this.state.onDaySwitch,
+                    ["colorLightGrey"]: !this.state.onDaySwitch,
                     ["colorEditBlack"]: this.state.onDaySwitch
                   }
                 )}>
@@ -94,8 +102,7 @@ class NavTitle extends React.Component {
   }
 
   _handleEnter_daySwitch(e){
-    let linkTo = e.currentTarget.getAttribute('topath');
-    this.setState({onDaySwitch: linkTo});
+    this.setState({onDaySwitch: true});
   }
 
   _handleLeave_daySwitch(e){

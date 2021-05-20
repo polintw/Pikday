@@ -43,51 +43,57 @@ class NailFeedwtNodes extends React.Component {
       <div
         className={classnames(styles.boxNodes)}>
         <span
-          className={classnames( 'colorEditLightBlack', 'fontSubtitle_h5')}>
+          className={classnames( 'colorEditBlack', 'fontSubtitle_h5')}>
           {this.props.i18nUIString.catalog['text_at']}
         </span>
         <div
           className={classnames(styles.boxTitlePin)}>
           <div
-            style={{width: "11px", height: "16px"}}>
+            style={{ height: "16px"}}>
             <SvgPin
+              customStyles={{fillColor: '#ff8168'}}
               mouseOn={this.state.onNodeLink}/>
           </div>
         </div>
-        <Link
-          to={"/cosmic/explore/node?nodeid=" + this.props.unitBasic.nounsList[0]}
-          className={classnames('plainLinkButton')}
-          eventkey={"mouseEvKey_node_" + this.props.unitId + "_" + this.props.unitBasic.nounsList[0]}>
-          {(this.props.unitBasic.nounsList[0] in this.props.nounsBasic) &&
-            <span
-              className={classnames(
-                "fontNodesEqual", "weightBold", "colorEditBlack",
-                styles.spanBaseNode,
-                { [styles.spanBaseNodeMouse]: this.state.onNodeLink }
-              )}>
-              {this.props.nounsBasic[this.props.unitBasic.nounsList[0]].name}</span>
-          }
-        </Link>
-        <span
-          className={classnames("fontNodesEqual", "colorEditBlack", "weightBold")}>
-          {this.props.unitBasic.nounsList[0] in this.props.nounsBasic ? (
-            (this.props.nounsBasic[this.props.unitBasic.nounsList[0]].prefix.length > 0) &&
-            (", ")) : (null)
-          }
-        </span>
-        <br/>
-        {
-          (this.props.unitBasic.nounsList[0] in this.props.nounsBasic &&
-            this.props.nounsBasic[this.props.unitBasic.nounsList[0]].prefix.length > 0) &&
-          <div
+        <div>
+          <Link
+            to={"/cosmic/explore/node?nodeid=" + this.props.unitBasic.nounsList[0]}
+            nodeid={this.props.unitBasic.nounsList[0]}
             className={classnames('plainLinkButton')}
-            style={{display: 'inline-block'}}
-            eventkey={"mouseEvKey_node_" + this.props.unitId + "_prefix_" + this.props.nounsBasic[this.props.unitBasic.nounsList[0]].parentId}>
+            onTouchStart={this._handleEnter_nailNode}
+            onTouchEnd={this._handleLeave_nailNode}
+            onMouseEnter={this._handleEnter_nailNode}
+            onMouseLeave={this._handleLeave_nailNode}>
+            {(this.props.unitBasic.nounsList[0] in this.props.nounsBasic) &&
               <span
-                className={classnames("fontSubtitle", "weightBold", "colorEditBlack")}>
-                {this.props.nounsBasic[this.props.unitBasic.nounsList[0]].prefix}</span>
-          </div>
-        }
+                className={classnames(
+                  "fontNodesEqual", "weightBold", "colorEditBlack",
+                  styles.spanBaseNode,
+                  { [styles.spanBaseNodeMouse]: this.state.onNodeLink == this.props.unitBasic.nounsList[0] }
+                )}>
+                {this.props.nounsBasic[this.props.unitBasic.nounsList[0]].name}</span>
+            }
+          </Link>
+          <span
+            className={classnames("fontNodesEqual", "colorEditBlack", "weightBold")}>
+            {this.props.unitBasic.nounsList[0] in this.props.nounsBasic ? (
+              (this.props.nounsBasic[this.props.unitBasic.nounsList[0]].prefix.length > 0) &&
+              (", ")) : (null)
+            }
+          </span>
+          <br/>
+          {
+            (this.props.unitBasic.nounsList[0] in this.props.nounsBasic &&
+              this.props.nounsBasic[this.props.unitBasic.nounsList[0]].prefix.length > 0) &&
+              <div
+                className={classnames('plainLinkButton')}
+                style={{display: 'inline-block'}}>
+                <span
+                  className={classnames("fontSubtitle", "weightBold", "colorEditBlack")}>
+                  {this.props.nounsBasic[this.props.unitBasic.nounsList[0]].prefix}</span>
+              </div>
+            }
+        </div>
       </div>
     );
   }
@@ -110,6 +116,8 @@ class NailFeedwtNodes extends React.Component {
           {[styles.frameOnMouse]: this.state.onFrame}
         )}
         onClick={(e)=>{if( !this.props.linkPath ){e.preventDefault();};/*a optional control, mean the parent want to take the refer control*/ }}
+        onTouchStart={this._handleEnter_nailFrame}
+        onTouchEnd={this._handleLeave_nailFrame}
         onMouseEnter={this._handleEnter_nailFrame}
         onMouseLeave={this._handleLeave_nailFrame}>
         {this._render_ContentBox()}
@@ -120,7 +128,7 @@ class NailFeedwtNodes extends React.Component {
   _render_ContentBox(){
     let contentBoxDOM = [];
     contentBoxDOM.push(contentBoxImg(this));
-    contentBoxDOM.push(contentBoxMarks(this));
+    contentBoxDOM.push(contentRowBottom(this));
     return contentBoxDOM;
   }
 
@@ -133,7 +141,8 @@ class NailFeedwtNodes extends React.Component {
   }
 
   _handleEnter_nailNode(e){
-    this.setState({onNodeLink: true})
+    let nodeID = e.currentTarget.getAttribute('nodeid');
+    this.setState({onNodeLink: nodeID})
   }
 
   _handleLeave_nailNode(e){
@@ -152,8 +161,10 @@ const contentBoxImg = (self)=>{
   return (
     <div
       key={"key_NailBoxImg_"+self.props.unitId}
-      className={classnames(styles.boxContent)}
-      style={{minWidth: "30.8vw"}}>
+      className={classnames(
+        styles.boxContent,
+        {[styles.boxContentMouseOn]: self.state.onFrame}
+      )}>
       <Link
         ref={self.nailImgBox}
         to={{
@@ -170,13 +181,12 @@ const contentBoxImg = (self)=>{
     </div>
   )
 };
-const contentBoxMarks = (self)=>{
+const contentRowBottom = (self)=>{
   return (
     <div
       key={"key_NailBoxMarks_"+self.props.unitId}
-      className={classnames(styles.boxContentMobile)}>
-      <div
-        className={classnames(styles.boxTitle)}>
+      className={classnames(styles.boxRowBottom)}>
+      <div>
         {self._render_nails_nouns()}
       </div>
     </div>

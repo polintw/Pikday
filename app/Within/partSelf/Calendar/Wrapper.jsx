@@ -18,9 +18,7 @@ class Wrapper extends React.Component {
       savedPosition: null
     };
     this.wrapperWithinSelf = React.createRef();
-    this.axiosSource = axios.CancelToken.source();
     this._construct_UnitInit = this._construct_UnitInit.bind(this);
-    this._render_FooterHint = this._render_FooterHint.bind(this);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot){
@@ -58,14 +56,6 @@ class Wrapper extends React.Component {
 
   }
 
-  _render_FooterHint(){
-    return (
-      <span
-        className={classnames(styles.spanFooterHint, "fontTitleSmall", "colorLightGrey")}>
-        {this.props.i18nUIString.catalog['descript_AroundIndex_footer']}</span>
-    );
-  }
-
   render(){
     return(
       <div>
@@ -76,15 +66,8 @@ class Wrapper extends React.Component {
             className={classnames(styles.boxTopTitle)}>
             <NavTitle {...this.props}/>
           </div>
-          <div
-            className={classnames(styles.boxRow)}>
+          <div>
             <Feed {...this.props}/>
-          </div>
-          <div
-            className={classnames(styles.boxRow, styles.boxFooter)}>
-            {
-              this._render_FooterHint()
-            }
           </div>
         </div>
 

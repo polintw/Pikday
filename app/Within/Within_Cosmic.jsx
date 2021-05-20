@@ -24,7 +24,8 @@ class WithinCosmic extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      switchTo: null
+      switchTo: null,
+      navWithinNotDisSmall: false
     };
     this._refer_von_cosmic = this._refer_von_cosmic.bind(this);
     this.style={
@@ -61,6 +62,19 @@ class WithinCosmic extends React.Component {
         switchTo: null
       });
     }
+    if(
+      this.props.location.pathname != prevProps.location.pathname &&
+      this.props.location.pathname.includes('/unit')
+    ){
+      this.setState({ navWithinNotDisSmall: true });
+    }
+    else if(
+      this.props.location.pathname != prevProps.location.pathname &&
+      prevProps.location.pathname.includes('/unit') &&
+      !this.props.location.pathname.includes('/unit')
+    ){
+      this.setState({ navWithinNotDisSmall: false });
+    };
   }
 
   componentDidMount() {
@@ -109,7 +123,8 @@ class WithinCosmic extends React.Component {
                 styles.boxContentFilledRight)} />
           </div>
           <div
-            className={classnames(styles.boxNavWithinCosmic)}>
+            className={this.state.navWithinNotDisSmall ? classnames(styles.boxNavAround, styles.boxNavWithinCosmic, 'smallDisplayNone') :
+              classnames(styles.boxNavAround, styles.boxNavWithinCosmic) }>
             <NavWithin
               {...this.props} _refer_to={this._refer_von_cosmic}
               logotop={
