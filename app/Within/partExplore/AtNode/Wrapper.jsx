@@ -17,9 +17,9 @@ class Wrapper extends React.Component {
     super(props);
     this.state = {
       axios: false,
-
+      savedPosition: null
     };
-    this.axiosSource = axios.CancelToken.source();
+    this.wrapperWithinNode = React.createRef();
     this._construct_UnitInit = this._construct_UnitInit.bind(this);
 
   }
@@ -31,6 +31,30 @@ class Wrapper extends React.Component {
     if(this.nodeAtId != lastNodeAtId){
       this.props._submit_NounsList_new([this.nodeAtId]);
     }
+    if(
+      this.props.location.pathname != prevProps.location.pathname &&
+      this.props.location.pathname.includes('/unit')
+    ){
+      let savedPosition = window.scrollY;
+      this.setState((prevState, props)=>{
+        return {
+          savedPosition: savedPosition
+        };
+      }, ()=>{
+        this.wrapperWithinNode.current.style.display='none';
+      });
+    }
+    else if(
+      this.props.location.pathname != prevProps.location.pathname &&
+      prevProps.location.pathname.includes('/unit') &&
+      !this.props.location.pathname.includes('/unit')
+    ){
+      this.wrapperWithinNode.current.style={};
+      window.scroll(0, prevState.savedPosition);
+      this.setState({
+        savedPosition: null
+      });
+    };
   }
 
   componentDidMount(){
@@ -39,9 +63,7 @@ class Wrapper extends React.Component {
   }
 
   componentWillUnmount(){
-    if(this.state.axios){
-      this.axiosSource.cancel("component will unmount.")
-    }
+
   }
 
   render(){
@@ -51,28 +73,29 @@ class Wrapper extends React.Component {
     return(
       <div>
         <div
+          ref={this.wrapperWithinNode}
           className={classnames(styles.comAtNode)}>
           <div
-            className={classnames(styles.boxRow, styles.boxTitle)}
-            style={{paddingBottom: '14px'}}>
-            <span
-              className={classnames("fontTitle", "colorEditBlack", "weightBold")}>
-              { this.nodeAtId in this.props.nounsBasic ? (this.props.nounsBasic[this.nodeAtId].name) : null }
-            </span>
-            <span
-              className={classnames("fontTitle", "colorEditBlack", "weightBold")}>
-              { this.nodeAtId in this.props.nounsBasic ? (
-                (this.props.nounsBasic[this.nodeAtId].prefix.length > 0) &&
-                (", " + this.props.nounsBasic[this.nodeAtId].prefix)) : (null)
-              }
-            </span>
+            className={classnames(styles.boxTopTitle)}>
+            <div
+              className={classnames(styles.boxNodeTitle)}>
+              <span
+                className={classnames("fontTitle", "colorSignBlack", "weightBold")}>
+                { this.nodeAtId in this.props.nounsBasic ? (this.props.nounsBasic[this.nodeAtId].name) : null }
+              </span>
+              <span
+                className={classnames("fontSubtitle_h5", "colorSignBlack")}>
+                { this.nodeAtId in this.props.nounsBasic ? (
+                  (this.props.nounsBasic[this.nodeAtId].prefix.length > 0) &&
+                  (", " + this.props.nounsBasic[this.nodeAtId].prefix)) : (null)
+                }
+              </span>
+            </div>
           </div>
-          <div
-            className={classnames(styles.boxRow)}>
+          <div>
             <Feed/>
           </div>
-
-          <div className={classnames(styles.boxDecoBottom, styles.smallDisplayNone)}></div>
+          <div className={classnames(styles.boxDecoBottom, "smallDisplayNone")}></div>
         </div>
 
         <Route

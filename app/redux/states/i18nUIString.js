@@ -216,9 +216,9 @@ const i18nUIString_EN = {
     "today" : "Today",
     "yesterday": "Yesterday"
   },
+  "subtitle_Node_pastStart": "and flow back",
 
   "title_NavAtNode_": "Accumulations",
-  "subtitle_NavAtNode_Num": ['stay', "from"],
   "guiding_AtNode_noAccumulated": "Waiting for the first share to the day.",
   "guiding_noAccumulated_waitAuthor": "Good content is always worth waiting!",
   "guiding_noAccumulated_shareInvitation": "Start your Calendar by upload the scene to your day today!",

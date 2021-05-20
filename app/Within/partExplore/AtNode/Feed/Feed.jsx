@@ -78,8 +78,7 @@ class Feed extends React.Component {
       return (
         <div>
           <span
-            className={classnames("fontTitleSmall", "colorLightGrey")}
-            style={{margin: "8px 0", display: 'inline-block' }}>
+            className={classnames(styles.spanFooterHint, "fontTitleSmall", "colorLightGrey")}>
             {this.props.i18nUIString.catalog['descript_AroundIndex_footer']}
           </span>
         </div>
@@ -103,7 +102,8 @@ class Feed extends React.Component {
             key={"key_NodeFeed_new_" + listByDayRange + "_"+ index}
             className={classnames(styles.boxModuleItem)}>
               <div
-                className={classnames(stylesNail.boxNail)}>
+                className={classnames(stylesNail.boxNail)}
+                style={ (dayRange == "today") ? {} : {margin: '0 0 8px'}  }>
                 {
                   (dayRange == "today") ? (
                     <NailFeedwtNone
@@ -132,15 +132,20 @@ class Feed extends React.Component {
     this.state[listByDayRange].forEach((unitGroup, index)=>{
       groupsDOM.push(
         <div
-          key={"key_AtNode_FeedGroup"+index}
-          className={classnames(
-            styles.boxModule,
-            styles.boxModuleSmall,
-          )}>
+          key={"key_AtNode_FeedGroup"+index}>
           {_nailsGroup(unitGroup, index)}
         </div>
       );
     });
+    if( (dayRange == 'today') && (groupsDOM.length == 0) ){
+      groupsDOM.push(
+        <div
+          style={{
+            margin: '8px 0 16px', color: '#b8b8b8', fontSize: '1.4rem'}}>
+          {"---"}
+        </div>
+      )
+    }
 
     return groupsDOM;
   }
@@ -151,38 +156,67 @@ class Feed extends React.Component {
 
     return (
       <div className={styles.comAtNodeFeed}>
-        <div>
-          <div>
+        <div
+          className={classnames(styles.boxRow, styles.boxFeedToday)}>
+          <div
+            style={{margin: '8px 0 12px'}}>
+            <span
+              className={classnames(
+                "fontTitle", "lineHeight15", "weightBold", "colorEditBlack")}>
+              { this.props.i18nUIString.catalog["title_DayFeed_dayrange"]['today'] }
+            </span>
+          </div>
+          <div
+            className={classnames(
+              styles.boxModule,
+              styles.boxModuleSmall,
+            )}>
             {this._render_FeedNails('today')}
           </div>
-          {
-            (this.state.feedListPast.length > 0) &&
-            <div>
-              {this._render_FeedNails('past')}
+        </div>
+        {
+          (this.state.feedListPast.length > 0) &&
+          <div
+            className={classnames(styles.boxRow, styles.boxFeedPast)}>
+            <div
+              className={classnames(styles.boxRowPastSubtitle)}>
+              <span
+                className={classnames(
+                  "fontContent", "colorAssistGold")}>
+                  {this.props.i18nUIString.catalog['subtitle_Node_pastStart']}
+              </span>
             </div>
-          }
-          {
-            ((this.state.feedListPast.length == 0) &&
-              this.state.feedListToday.length == 0 &&
-              !this.state.scrolled &&
-              !this.state.axios
-            ) &&
             <div
               className={classnames(
                 styles.boxModule,
                 styles.boxModuleSmall,
               )}>
-              <FeedEmpty
-                {...this.props}
-                nodeAtId={this.nodeAtId}/>
+              {this._render_FeedNails('past')}
             </div>
-          }
-
-          <div ref={this.refScroll}/>
-          <div
-            className={classnames(styles.boxFooter)}>
-            {this._render_FooterHint()}
           </div>
+        }
+        {
+          ((this.state.feedListPast.length == 0) &&
+            this.state.feedListToday.length == 0 &&
+            !this.state.scrolled &&
+            !this.state.axios
+          ) &&
+          <div
+            className={classnames(
+              styles.boxModule,
+              styles.boxModuleSmall,
+              styles.boxRow
+            )}>
+            <FeedEmpty
+              {...this.props}
+              nodeAtId={this.nodeAtId}/>
+          </div>
+        }
+
+        <div ref={this.refScroll}/>
+        <div
+          className={classnames(styles.boxRow, styles.boxFooter)}>
+          {this._render_FooterHint()}
         </div>
       </div>
     )

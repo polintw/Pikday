@@ -35,13 +35,13 @@ class NailFeedwtDate extends React.Component {
       <div
         className={classnames(styles.boxNodes)}>
         <span
-          className={classnames(
-            "fontSubtitle_h5", "colorEditBlack")}>
+          className={classnames( 'colorEditBlack', 'fontSubtitle_h5')}
+          style={{marginRight:'5px'}}>
             {"on "}
-          </span>
-          <DateConverter
-            styles={{color: '#545454'}}
-            datetime={showedTime}/>
+        </span>
+        <DateConverter
+          styles={{fontSize: '1.6rem', lineHeight: '1.5', color: '#545454'}}
+          datetime={showedTime}/>
       </div>
     );
   }
@@ -64,6 +64,8 @@ class NailFeedwtDate extends React.Component {
           {[styles.frameOnMouse]: this.state.onFrame}
         )}
         onClick={(e)=>{if( !this.props.linkPath ){e.preventDefault();};/*a optional control, mean the parent want to take the refer control*/ }}
+        onTouchStart={this._handleEnter_nailFrame}
+        onTouchEnd={this._handleLeave_nailFrame}
         onMouseEnter={this._handleEnter_nailFrame}
         onMouseLeave={this._handleLeave_nailFrame}>
         {this._render_ContentBox()}
@@ -74,7 +76,7 @@ class NailFeedwtDate extends React.Component {
   _render_ContentBox(){
     let contentBoxDOM = [];
     contentBoxDOM.push(contentBoxImg(this));
-    contentBoxDOM.push(contentBoxMarks(this));
+    contentBoxDOM.push(contentBoxDate(this));
     return contentBoxDOM;
   }
 
@@ -98,8 +100,10 @@ const contentBoxImg = (self)=>{
   return (
     <div
       key={"key_NailBoxImg_"+self.props.unitId}
-      className={classnames(styles.boxContent)}
-      style={{minWidth: "30.8vw"}}>
+      className={classnames(
+        styles.boxContent,
+        {[styles.boxContentMouseOn]: self.state.onFrame}
+      )}>
       <Link
         ref={self.nailImgBox}
         to={{
@@ -116,13 +120,12 @@ const contentBoxImg = (self)=>{
     </div>
   )
 };
-const contentBoxMarks = (self)=>{
+const contentBoxDate = (self)=>{
   return (
     <div
       key={"key_NailBoxMarks_"+self.props.unitId}
-      className={classnames(styles.boxContentMobile)}>
-      <div
-        className={classnames(styles.boxTitle)}>
+      className={classnames(styles.boxRowBottom)}>
+      <div>
         {self._render_nails_Date()}
       </div>
     </div>

@@ -48,10 +48,6 @@
   align-items: baseline;
 }
 
-.boxAuthor {
-  max-width: 100%;
-}
-
 .boxTitlePin {
   display: flex;
   justify-content: center;

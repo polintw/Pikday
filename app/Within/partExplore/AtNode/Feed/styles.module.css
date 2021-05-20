@@ -1,10 +1,16 @@
 .comAtNodeFeed {
   display: flex;
+  flex-direction: column;
 }
 
 .comFeedEmpty {
   width: 100%;
   padding-top: 6rem;
+}
+
+.boxRow {
+  position: relative;
+  margin: 12px 0;
 }
 
 .boxTitle {
@@ -17,13 +23,36 @@
   justify-content: space-between;
 }
 
-.boxDescript {
-  width: 100%;
+.boxModuleItem {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin: 8px 0;
+}
+
+.boxFeedToday {
+  display: flex;
+  flex-direction: column;
+}
+
+.boxFeedPast {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.boxRowPastSubtitle {
+  width: 79%;
+  box-sizing: border-box;
+  margin: 0 0 8px;
+  padding: 8px 0 0;
+  border-top: solid 1px #b8b8b8;
   text-align: center;
 }
 
-.boxNodeUsers {
-  margin: 8px 2.76vw 0 0;
+.boxDescript {
+  width: 100%;
+  text-align: center;
 }
 
 .boxEmptyDescript {
@@ -31,44 +60,29 @@
   text-align: center;
 }
 
-.boxInvite {
-  padding-top: 22px;
-  text-align: center;
-}
-
-.boxBtnInvite {
-  display: inline-block;
-  position: relative;
-  box-sizing: border-box;
-  padding: 6px 1.2rem 7px;
-  border-radius: 4px;
-  border: solid 1px #a3a3a3;
-  cursor: pointer;
-}
-
-.boxBtnInviteActiv {
-  border: dashed 2px #ababab;
-}
-
 .boxFooter {
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
-  padding-top: 4.4rem;
-  margin-bottom: 31.1vh;
+  padding-top: 38px;
+  margin-bottom: 36vh;
 }
 
-.spanBtnInvite {
-  white-space: nowrap;
+.spanFooterHint {
+  margin: 8px 0;
 }
 
 @media screen and (max-width:860px) {
-  .comAtNodeFeed {
-    flex-direction: column;
-  }
-
   .boxModuleSmall {
     justify-content: center;
+  }
+
+  .boxModuleItem {
+    width: 94.24vw;
+    max-width: 390px;
+  }
+
+  .boxFooter {
+    margin-bottom: 19vh;
   }
 }
