@@ -23,8 +23,9 @@
 }
 
 .comMouseEnter {
-  border: solid 2px transparent;
-  background-color: #FF8168;
+  border: solid 2px rgba(84, 84, 84, 0.45);
+  box-shadow: 0 0 4px 0 rgba(84, 84, 84, 0.45);
+  background-color: #FFFFFF;
 }
 
 .comMouseEnterWideScreen {

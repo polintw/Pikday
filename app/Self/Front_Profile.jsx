@@ -9,7 +9,6 @@ import {connect} from "react-redux";
 import classnames from 'classnames';
 import styles from "./styles.module.css";
 import Sheet from './Profile/Sheet.jsx';
-import NavProfile from './Profile/NavProfile.jsx';
 import NavWithin from '../Components/NavWithin/NavWithin.jsx';
 import NavOptions from '../Components/NavOptions/NavOptions.jsx';
 import SingleDialog from '../Components/Dialog/SingleDialog/SingleDialog.jsx';
@@ -17,9 +16,6 @@ import SingleCloseDialog from '../Components/Dialog/SingleCloseDialog/SingleClos
 import BooleanDialog from '../Components/Dialog/BooleanDialog/BooleanDialog.jsx';
 import ModalBox from '../Components/ModalBox.jsx';
 import ModalBackground from '../Components/ModalBackground.jsx';
-import {
-  fetchBelongRecords
-} from '../redux/actions/general.js'
 
 class FrontProfile extends React.Component {
   constructor(props){
@@ -32,30 +28,15 @@ class FrontProfile extends React.Component {
         width: '100%',
         height: '100%',
         position: 'fixed',
-        backgroundColor: '#FCFCFC'
+        backgroundColor: '#FDFDFC'
       },
-      Within_NavOptions: {
-        width: '1.4%',
-        height: '3.2%',
-        position: 'fixed',
-        bottom: '6.9%',
-        right: '1%',
-        boxSizing: 'border-box'
-      }
     }
   }
 
   _refer_leaveSelf(identifier, route){
     switch (route) {
-      case 'user':
-        if(identifier == this.props.userInfo.id){
-          window.location.assign('/user/screen');
-        }else{
-          window.location.assign('/cosmic/users/'+identifier+'/accumulated');
-        }
-        break;
       case 'noun':
-        window.location.assign('/cosmic/nodes/'+identifier);
+        window.location.assign('/cosmic/explore/node?nodeid='+identifier);
         break;
       default:
         window.location.assign(route)
@@ -63,11 +44,7 @@ class FrontProfile extends React.Component {
   }
 
   componentDidMount() {
-    /*
-    Here is the highest level next only to status() in root, fetching data or any info needed
-    */
-    //beneath are the process difinately need a token
-    this.props._fetch_belongRecords();
+
   }
 
   render(){
@@ -95,11 +72,7 @@ class FrontProfile extends React.Component {
             <div style={{width:'100%', height: '22vh', minHeight: '81px', position: 'unset', bottom: 'unset', backgroundColor: 'transparent'}}></div>
           </div>
 
-          <div
-            className={classnames(styles.boxNavProfile)}>
-            <NavProfile/>
-          </div>
-          <div className={classnames(styles.boxDecoBottom)}></div>
+          <div className={classnames(styles.boxDecoBottom, "smallDisplayNone")}></div>
           <div
             className={classnames(styles.boxNavAround)}>
             <NavWithin {...this.props} _refer_to={this._refer_leaveSelf}/>
@@ -168,7 +141,7 @@ const mapStateToProps = (state)=>{
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    _fetch_belongRecords: () => {dispatch(fetchBelongRecords())},
+
   }
 }
 

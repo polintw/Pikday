@@ -116,7 +116,7 @@ class BtnUploadDaily extends React.Component {
                   className={classnames(
                     styles.spanWriter, 'lineHeight15',
                     {
-                      ['colorWhite']: (this.state.spaceRemain && this.state.onCreate),
+                      ['colorStandard']: (this.state.spaceRemain && this.state.onCreate),
                       ['colorGrey']: (this.state.spaceRemain && !this.state.onCreate),
                       ['fontNodesEqual']: this.state.spaceRemain,
                       ['weightBold']: this.state.spaceRemain,

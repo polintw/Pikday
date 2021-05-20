@@ -86,31 +86,30 @@ class NavOptions extends React.Component {
 
           <ol
             className={styles.boxOlist}>
-            <span style={{
-                display: 'inline-block',
-                fontSize: '1.6rem', color: '#f3b55a', marginBottom: '1rem', cursor: 'default'}}>
-              {this.props.i18nUIString.catalog["text_your_cap"]}
-            </span>
             <li
-              method="self"
+              method="home"
               className={classnames(styles.boxLiItem)}
-              onClick={(e) => { e.preventDefault(); e.stopPropagation(); this.props._refer_to('', '/self/shareds') }}
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); this.props._refer_to('', '/') }}
+              onTouchStart={this._handleEnter_CornerOpt}
+              onTouchEnd={this._handleLeave_CornerOpt}
               onMouseEnter={this._handleEnter_CornerOpt}
               onMouseLeave={this._handleLeave_CornerOpt}>
               <span
-                style={(this.state.mouseOn == 'self') ? {borderBottom: "solid 1px #333333"}:{}}>
-                {this.props.i18nUIString.catalog["link_Options_selfLink"]}
+                style={(this.state.mouseOn == 'home') ? {borderBottom: "solid 1px #333333"}:{}}>
+                {this.props.i18nUIString.catalog["title_home"]}
               </span>
             </li>
             <li
-              method="public"
+              method="calendar"
               className={classnames(styles.boxLiItem)}
-              onClick={(e) => { e.preventDefault(); e.stopPropagation(); this.props._refer_to('', '/cosmic/explore/user?userId='+this.props.userInfo.id) }}
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); this.props._refer_to('', '/self/calendar') }}
+              onTouchStart={this._handleEnter_CornerOpt}
+              onTouchEnd={this._handleLeave_CornerOpt}
               onMouseEnter={this._handleEnter_CornerOpt}
               onMouseLeave={this._handleLeave_CornerOpt}>
               <span
-                style={(this.state.mouseOn == 'public') ? {borderBottom: "solid 1px #333333"}:{}}>
-                {this.props.i18nUIString.catalog["link_Options_public"]}
+                style={(this.state.mouseOn == 'calendar') ? {borderBottom: "solid 1px #333333"}:{}}>
+                {this.props.i18nUIString.catalog["title_Calendar"]}
               </span>
             </li>
           </ol>
@@ -124,7 +123,7 @@ class NavOptions extends React.Component {
               onMouseLeave={this._handleLeave_CornerOpt}>
               <span
                 style={(this.state.mouseOn == 'account') ? {borderBottom: "solid 1px #333333"}:{}}>
-                {this.props.i18nUIString.catalog["submit_Options_profile"]}
+                {this.props.i18nUIString.catalog["title_Account"]}
               </span>
             </li>
           </ol>

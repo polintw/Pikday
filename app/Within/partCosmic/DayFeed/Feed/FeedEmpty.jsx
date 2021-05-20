@@ -31,7 +31,7 @@ class FeedEmpty extends React.Component {
       <div className={styles.comFeedEmpty}>
         <div
           className={classnames(styles.boxTitle, styles.boxEmptyDescript, "fontTitleSmall", "colorLightGrey")}>
-          {this.props.i18nUIString.catalog['guiding_AtNode_noAccumulated']}
+          {this.props.i18nUIString.catalog['guiding_Feed_noAccumulated']}
           <br/>
         </div>
 
