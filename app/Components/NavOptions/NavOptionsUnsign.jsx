@@ -22,41 +22,16 @@ class NavOptionsUnsign extends React.Component {
     */
     let currentPath = this.props.location.pathname;
 
-    /* Ok, we are now didn't want the "Sign up/in" show on the topbar-but keep them here in case our mind changed
-    if(this.props.location.pathname.includes('cosmic/explore/')){
-      return(
+    return(
+      <div
+        className={classnames(styles.boxNavSmall)}>
         <div
-          className={classnames(styles.boxNavSmall)}>
-          <div
-            className={classnames(styles.boxLogo)}
-            onClick={(e)=>{e.preventDefault(); e.stopPropagation(); this.props._refer_to('', '/')}}>
+          className={classnames(styles.boxLogo)}
+          onClick={(e)=>{e.preventDefault(); e.stopPropagation(); window.location.assign('/')}}>
 
-          </div>
-          <div
-            id={"NavOptions_Self_small"}
-            className={classnames(
-              styles.selfCom_NavOptions_svg_, 'colorWhite', 'fontSubtitle',
-              "smallDisplayBox"
-            )}
-            onClick={(e)=>{e.preventDefault(); e.stopPropagation(); window.location.assign('/');}}>
-            {this.props.i18nUIString.catalog['submit_nav_Signupin']}
-          </div>
         </div>
-      );
-    }
-    else{*/
-      return(
-        <div
-          className={classnames(styles.boxNavSmall)}
-          style={{justifyContent: 'flex-end'}}>
-          <div
-            className={classnames(styles.boxLogo)}
-            onClick={(e)=>{e.preventDefault(); e.stopPropagation(); this.props._refer_to('', '/')}}>
-
-          </div>
-        </div>
-      );
-    // };
+      </div>
+    );
   }
 
   render(){
@@ -64,8 +39,8 @@ class NavOptionsUnsign extends React.Component {
       <div
         className={classnames(styles.comNavOption)}>
         <div
-          className={classnames("smallDisplayBox")}
-          style={{width: '100%', padding: "0 1.38vw", boxSizing: 'border-box'}}>
+          className={classnames(
+            "smallDisplayBox", styles.boxNavOptionsSmall)}>
           {
             /*Notice, this render method actually deal with only situation the screen width < 860px
             and the rest (>860px) would rely on the next DOM beneath*/

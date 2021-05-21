@@ -62,7 +62,7 @@ class NavTitle extends React.Component {
           <div
             className={classnames(styles.boxSubtitleDate)}>
             <DateConverter
-              styles={{fontSize: '1.6rem', lineHeight: '1.5', color: '#f3b55a'}}
+              styles={{fontSize: '1.4rem', lineHeight: '1.5', color: '#f3b55a'}}
               datetime={showedTime}/>
           </div>
           <div>
@@ -81,7 +81,7 @@ class NavTitle extends React.Component {
               }
               <span
                 className={classnames(
-                  "fontSubtitle_h5", styles.spanDaySwitch,
+                  "fontContent", styles.spanDaySwitch,
                   {
                     [styles.spanDaySwitchMouseon]: (this.state.onDaySwitch),
                     ["colorLightGrey"]: !this.state.onDaySwitch,

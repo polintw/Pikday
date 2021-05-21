@@ -9,6 +9,13 @@
   padding: 3.8vh 0.5vw 0;
 }
 
+.boxNavOptionsFrame {
+  min-width: 10vw; /* follow boxContentFilledLeft*/
+  height: 100%;
+  position: fixed;
+  z-index: 1; /* set here no matter the children set or not(like boxNavOptions) */
+}
+
 .boxNavOptions {
   min-width: 4.2vw;
   min-height: 7.6vh;
@@ -20,13 +27,21 @@
 }
 
 .boxContent {
-  width: 60vw;
-  margin-left: 15vw;
-  margin-right: 25vw;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
 }
 
 .boxContentCenter {
-  width: 100%;
+  min-width: 67vw;
+}
+
+.boxContentFilledRightSelf { /* after boxContentFilledRight */
+  min-width: 20.5%;
+}
+
+.boxContentFilledLeftSelf { /* after boxContentFilledLeft */
+  min-width: 11.38%;
 }
 
 .boxDecoBottom {
@@ -57,6 +72,16 @@
     top: 0;
     background-color: transparent;
   }
+
+  .boxNavOptionsFrame {
+    min-width: unset;
+  }
+
+  .boxAroundContentCenter {
+    width: calc(342px * 2 + 1.38vw * 4 + 1.38vw);
+    min-width: 69.7vw; /*calc(32vw + 30.8vw + 1.38vw * 4 + 1.38vw)*/
+  }
+
 }
 
 @media screen and (max-width:860px) {
@@ -71,9 +96,24 @@
     display: flex;
     align-items: center;
     width: 100%;
+    min-height: unset;
     position: sticky;
     top: 0;
     left: 0;
+    padding-top: 2.53vh;
+  }
+
+  .boxNavOptionsFrame {    /* back to a plain <div> */
+    min-width: unset; /* back to NavOptions */
+    height: unset; /* back to NavOptions */
+    position: static; /* back to NavOptions */
+  }
+
+  .boxAroundContentCenter {
+    width: 94.24vw;
+    max-width: 790px;
+    min-width: unset;
+    min-height: 87vh;
   }
 
   .boxDecoBottom {

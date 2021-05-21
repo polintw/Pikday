@@ -56,20 +56,27 @@ class FrontProfile extends React.Component {
         <div
           className={classnames(styles.boxProfile)}>
           <div
-            className={classnames(styles.boxNavOptions)}>
-            <NavOptions {...this.props} _refer_to={this._refer_leaveSelf}/>
+            className={classnames(styles.boxNavOptionsFrame)}>
+            <div
+              className={classnames(styles.boxNavOptions)}>
+              <NavOptions {...this.props} _refer_to={this._refer_leaveSelf}/>
+            </div>
           </div>
           <div
             className={classnames(styles.boxContent)}>
             <div
+              className={classnames(
+                styles.boxContentFilledLeftSelf)}/>
+            <div
               className={classnames(styles.boxContentCenter)}>
               <Switch>
                 <Route path={this.props.match.path+"/sheet"} render={(props)=> <Sheet {...props}/>}/>
-
               </Switch>
             </div>
 
-            <div style={{width:'100%', height: '22vh', minHeight: '81px', position: 'unset', bottom: 'unset', backgroundColor: 'transparent'}}></div>
+            <div
+              className={classnames(
+                styles.boxContentFilledRightSelf)}/>
           </div>
 
           <div className={classnames(styles.boxDecoBottom, "smallDisplayNone")}></div>

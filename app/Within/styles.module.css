@@ -205,9 +205,11 @@
     display: flex;
     align-items: center;
     width: 100%;
+    min-height: unset;
     position: sticky;
     top: 0;
     left: 0;
+    padding-top: 2.53vh;
   }
 
   .boxNavOptionsFrame {    /* back to a plain <div> */
@@ -224,10 +226,12 @@
     display: flex;
     align-items: center;
     width: 100%;
+    min-height: unset;
     position: sticky;
     top: 0;
     bottom: unset;
     left: 0;
+    padding-top: 2.53vh;
     /*
     remained from Cornerth.
     background-color: rgb(117,117,117);

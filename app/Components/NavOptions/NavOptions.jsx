@@ -1,25 +1,122 @@
 import React from 'react';
 import {
+  Link,
   withRouter
 } from 'react-router-dom';
 import {connect} from "react-redux";
 import classnames from 'classnames';
 import styles from "./styles.module.css";
 import AccountPalette from '../AccountPalette.jsx';
+import {
+  SvgArrowToRight,
+  SvgArrowToLeft
+} from '../Svg/SvgArrow.jsx';
 
 class NavOptions extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       mouseOn: false,
-      toolBoxify: false
+      onBackBtn: false,
+      toolBoxify: false,
     };
+    this._render_btnBack = this._render_btnBack.bind(this);
     this._render_NavToolBox = this._render_NavToolBox.bind(this);
     this._render_NavSmallScreen = this._render_NavSmallScreen.bind(this);
+    this._handleEnter_BackBtn = this._handleEnter_BackBtn.bind(this);
+    this._handleLeave_BackBtn = this._handleLeave_BackBtn.bind(this);
     this._handleEnter_CornerOpt = this._handleEnter_CornerOpt.bind(this);
     this._handleLeave_CornerOpt = this._handleLeave_CornerOpt.bind(this);
     this._handleClick_navToolBox = this._handleClick_navToolBox.bind(this);
     this._handleClick_ToolBox_logout = this._handleClick_ToolBox_logout.bind(this);
+  }
+
+  _render_btnBack(){
+    /*
+    currently only 2 possibility:
+    go Home, or go Back
+    */
+    if(
+      this.props.location.pathname.includes("explore/node") ||
+      this.props.location.pathname.includes("cosmic/today") ||
+      this.props.location.pathname.includes("cosmic/yesterday")
+    ){
+      return (
+        <div
+          className={classnames(styles.boxBackBtn)}
+          onTouchStart={this._handleEnter_BackBtn}
+          onTouchEnd={this._handleLeave_BackBtn}
+          onMouseEnter={this._handleEnter_BackBtn}
+          onMouseLeave={this._handleLeave_BackBtn}
+          onClick={(event)=>{
+            event.preventDefault(); event.stopPropagation();
+            this.props.history.goBack();
+          }}>
+          {
+            this.state.onBackBtn &&
+            <div
+              className={classnames(styles.boxLinkSwitchMouseOn)}/>
+          }
+          <div
+            className={classnames(styles.boxSvgArrow)}
+            style={{paddingRight: "8px"}}>
+            <div
+              style={{width: "10px"}}>
+              <SvgArrowToLeft
+                mouseOn={this.state.onBackBtn}
+                customStyles={{fillColorMouseOn: '#444444', fillColor: '#d8d8d8'}}/>
+            </div>
+          </div>
+        </div>
+      )
+    }
+    else if( this.props.location.pathname.includes("calendar")){
+      return (
+        <Link
+          to={"/" }
+          className={classnames('plainLinkButton', styles.boxBackBtn)}
+          onTouchStart={this._handleEnter_BackBtn}
+          onTouchEnd={this._handleLeave_BackBtn}
+          onMouseEnter={this._handleEnter_BackBtn}
+          onMouseLeave={this._handleLeave_BackBtn}>
+          {
+            this.state.onBackBtn &&
+            <div
+              className={classnames(styles.boxLinkSwitchMouseOn)}/>
+          }
+          <span
+            className={classnames(
+              "fontSubtitle_h5", styles.spanBtnText,
+              {
+                ["colorLightGrey"]: !this.state.onBackBtn,
+                ["colorDescripBlack"]: this.state.onBackBtn,
+                ['weightBold']: this.state.onBackBtn
+              }
+            )}>
+            {this.props.i18nUIString.catalog["title_home"]}
+          </span>
+          <div
+            className={classnames(styles.boxSvgArrow)}
+            style={{paddingLeft: "8px"}}>
+            <div
+              style={{width: "10px"}}>
+              <SvgArrowToRight
+                mouseOn={this.state.onBackBtn}
+                customStyles={{fillColorMouseOn: '#444444', fillColor: '#d8d8d8'}}/>
+            </div>
+          </div>
+        </Link>
+      )
+    }
+    else{
+      return (
+        <div
+          className={classnames(styles.boxLogo)}
+          onClick={(e)=>{e.preventDefault(); e.stopPropagation(); window.location.assign('/')}}>
+
+        </div>
+      );
+    };
   }
 
   _render_NavSmallScreen(){
@@ -34,11 +131,8 @@ class NavOptions extends React.Component {
         className={classnames(styles.boxNavSmall)}>
         <div
           id={"NavOptions_Self_small"}
-          className={classnames(
-            styles.selfCom_NavOptions_svg_, 'colorDescripBlack', 'fontSubtitle',
-          )}
-          onClick={(e)=>{e.preventDefault(); e.stopPropagation(); this.props.history.goBack()}}>
-          {this.props.i18nUIString.catalog['submit_back']}
+          className={classnames(styles.selfCom_NavOptions_svg_)}>
+          {this._render_btnBack()}
         </div>
 
         <div
@@ -149,8 +243,8 @@ class NavOptions extends React.Component {
       <div
         className={classnames(styles.comNavOption)}>
         <div
-          className={classnames("smallDisplayBox")}
-          style={{width: '100%', padding: "0 1.38vw", boxSizing: 'border-box'}}>
+          className={classnames(
+            "smallDisplayBox", styles.boxNavOptionsSmall)}>
           {this._render_NavSmallScreen()}
         </div>
         { // if under a valid token
@@ -190,6 +284,14 @@ class NavOptions extends React.Component {
     localStorage.removeItem('token');
     localStorage.removeItem('tokenRefresh');
     window.location.assign('/');
+  }
+
+  _handleEnter_BackBtn(e){
+    this.setState({onBackBtn: true});
+  }
+
+  _handleLeave_BackBtn(e){
+    this.setState({onBackBtn: false})
   }
 
   _handleEnter_CornerOpt(e) {
