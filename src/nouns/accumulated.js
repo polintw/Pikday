@@ -24,8 +24,7 @@ async function _handle_GET_node_FeedList(req, res){
     const reqDayRange = !!req.query.dayRange ? req.query.dayRange : 'all';
     const currentTime = new Date();
     const currentDate = new Date(currentTime.toDateString());
-console.log(">>> currentDate: ", currentDate)
-console.log(">>> lastUnitTime: ", lastUnitTime)
+
     let unitsInRange = await _DB_attribution.findAll({
       where: {
         id_noun: nodeId
@@ -45,7 +44,7 @@ console.log(">>> lastUnitTime: ", lastUnitTime)
       limit: 12
     })
     .catch((err)=>{ throw new internalError(err ,131); });
-console.log(">>> length: ", unitsInRange.length)
+
     let unitsAssignedDate = {}, unitsIdAssignedDate = {};
     let unitsIdList = unitsInRange.map((row, index)=>{
       unitsIdAssignedDate[row.id_unit] = row.units_calendar.assignedDate;

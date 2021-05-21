@@ -38,9 +38,7 @@ class NavOptions extends React.Component {
     go Home, or go Back
     */
     if(
-      this.props.location.pathname.includes("explore/node") ||
-      this.props.location.pathname.includes("cosmic/today") ||
-      this.props.location.pathname.includes("cosmic/yesterday")
+      this.props.location.pathname.includes("explore/node")
     ){
       return (
         <div
@@ -71,7 +69,11 @@ class NavOptions extends React.Component {
         </div>
       )
     }
-    else if( this.props.location.pathname.includes("calendar")){
+    else if(
+      this.props.location.pathname.includes("cosmic/today") ||
+      this.props.location.pathname.includes("cosmic/yesterday") ||
+      this.props.location.pathname.includes("calendar")
+    ){
       return (
         <Link
           to={"/" }
@@ -85,6 +87,20 @@ class NavOptions extends React.Component {
             <div
               className={classnames(styles.boxLinkSwitchMouseOn)}/>
           }
+          {
+            (this.props.location.pathname.includes("cosmic/today") ||
+            this.props.location.pathname.includes("cosmic/yesterday")) &&
+            <div
+              className={classnames(styles.boxSvgArrow)}
+              style={{paddingRight: "8px"}}>
+              <div
+                style={{width: "10px"}}>
+                <SvgArrowToLeft
+                  mouseOn={this.state.onBackBtn}
+                  customStyles={{fillColorMouseOn: '#444444', fillColor: '#d8d8d8'}}/>
+              </div>
+            </div>
+          }
           <span
             className={classnames(
               "fontSubtitle", styles.spanBtnText,
@@ -96,16 +112,19 @@ class NavOptions extends React.Component {
             )}>
             {this.props.i18nUIString.catalog["title_home"]}
           </span>
-          <div
-            className={classnames(styles.boxSvgArrow)}
-            style={{paddingLeft: "8px"}}>
+          {
+            this.props.location.pathname.includes("calendar") &&
             <div
-              style={{width: "10px"}}>
-              <SvgArrowToRight
-                mouseOn={this.state.onBackBtn}
-                customStyles={{fillColorMouseOn: '#444444', fillColor: '#d8d8d8'}}/>
+              className={classnames(styles.boxSvgArrow)}
+              style={{paddingLeft: "8px"}}>
+              <div
+                style={{width: "10px"}}>
+                <SvgArrowToRight
+                  mouseOn={this.state.onBackBtn}
+                  customStyles={{fillColorMouseOn: '#444444', fillColor: '#d8d8d8'}}/>
+              </div>
             </div>
-          </div>
+          }
         </Link>
       )
     }

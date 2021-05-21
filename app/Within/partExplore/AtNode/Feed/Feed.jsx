@@ -46,11 +46,10 @@ class Feed extends React.Component {
     if(this.nodeAtId != lastNodeAtId){
       this._set_feedUnits('today');
     };
-    // check a special condition: feedListToday was empty & the scrolledToday just turn into false,
-    // in case the very beginning, and the _check_Position() can not work.
+    // check: feedListToday was empty or the scrolledToday just turn into false,
     if(
       prevState.scrolledToday != this.state.scrolledToday &&
-      this.state.feedListToday.length == 0
+      !this.state.scrolledToday
     ){
       this._set_feedUnits('past');
     }
