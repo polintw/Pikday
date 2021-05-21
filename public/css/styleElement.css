@@ -121,14 +121,6 @@
   max-width: 100%;
 }
 
-.tagServiceLink {
-  display: inline-block;
-  width: 50%;
-  box-sizing: border-box;
-  margin-top: 1rem;
-  text-align: center;
-}
-
 .fontServiceLink {
   font-size: 1.2rem;
   font-weight: bold;
@@ -163,7 +155,5 @@
 }
 
 @media screen and (max-width:860px) {
-  .tagServiceLink {
-    width: 72px;
-  }
+
 }

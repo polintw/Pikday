@@ -8,7 +8,7 @@ import {
 import { connect } from "react-redux";
 import classnames from 'classnames';
 import styles from "./styles.module.css";
-import {SvgArrowToRight} from '../Svg/SvgArrow.jsx';
+import {SvgArrowToLeft} from '../Svg/SvgArrow.jsx';
 
 class NavWihtinCosmic extends React.Component {
     constructor(props) {
@@ -53,7 +53,7 @@ class NavWihtinCosmic extends React.Component {
                     className={classnames(styles.boxSvgArrow)}>
                     <div
                       style={{width: "10px", height: "12px"}}>
-                      <SvgArrowToRight
+                      <SvgArrowToLeft
                         mouseOn={this.state.onbtn}
                         customStyles={{fillColorMouseOn: '#444444', fillColor: '#a3a3a3'}}/>
                     </div>

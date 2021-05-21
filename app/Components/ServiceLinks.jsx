@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom';
 import {connect} from "react-redux";
 import classnames from 'classnames';
+import SvgLogo from './Svg/SvgLogo.jsx';
 
 class ServiceLinks extends React.Component {
   constructor(props){
@@ -74,6 +75,12 @@ class ServiceLinks extends React.Component {
               onMouseEnter={this._handleEnter_Link}
               onMouseLeave={this._handleLeave_Link}>
               {"Privacy"}</a>
+        </div>
+        <div
+          className={classnames('tagServiceLink', 'tagServiceLinkSmallNone')}
+          style={{height: '14.6px', cursor: "pointer"}}
+          onClick={(e)=>{e.preventDefault(); e.stopPropagation(); window.location.assign('/')}}>
+          <SvgLogo/>
         </div>
         <div className={classnames('tagServiceLink')}>
           <a

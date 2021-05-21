@@ -44,14 +44,6 @@
   min-width: 11.38%;
 }
 
-.boxDecoBottom {
-  height: 2.66vh;
-  width: 80%;
-  position: fixed;
-  bottom: 0;
-  background-color: #a4a4a4
-}
-
 
 @media screen and (min-width:1110px) {
   .boxNavAround {

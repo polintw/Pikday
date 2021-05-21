@@ -186,7 +186,7 @@ const i18nUIString_EN = {
 
   "subtitle_Create_assignedNodes": "Nodes assigned",
   "subtitle_Create_dateAssigned": "Today or yesterday: ",
-  "guidingCreateShare_NodesView": "Choose an area, city, or country refer to you or your pik:",
+  "guidingCreateShare_NodesView": "Choose an area, city, or country refer to you, or your pik:",
   "guidingCreateShare_NodesView_selectHint": "No selection yet.",
   "message_CreateShare_basicRequireWarn": "Make sure you've already upload 1 image and pick at least 1 corner to which you want to contribute.",
   "message_CreateShare_dailyAssigned": "Make sure you've already selected a day you desired by the buttons at the right-bottom corner.",

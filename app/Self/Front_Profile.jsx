@@ -78,8 +78,6 @@ class FrontProfile extends React.Component {
               className={classnames(
                 styles.boxContentFilledRight, styles.boxContentFilledRightSelf)}/>
           </div>
-
-          <div className={classnames(styles.boxDecoBottom, "smallDisplayNone")}></div>
           <div
             className={classnames(styles.boxNavAround)}>
             <NavWithin {...this.props} _refer_to={this._refer_leaveSelf}/>
