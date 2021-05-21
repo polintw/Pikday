@@ -11,6 +11,7 @@ import {
   SvgArrowToRight,
   SvgArrowToLeft
 } from '../Svg/SvgArrow.jsx';
+import SvgLogo from '../Svg/SvgLogo.jsx';
 
 class NavOptions extends React.Component {
   constructor(props){
@@ -86,7 +87,7 @@ class NavOptions extends React.Component {
           }
           <span
             className={classnames(
-              "fontSubtitle_h5", styles.spanBtnText,
+              "fontSubtitle", styles.spanBtnText,
               {
                 ["colorLightGrey"]: !this.state.onBackBtn,
                 ["colorDescripBlack"]: this.state.onBackBtn,
@@ -113,7 +114,7 @@ class NavOptions extends React.Component {
         <div
           className={classnames(styles.boxLogo)}
           onClick={(e)=>{e.preventDefault(); e.stopPropagation(); window.location.assign('/')}}>
-
+          <SvgLogo/>
         </div>
       );
     };

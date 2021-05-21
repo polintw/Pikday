@@ -133,7 +133,7 @@ class WithinCosmic extends React.Component {
                   className={classnames(
                     styles.boxNavCosmic,
                     styles.boxNavCosmicJust,
-                    styles.smallDisplayNone)}>
+                    "smallDisplayNone")}>
                     <NavWihtinCosmic
                       {...this.props}/>
                 </div>

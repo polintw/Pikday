@@ -56,7 +56,9 @@
 }
 
 .boxLogo {
-  height: 20px;
+  width: 60px;
+  position: absolute;
+  transform: translate(0, -14px);
   box-sizing: border-box;
   cursor: pointer;
 }

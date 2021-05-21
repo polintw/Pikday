@@ -5,6 +5,7 @@ import {
 import {connect} from "react-redux";
 import classnames from 'classnames';
 import styles from "./styles.module.css";
+import SvgLogo from '../Svg/SvgLogo.jsx';
 
 class NavOptionsUnsign extends React.Component {
   constructor(props){
@@ -28,7 +29,7 @@ class NavOptionsUnsign extends React.Component {
         <div
           className={classnames(styles.boxLogo)}
           onClick={(e)=>{e.preventDefault(); e.stopPropagation(); window.location.assign('/')}}>
-
+          <SvgLogo/>
         </div>
       </div>
     );

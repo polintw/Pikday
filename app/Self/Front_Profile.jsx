@@ -66,7 +66,7 @@ class FrontProfile extends React.Component {
             className={classnames(styles.boxContent)}>
             <div
               className={classnames(
-                styles.boxContentFilledLeftSelf)}/>
+                styles.boxContentFilledLeft, styles.boxContentFilledLeftSelf)}/>
             <div
               className={classnames(styles.boxContentCenter)}>
               <Switch>
@@ -76,7 +76,7 @@ class FrontProfile extends React.Component {
 
             <div
               className={classnames(
-                styles.boxContentFilledRightSelf)}/>
+                styles.boxContentFilledRight, styles.boxContentFilledRightSelf)}/>
           </div>
 
           <div className={classnames(styles.boxDecoBottom, "smallDisplayNone")}></div>
