@@ -61,17 +61,20 @@ class WithinSelf extends React.Component {
       this.setState({
         switchTo: null
       });
-    }
+    };
+    let urlParams = new URLSearchParams(this.props.location.search); //we need value in URL query
+    let prevUrlParmas = new URLSearchParams(prevProps.location.search);
     if(
-      this.props.location.pathname != prevProps.location.pathname &&
-      this.props.location.pathname.includes('/unit')
+      (this.props.location.pathname != prevProps.location.pathname && this.props.location.pathname.includes('/unit')) ||
+      (urlParams.has('creating') && !prevUrlParmas.has("creating"))
     ){
       this.setState({ navWithinNotDisSmall: true });
     }
     else if(
-      this.props.location.pathname != prevProps.location.pathname &&
+      (this.props.location.pathname != prevProps.location.pathname &&
       prevProps.location.pathname.includes('/unit') &&
-      !this.props.location.pathname.includes('/unit')
+      !this.props.location.pathname.includes('/unit') )||
+      (!urlParams.has('creating') && prevUrlParmas.has("creating"))
     ){
       this.setState({ navWithinNotDisSmall: false });
     };

@@ -24,17 +24,19 @@ async function _handle_GET_node_FeedList(req, res){
     const reqDayRange = !!req.query.dayRange ? req.query.dayRange : 'all';
     const currentTime = new Date();
     const currentDate = new Date(currentTime.toDateString());
-
-    let unitsInRange = await _DB_unitsCalendar.findAll({
+console.log(">>> currentDate: ", currentDate)
+console.log(">>> lastUnitTime: ", lastUnitTime)
+    let unitsInRange = await _DB_attribution.findAll({
       where: {
-        assignedDate: (reqDayRange == 'today') ? currentDate : {[Op.lt]: currentDate},
-        createdAt: {[Op.lt]: lastUnitTime},
+        id_noun: nodeId
       },
       include: { //this is worked by comprehensive setting for 'association' --- foreign key between 2 including table(even a foreign key to self )
-        model: _DB_attribution,
-        // required: no set, as INNER JOIN
+        model: _DB_unitsCalendar,
+        // INNER JOIN, no 'required' set
+        required: true,
         where: {
-          id_noun: nodeId
+          assignedDate: (reqDayRange == 'today') ? currentDate : {[Op.lt]: currentDate},
+          createdAt: {[Op.lt]: lastUnitTime},
         }
       },
       order: [ //make sure the order of arr are from latest
@@ -43,10 +45,10 @@ async function _handle_GET_node_FeedList(req, res){
       limit: 12
     })
     .catch((err)=>{ throw new internalError(err ,131); });
-
+console.log(">>> length: ", unitsInRange.length)
     let unitsAssignedDate = {}, unitsIdAssignedDate = {};
     let unitsIdList = unitsInRange.map((row, index)=>{
-      unitsIdAssignedDate[row.id_unit] = row.assignedDate;
+      unitsIdAssignedDate[row.id_unit] = row.units_calendar.assignedDate;
       return row.id_unit;
     });
     //and we have to select from units for getting exposedId

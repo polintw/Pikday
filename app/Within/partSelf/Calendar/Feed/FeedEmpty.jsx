@@ -45,8 +45,8 @@ class FeedEmpty extends React.Component {
               // close the Create by rm creating in url, and then refresh page
               let urlParams = new URLSearchParams(this.props.location.search); //we need value in URL query
               urlParams.delete('creating');
-              window.history.replaceState({
-                pathname: this.props.match.path,
+              this.props.history.replace({
+                pathname: this.props.location.pathname,
                 search: urlParams.toString(),
                 state: {from: this.props.location}
               });

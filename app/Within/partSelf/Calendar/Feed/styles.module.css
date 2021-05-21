@@ -36,6 +36,12 @@
   overflow: hidden;
 }
 
+.boxNoDateFrame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .boxCalendarNoNailBack {
   width: 67%;
   height: 100%;

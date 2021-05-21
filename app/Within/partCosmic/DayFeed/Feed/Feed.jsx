@@ -110,7 +110,11 @@ class Feed extends React.Component {
     this.state.feedList.forEach((unitGroup, index)=>{
       groupsDOM.push(
         <div
-          key={"key_PathProject_FeedGroup"+index}>
+          key={"key_PathProject_FeedGroup"+index}
+          className={classnames(
+            styles.boxModule,
+            styles.boxModuleSmall,
+          )}>
           {_nailsGroup(unitGroup, index)}
         </div>
       );
@@ -127,8 +131,6 @@ class Feed extends React.Component {
             (this.state.feedList.length > 0) &&
             <div
               className={classnames(
-                styles.boxModule,
-                styles.boxModuleSmall,
                 styles.boxRow
               )}>
               {this._render_FeedNails()}

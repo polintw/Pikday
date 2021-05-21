@@ -132,7 +132,11 @@ class Feed extends React.Component {
     this.state[listByDayRange].forEach((unitGroup, index)=>{
       groupsDOM.push(
         <div
-          key={"key_AtNode_FeedGroup"+index}>
+          key={"key_AtNode_FeedGroup"+index}
+          className={classnames(
+            styles.boxModule,
+            styles.boxModuleSmall,
+          )}>
           {_nailsGroup(unitGroup, index)}
         </div>
       );
@@ -140,6 +144,10 @@ class Feed extends React.Component {
     if( (dayRange == 'today') && (groupsDOM.length == 0) ){
       groupsDOM.push(
         <div
+          className={classnames(
+            styles.boxModule,
+            styles.boxModuleSmall,
+          )}
           style={{
             margin: '8px 0 16px', color: '#b8b8b8', fontSize: '1.4rem'}}>
           {"---"}
@@ -166,11 +174,7 @@ class Feed extends React.Component {
               { this.props.i18nUIString.catalog["title_DayFeed_dayrange"]['today'] }
             </span>
           </div>
-          <div
-            className={classnames(
-              styles.boxModule,
-              styles.boxModuleSmall,
-            )}>
+          <div>
             {this._render_FeedNails('today')}
           </div>
         </div>
@@ -186,11 +190,7 @@ class Feed extends React.Component {
                   {this.props.i18nUIString.catalog['subtitle_Node_pastStart']}
               </span>
             </div>
-            <div
-              className={classnames(
-                styles.boxModule,
-                styles.boxModuleSmall,
-              )}>
+            <div>
               {this._render_FeedNails('past')}
             </div>
           </div>

@@ -7,6 +7,7 @@ import classnames from 'classnames';
 import styles from "./styles.module.css";
 import stylesNail from "../../../stylesNail.module.css";
 import FeedEmpty from './FeedEmpty.jsx';
+import BtnUploadDaily from '../../../../Unit/Editing/BtnUploadDaily/BtnUploadDaily.jsx';
 import NailFeedwtNone from '../../../../Components/Nails/NailFeedwtNone/NailFeedwtNone.jsx';
 import {_axios_get_accumulatedList} from '../axios.js';
 import {axios_get_UnitsBasic} from '../../../../utils/fetchHandlers.js';
@@ -91,6 +92,7 @@ class Feed extends React.Component {
     let currentTimeWeekEarly = new Date();
     currentTimeWeekEarly.setDate(currentTime.getDate() -7);
     let currentLoopDate = new Date(currentTime.toDateString());
+    let firstUnitDate = new Date(this.state.feedList[0][0].assignedDate);
     let latestUnitDate = false; // default a bool 'false' to control while() loop
     let latestUnitInfo = { // count info inside loop
       groupIndex: 0,
@@ -117,7 +119,8 @@ class Feed extends React.Component {
       else if( currentLoopDate.getDate() > currentTime.getDate() - 30 ){ // 30 day the most for blank date
         groupsDOM.push(
           <div
-            key={"key_Shareds_FeedGroup_"+ loopMonth + "_" + loopDate}>
+            key={"key_Shareds_FeedGroup_"+ loopMonth + "_" + loopDate}
+            className={classnames(styles.boxNoDateFrame)}>
             <div
               className={classnames(
                 styles.boxDateandNail, styles.boxDatewtNoNail)}
@@ -140,6 +143,25 @@ class Feed extends React.Component {
                 </span>
               </div>
             </div>
+            { // a special condition: there is unit, but not on today, the first day of the loop
+              ( currentLoopDate.toDateString() == currentTime.toDateString() ) &&
+              <div
+                style={{width: '100%', minWidth: '274px', margin: '4px 0 22px'}}>
+                <BtnUploadDaily
+                  {...this.props}
+                  _submit_Share_New={()=>{
+                    // close the Create by rm creating in url, and then refresh page
+                    let urlParams = new URLSearchParams(this.props.location.search); //we need value in URL query
+                    urlParams.delete('creating');
+                    this.props.history.replace({
+                      pathname: this.props.location.pathname,
+                      search: urlParams.toString(),
+                      state: {from: this.props.location}
+                    });
+                    window.location.reload();}}
+                  _refer_von_Create={this.props._refer_von_cosmic}/>
+                </div>
+              }
           </div>
         );
       };
