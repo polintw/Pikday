@@ -20,7 +20,7 @@ const i18nUIString_EN = {
     "Your registration was submitted successfully.", //"Your registration was submit successfully."
     "Please verify your email address with the link sent to your mailbox.",
   ],//"Please verifing your mail address by link we just sent to you. That's all you need to do before log in." 後面這句感覺不太需要?!
-  "message_Signin_intro": ["Get Started!", "Before you miss the wonder of the world."], //"before" to "Before"
+  "message_Signin_intro": ["Get Started!", "Not only shelf your day but also bring you the world."], //"before" to "Before"
 
   "subtitle_Sign_name": ["First name", "Last name"], //Original: Family name. 但Last name比較常用
   "subtitle_Sign_gender": "Gender",

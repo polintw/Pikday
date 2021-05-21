@@ -50,10 +50,10 @@ class Terms extends React.Component {
           className={classnames(styles.boxScroll, styles.fontScroll)}>
           <h2>{"Terms of Services"}</h2>
           <section>
-            <p>{"Hi, welcome to Cornerth. !"}</p>
+            <p>{"Hi, welcome to Piksight!"}</p>
           </section>
           <section>
-            <p>{ domain.name +" enable you to post articles with graphic items on this weblog to share something interesting related to the corner you concern about, and we would love for you to use it. "+ domain.name + "’s basic service is free, and are provided by Cornerth., Inc."}</p>
+            <p>{ domain.name +" enable you to shelf your daily memory by any photograph you got and meanwhile share it to the corner you care about. "+ domain.name + "’s basic service is free, and are provided by Cornerth., Inc."}</p>
           </section>
           <section>
             <p>{"These Terms govern your access to and use of " + domain.name+ ". These Terms also govern visitors’ access to and use of " + domain.name+ "."}</p>

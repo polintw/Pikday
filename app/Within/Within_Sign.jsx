@@ -167,7 +167,7 @@ const UnsignWithin = ( routeProps, parent) => {
         <WithinSign {...routeProps}/>
       </div>
       <div
-        className={classnames(styles.boxNavAround)}>
+        className={classnames(styles.boxNavAround, styles.boxNavAroundBgColor)}>
         <NavWithin {...routeProps} _refer_to={()=>{window.location.assign('/')}}/>
       </div>
     </div>

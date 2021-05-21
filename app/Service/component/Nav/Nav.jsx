@@ -6,7 +6,7 @@ import {
 import {connect} from "react-redux";
 import classnames from 'classnames';
 import styles from "./styles.module.css";
-import AccountPalette from '../../../Components/AccountPalette.jsx';
+import SvgLogo from '../../../Components/Svg/SvgLogo.jsx';
 
 class Nav extends React.Component {
   constructor(props){
@@ -80,51 +80,15 @@ class Nav extends React.Component {
       <div
         className={classnames(styles.comAboutNav, styles.fontNav)}>
         <div>
-          { // if under a valid token
-            (this.props.tokenStatus == 'verified') ? (
-              <a
-                href="/"
-                topath={"index"}
-                className={classnames(
-                  'plainLinkButton', 'colorDescripBlack', styles.boxLink,
-                  {
-                    [styles.linkMouse]: (this.state.mouseOn == 'index'),
-                    [styles.linkNoMouse]: (this.state.mouseOn != 'index')
-                  }
-                )}
-                onMouseEnter={this._handleEnter_Link}
-                onMouseLeave={this._handleLeave_Link}>
-                <div
-                  className={classnames(styles.smallDisplayBox)}
-                  style={{height:"20px"}}>
-
-                </div>
-                <div
-                  className={classnames(styles.smallDisplayNone)}>
-                  <AccountPalette
-                    size={'regular'}
-                    accountFirstName={this.props.userInfo.firstName}
-                    accountLastName={this.props.userInfo.lastName}
-                    styleFirst={{ fontWeight: '600' }}/>
-                </div>
-              </a>
-            ):(
-              <a
-                href="/"
-                topath={"index"}
-                className={classnames(
-                  'plainLinkButton', 'colorDescripBlack', 'fontSubtitle', styles.boxLink,
-                  {
-                    [styles.linkMouse]: (this.state.mouseOn == 'index'),
-                    [styles.linkNoMouse]: (this.state.mouseOn != 'index')
-                  }
-                )}
-                onMouseEnter={this._handleEnter_Link}
-                onMouseLeave={this._handleLeave_Link}>
-                {this.props.i18nUIString.catalog['submit_nav_Signupin']}
-              </a>
-            )
-          }
+          <a
+            href="/"
+            topath={"index"}
+            className={classnames(
+              'plainLinkButton', 'colorDescripBlack', 'fontSubtitle', styles.boxLink,
+              styles.boxLogo
+            )}>
+            <SvgLogo/>
+          </a>
         </div>
         <div>
           {this._render_serviceNav()}

@@ -104,6 +104,9 @@
     position: fixed;
     right: 0;
     top: 0;
+  }
+
+  .boxNavAroundBgColor {
     background-color: #fff8f7;
   }
 
@@ -137,6 +140,9 @@
     position: fixed;
     right: 0;
     top: 0;
+  }
+
+  .boxNavAroundBgColor {
     background-color: transparent;
   }
 
@@ -145,11 +151,8 @@
   }
 
   .boxNavWithinCosmic { /* must 'after' the boxNavAround */
-    background-color: transparent;
-  }
-
-  .boxNavWithinCosmic {
     width: 11vw;
+    background-color: transparent;
   }
 
   .boxNavOptionsFrame {
@@ -182,15 +185,23 @@
   .boxNavAround {
     width: 100%;
     position: sticky;
-    background-color: #fff8f7;
     padding: 6.46vh 0.5vw 2.66vh;
   }
 
-  .boxNavWithinCosmic {
+  .boxNavAroundBgColor {
+    background-color: #fff8f7;
+  }
+
+  .boxNavWithinSelf { /* must 'after' the boxNavAround */
+    background-color: #fff8f7;
+  }
+
+  .boxNavWithinCosmic { /* must 'after' the boxNavAround */
     width: 100%;
     height: unset;
     position: sticky;
     bottom: unset;
+    background-color: #fff8f7;
   }
 
   .boxNavOptions {

@@ -123,9 +123,10 @@
 
 @media screen and (max-width:860px) {
   .boxContentCenter {
+    width: 94.24vw;
+    max-width: 790px;
     min-width: unset;
-    width: calc(342px + 1.38vw * 2);
-    max-width: 99vw;
+    min-height: 87vh;
   }
 
   .boxContentFilledLeft {
