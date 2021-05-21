@@ -27,9 +27,17 @@ class NavOptionsUnsign extends React.Component {
       <div
         className={classnames(styles.boxNavSmall)}>
         <div
-          className={classnames(styles.boxLogo)}
-          onClick={(e)=>{e.preventDefault(); e.stopPropagation(); window.location.assign('/')}}>
-          <SvgLogo/>
+          className={classnames(styles.selfCom_NavOptions_svg_)}>
+          <div
+            className={classnames(styles.boxLogo)}
+            onClick={(e)=>{e.preventDefault(); e.stopPropagation(); window.location.assign('/')}}>
+            <SvgLogo/>
+          </div>
+        </div>
+        <div
+          className={classnames(styles.selfCom_NavOptions_svg_)}
+          style={{height: '19.33px'} /* height of 1.6rem fontSize */ }>
+          { /* No use, just easier for CSS alignment */ }
         </div>
       </div>
     );

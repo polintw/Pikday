@@ -145,7 +145,7 @@ const UnsignWithinCosmic = ( routeProps, parent) => {
             styles.boxContentFilledRight)} />
       </div>
       <div
-        className={classnames(styles.boxNavWithinCosmic)}>
+        className={classnames(styles.boxNavAround, styles.boxNavWithinCosmic)}>
         <NavWithin {...routeProps} _refer_to={()=>{window.location.assign('/')}}/>
       </div>
     </div>
@@ -156,8 +156,11 @@ const UnsignWithin = ( routeProps, parent) => {
   return (
     <div>
       <div
-        className={classnames(styles.boxNavOptions)}>
-        <NavOptionsUnsign {...routeProps} _refer_to={parent._refer_von_Sign}/>
+        className={classnames(styles.boxNavOptionsFrame)}>
+        <div
+          className={classnames(styles.boxNavOptions)}>
+          <NavOptionsUnsign {...routeProps} _refer_to={parent._refer_von_Sign}/>
+        </div>
       </div>
       <div
         className={styles.boxWithinSign}>

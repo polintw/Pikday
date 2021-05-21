@@ -68,7 +68,8 @@ class WithinSign extends React.Component {
             <Route path={this.props.match.path} component={this._compPathPlain}/>
           </Switch>
         </div>
-
+        <div
+          className={classnames(styles.boxFooter)}/>
       </div>
     )
   }
