@@ -1,6 +1,5 @@
 import {
   SET_TOKENSTATUS,
-  SET_FETCHFLAGS,
   SET_MESSAGE_SINGLE,
   SET_MESSAGE_SINGLECLOSE,
   SET_MESSAGE_BOOLEAN,
@@ -55,24 +54,6 @@ export function setMessageSingleClose(obj) {
 export function setMessageBoolean(obj) {
   return { type: SET_MESSAGE_BOOLEAN, messageBoolean: obj}
 };
-
-export function setFlag(targetArr){
-  //this actoin creator, could do function return is because we use 'thunk' middleware when create store
-  return (dispatch, getState) => {
-    //by this method we could use 'getState' & 'dispatch' in action creator
-    const currentState =  getState();
-    let flagObj = {};
-    targetArr.forEach((target, index)=>{
-      flagObj[target] = currentState[target] ? false : true;
-    })
-
-    let submitObj = {
-      type: SET_FETCHFLAGS,
-      flags: flagObj
-    };
-    dispatch(submitObj)
-  }
-}
 
 export function handleNounsList(nounsArr) {
   //this actoin creator, could do function return is because we use 'thunk' middleware when create store
@@ -213,73 +194,13 @@ export function handlePathProjectsList(pathsArr) {
 
 export function fetchBelongRecords(cancelToken){
   return (dispatch, getState) => {
-    dispatch(setBelongsByType({ // reset fetched- to init
-      fetched: false,
-      fetchedSeries: false
-    }));
-    //by this method we could use 'getState' & 'dispatch' in action creator
-    axios({
-      method: 'get',
-      url: '/router/profile/nodesBelong',
-      headers: {
-        'charset': 'utf-8',
-        'token': window.localStorage['token']
-      },
-      cancelToken: cancelToken
-    }).then(function (res) {
-      let belongObj = JSON.parse(res.data);
 
-      const nodesList= belongObj.main.nodesList;
-      let byTypeObj = belongObj.main.categoryObj;
-      let inclCatListObj = Object.assign({}, byTypeObj); //shallow copy to prevent modifying res obj
-      inclCatListObj['setTypesList'] = belongObj.main.setCatList;
-      inclCatListObj['fetched'] = true;
-
-      dispatch(handleNounsList(nodesList)); //GET nodes info
-      dispatch(setBelongsByType(inclCatListObj)); //update data incl. setCatList
-      dispatch(fetchBelongsSeries(byTypeObj)); //only need to know the type need to be fetched
-    })
-    .catch(function (thrown) {
-      let message = uncertainErr(thrown);
-      if(message) alert(message);
-    });
   }
 }
 
 export function fetchBelongsSeries(objByType) {
   //this actoin creator, could do function return is because we use 'thunk' middleware when create store
   return (dispatch, getState) => {
-    let typeKeys = Object.keys(objByType);
-    let fetchList = typeKeys.map((type, index)=>{
-      return objByType[type];
-    });
-    if(fetchList.length<1){ return;}; //security check, just prevent any unpredictable req
 
-    return axios.get('/router/nouns/direct', {
-      headers: {
-        'charset': 'utf-8',
-        'token': window.localStorage['token']
-      },
-      params: {
-        fetchList: fetchList
-      }
-    }).then((res)=>{
-      let resObj = JSON.parse(res.data);
-      let submitObj = {}, submitNodesList = [];
-      //continued using var 'typeKeys' to keep it staying consistent
-      typeKeys.forEach((type, index) => {
-        let targetNode = objByType[type];
-        submitObj[(type=="homeland") ?"homelandup": "residenceup" ] = resObj.main.nodesSeries[targetNode];
-        submitNodesList= submitNodesList.concat(resObj.main.nodesSeries[targetNode].listToTop);
-      });
-      submitObj["fetchedSeries"] = true;
-
-      dispatch({type: SET_BELONGSBYTYPE, typeObj: submitObj});
-      dispatch(handleNounsList(submitNodesList)); //also, these 'new fetched' nodes need to be handle
-    })
-    .catch(function (thrown) {
-      let message = uncertainErr(thrown);
-      if(message) alert(message);
-    });
   }
 }

@@ -29,12 +29,12 @@
 
 .boxResetForm {
   width: 358px;
-  max-width: 98vw;
+  max-width: 100%;
 }
 
 .spanTitle {
   display: inline-block;
-  padding-right: 2rem;
+  padding-right: 1rem;
   border-right: solid 1.5px #ff8168;
   box-sizing: border-box;
 }

@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from "react-redux";
 import classnames from 'classnames';
 import styles from './styles.module.css';
-import MarksLayer from './MarksLayer.jsx';
 
 class ImgLayer extends React.Component {
   constructor(props){
@@ -13,30 +12,6 @@ class ImgLayer extends React.Component {
     this.Com_ImgLayer_box = React.createRef();
     this.Com_ImgLayer_img = React.createRef();
     this._set_imgSize = ()=>{this.setState({imgWidthHeight:true})};
-    this._render_MarksLayer = this._render_MarksLayer.bind(this);
-  }
-
-  _render_MarksLayer(){
-
-    let imgWidthHeight = {
-      width: this.Com_ImgLayer_img.current.clientWidth,
-      height: this.Com_ImgLayer_img.current.clientHeight
-    },
-      //create the 'relation between img and box', then pass to marklayer as a reference for counting
-      //don't use customized statics, raising the maintanance difficulty
-      imgPosition = {
-        left: this.Com_ImgLayer_img.current.offsetLeft
-      },
-      boxWidth=this.Com_ImgLayer_box.current.clientWidth;
-
-    return (
-      <MarksLayer
-        {...this.props}
-        boxWidth={boxWidth}
-        imgPosition={imgPosition}
-        imgWidthHeight={imgWidthHeight}/>
-    )
-
   }
 
   render(){
@@ -56,10 +31,7 @@ class ImgLayer extends React.Component {
           ref={this.Com_ImgLayer_img}
           src={this.props.imgSrc}
           onLoad={this._set_imgSize}/>
-        {
-          (this.state.imgWidthHeight && this.props.lockify) &&
-          this._render_MarksLayer()
-        }
+
       </div>
     )
   }

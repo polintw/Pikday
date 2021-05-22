@@ -17,6 +17,7 @@ import {
 } from "../../utils/errHandlers.js";
 
 const initState = {
+  localClickCheck: false,
   warningDialog: false,
   confirmDialog: false,
   dialogMessage: null,
@@ -112,7 +113,7 @@ class CreateShare extends React.Component {
 
   _set_EditingClose_clear(){
     if(this.props.unitSubmitting) {this._set_warningDialog([{text: 'still submitting, please hold on.',style:{}}], 'warning');}
-    else this._set_confirmDialog([{text:'Your change will NOT be saved, do you still want to leave?',style:{}}], 'close'); //Original:'current input would not be saved after leaving, are you sure going to leave?'
+    else this._set_confirmDialog([{text:'Your change will NOT be saved.',style:{}}, {text: 'Are you sure you want to quit?', style:{display: 'block'}}], 'close'); //Original:'current input would not be saved after leaving, are you sure going to leave?'
   }
 
   _set_Submit(stateObj){
@@ -122,14 +123,9 @@ class CreateShare extends React.Component {
     const newShareObj = {
       coverBase64: stateObj.coverSrc,
       beneathBase64: stateObj.beneathSrc,
-      joinedMarks: Object.assign({}, stateObj.coverMarks.data, stateObj.beneathMarks.data),
-      joinedMarksList: stateObj.coverMarks.list.concat(stateObj.beneathMarks.list),
-      refsArr: stateObj.refsArr,
       nodesSet: stateObj.nodesSet,
       submitTime: submitTime,
-      outboundLinkMain: stateObj.outboundLinkMain,
-      authorIdentity: stateObj.authorIdentity,
-      exifGps: stateObj.exifGps
+      assignedDate: stateObj.assignedDate
     };
     //all pure JS object or structure,
     //we don't need to do any JSON.stringify() here, because the axios would serve automatical transformation
@@ -142,7 +138,7 @@ class CreateShare extends React.Component {
   _axios_post_Share_new(newObj){
     const self = this;
     self.props._set_unitSubmitting(true);
-    axios.post('/router/share/create', newObj, {
+    axios.post('/router/share/create/daily', newObj, {
       headers: {
         'Content-Type': 'application/json',
         'charset': 'utf-8',
@@ -151,13 +147,16 @@ class CreateShare extends React.Component {
       cancelToken: this.axiosSource.token
     }).then(function (res) {
       let resObj = JSON.parse(res.data); //still parse the res data prepared to be used below
-      //first, let redux state back, because this would last if the window not reload
-      self.props._set_unitSubmitting(false);
-      //then second call this, perhaps unmount the component so need to be called after redux state reset
-      //pass the res data which including id of unit
-      self.props._submit_Share_New(resObj.main);
-      //local state was final, as a last defense in case the user click the submit during a very small 'window'
-      self.setState(initState);
+      // for User Experience, wait for a second before the following steps, to make a 'distance' to the created time in DB
+      setTimeout(()=> {
+        //first, let redux state back, because this would last if the window not reload
+        self.props._set_unitSubmitting(false);
+        //then local state, by reset incl. state.localClickCheck to close the EditingModal first than path change
+        self.setState(initState);
+        //then second call this, perhaps unmount the component so need to be called after redux state reset
+        //pass the res data which including id of unit
+        self.props._submit_Share_New(resObj.main);
+      }, 1000);
     }).catch(function (thrown) {
       self.props._set_unitSubmitting(false);
       if (axios.isCancel(thrown)) {

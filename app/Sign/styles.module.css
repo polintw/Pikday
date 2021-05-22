@@ -5,12 +5,24 @@
   z-index: 3; /* set as a 'base': on the contrast to the 'Modal'*/
 }
 
+.boxNavOptions {
+  min-width: 4.2vw;
+  min-height: 7.6vh;
+  position: fixed;
+  top: 2vh;
+  left: 2.7vw;
+  box-sizing: border-box;
+  z-index: 1;
+}
+
 .boxContent {
   display: flex;
   justify-content: center;
-  width: 100%;
-  min-height: calc(93.54vh - 67px);
+  width: 94.24vw;
+  max-width: 790px;
+  min-height: calc(85.94vh - 67px);
   box-sizing: border-box;
+  margin: 0 auto;
 }
 
 .boxFooter {
@@ -46,4 +58,25 @@
 .boxRightsClaim {
   margin-top: 3rem;
   text-align: right;
+}
+
+.boxNavAround {
+  width: 100%;
+  position: sticky;
+  box-sizing: border-box;
+  background-color: #fff8f7;
+  padding: 6.46vh 0.5vw 2.66vh;
+}
+
+@media screen and (max-width:860px) {
+  .boxNavOptions {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: unset;
+    position: sticky;
+    top: 0;
+    left: 0;
+    padding-top: 2.53vh;
+  }
 }

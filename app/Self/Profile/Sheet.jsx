@@ -10,7 +10,6 @@ import {
   SheetAccount,
   SheetBasic
 } from './SheetCom.jsx';
-import BelongsSet from './BelongsSet/BelongsSet.jsx';
 import PasswordForm from '../../Components/PasswordForm/PasswordForm.jsx';
 import {mountUserSheet} from "../../redux/actions/front.js";
 import {
@@ -138,10 +137,6 @@ import {
               <SheetBasic {...this.props}/>
             </div>
             <div style={{width: '100%', borderBottom: "solid 1px #d8d8d8", marginBottom: '3rem'}}/>
-            <div>
-              <BelongsSet />
-            </div>
-
           </div>
         )
     };
@@ -158,7 +153,7 @@ import {
           className={classnames(styles.boxTitle)}>
           <span
             className={classnames(styles.spanTitle, "fontTitle", "colorSignBlack")}>
-            {this.props.i18nUIString.catalog["title_profile"]}
+            {this.props.i18nUIString.catalog["title_Account"]}
           </span>
         </div>
         <div

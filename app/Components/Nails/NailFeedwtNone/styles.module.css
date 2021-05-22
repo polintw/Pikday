@@ -1,0 +1,45 @@
+.frame {
+  position: relative;
+  box-sizing: border-box;
+}
+
+.frameOnMouse {
+
+}
+
+.boxContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 342px;
+  min-width: 30.8vw;
+  height: 249px;
+  min-height: 31.6vh;
+  position: relative;
+  box-shadow: 0 0 4px 0 rgb(84 84 84 / 45%);
+  border-radius: 8px;
+}
+
+.boxContentMouseOn {
+  box-shadow: 0 0 8px 0 rgb(84 84 84 / 45%);
+}
+
+.boxImg {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border-radius: 4px;
+  background-color: rgba(217, 232, 255, 0.15);
+  overflow: hidden;
+}
+
+@media screen and (max-width:860px) {
+  .frmaeSmall {
+    width: 100%;
+  }
+
+  .boxContent {
+    width: 100%;
+    height: 232px;
+  }
+}

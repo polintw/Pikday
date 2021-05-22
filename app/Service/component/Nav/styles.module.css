@@ -10,13 +10,19 @@
 }
 
 .boxLink {
-  display: inline-block;  
+  display: inline-block;
 }
 
 .boxNavLink {
   padding: 5px 10px;
   margin: 0 5px;
-   cursor: default; 
+   cursor: default;
+}
+
+.boxLogo {
+  width: 60px;
+  transform: translate(0, 3.2px);
+  box-sizing: border-box;
 }
 
 .boxNavLinkMouse {

@@ -1,7 +1,6 @@
 .comWrapper {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
   width: 100%;
   height: 100%;
@@ -10,6 +9,10 @@
 
 .boxContentWidth {
   width: 90%;
+}
+
+.boxContentImgWidth {
+  width: 90%; /* as boxContentWidth */
 }
 
 .boxTitle {
@@ -22,11 +25,9 @@
 }
 
 .boxFrame {
-  height: 72%;
   box-sizing: border-box;
   margin-bottom: 2.54vh;
   border-radius: 4px;
-  overflow: hidden;
 }
 
 .boxFrameAuthor {
@@ -114,7 +115,6 @@
   position: relative;
   box-sizing: border-box;
   border-radius: 4px;
-  background-color: rgba(217, 232, 255, 0.15);
 }
 
 .boxImgLayer {
@@ -129,15 +129,34 @@
 .boxImg {
   max-width: 100%;
   max-height: 100%;
+  box-shadow: 0 0 10px 0 rgb(0 0 0 / 30%);
 }
 
 .boxSmallRelative{
   display: none;
 }
 
+@media screen and (min-width:860px) {
+  .comWrapper {
+    justify-content: flex-start;
+  }
+
+  .boxFrame {
+    height: 81%;
+  }
+}
+
 @media screen and (max-width:860px) {
   .smallDisplayNone {
     display: none;
+  }
+
+  .boxContentWidth {
+    width: 94.24%; /* width to Wrapper/Feed on small screen */
+  }
+
+  .boxContentImgWidth {
+    width: 100%;
   }
 
   .boxFrame {
@@ -175,13 +194,12 @@
     align-items: center;
     width: 100%;
     height: unset;
-    min-height: 60vh;
     position: relative;
     top: unset;
     left: unset;
   }
 
   .boxImg {
-    max-height: 48vh;
+    max-height: unset;
   }
 }

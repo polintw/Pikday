@@ -37,7 +37,7 @@ class AssignSwitch extends React.Component {
     // only add when 'creating'
     if(this.props.unitView != "editing"){
       return(
-        (this.props.nodesSet.length < 3) ? (
+        (this.props.nodesSet.length < 1) ? (
           <div
             key={'_key_assignNode_readonly_add' }
             className={classnames(

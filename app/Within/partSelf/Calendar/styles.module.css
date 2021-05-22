@@ -1,0 +1,20 @@
+.comSelfWrapper {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.boxRow {
+  position: relative;
+  margin: 12px 0;
+}
+
+.boxTopTitle {
+  position: relative;
+  margin: 6.3vh 0 2.5vh;
+}
+
+@media screen and (max-width:860px) {
+
+
+}

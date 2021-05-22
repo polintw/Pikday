@@ -12,7 +12,6 @@ import Terms from './component/Terms/Terms.jsx';
 import Privacy from './component/Privacy/Privacy.jsx';
 import About from './component/About/About.jsx';
 import Contact from './component/Contact/Contact.jsx';
-import SvgLogo from '../Components/Svg/SvgLogo.jsx';
 
 class Service extends React.Component {
   constructor(props){
@@ -86,7 +85,7 @@ class Service extends React.Component {
                   <div
                     className={classnames(styles.boxRightLogo)}
                     onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.location.assign('/') }}>
-                    <SvgLogo />
+
                   </div>
                   <div className={classnames(styles.boxRightFooter)}/>
                 </div>
@@ -105,7 +104,7 @@ class Service extends React.Component {
                     'fontTitleSmall',
                     'colorDescripBlack'
                   )}>
-                  <span>{this.props.i18nUIString.catalog["Cornerth_inc"]}</span>
+                  <span>{this.props.i18nUIString.catalog["text_Inc"]}</span>
                   <span>{this.props.i18nUIString.catalog["AllRights"]}</span>
                 </div>
               </div>

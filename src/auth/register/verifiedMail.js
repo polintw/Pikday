@@ -17,7 +17,7 @@ function deliverVerifiedMail(userInfo, token){
 
     // setup email data with unicode symbols
     let mailOptions = {
-      from: '"Cornerth." <noreply@'+ domain.name +'>', // sender address
+      from: '"Piksight" <noreply@'+ domain.name +'>', // sender address
       to: userInfo.email, // list of receivers
       subject: "Email verification", // Subject line, notice! for unknown reason, subject "Please confirm your email address" would be blocked by mailjet so abandon
       html: _render_HtmlBody(token, userInfo)
@@ -41,13 +41,13 @@ const _render_HtmlBody = (token, userInfo)=>{
     domain.name+
     '/png/Logo.png" style= "height:auto; width: 100%; position:relative; box-sizing: border-box; "> </a> </div> <div class="mailBoxContent" style="text-align: left; min-height: 60vh; padding-bottom: 31.25px;"> <div class="colorEditBlack fontSubtitle"> <h2 class="mailBoxContentGreet fontSubmit" style="font-weight: 700;"> Welcome, '+
     userInfo.first_name +
-    '. </h2> <p> We are glad to have you here on Cornerth.<br/> This is the <strong>last step for the registration.</strong> </p> <p> Please <a href="https://'+
+    '. </h2> <p> We are glad to have you here on Piksight.<br/> This is the <strong>last step for the registration.</strong> </p> <p> Please <a href="https://'+
     domain.name+ '/router/register/mail/confirm?token='+token +
-    '">click here</a> <span> today<br/> verifying your email address to complete your registration.</span> </p> <p style="padding: 30px 0;"> Enjoy your adventure, and nice to meet you! </p> </div> <div class="mailBoxContentTail"> <div> <span class="colorEditLightBlack fontContent"> Best Wishes,</span> </div> <div> <span class="colorEditLightBlack fontContent"> Cornerth. Team</span> </div> </div> </div> <div class="boxFooter"> <a href="https://' +
+    '">click here</a> <span> today<br/> verifying your email address to complete your registration.</span> </p> <p style="padding: 30px 0;"> Enjoy your adventure, and nice to meet you! </p> </div> <div class="mailBoxContentTail"> <div> <span class="colorEditLightBlack fontContent"> Best Wishes,</span> </div> <div> <span class="colorEditLightBlack fontContent"> Piksight Team</span> </div> </div> </div> <div class="boxFooter"> <a href="https://' +
     domain.name+
     '/" target="_blank" class="boxLogoReverse plainLinkButton" style="margin-top: 20px; text-align: center;"> <!-- <SvgLogo/> --> <img src="https://'+
     domain.name+
-    '/png/Logo_reverse.png" style= "height:auto; width: 100%; position:relative; box-sizing: border-box; "> </a> <div class="boxFooter"> <!--class="boxServiceLink">--> <!-- <ServiceLinks/> --> <div class="boxServiceLink"> <a href="https://'+ 
+    '/png/Logo_reverse.png" style= "height:auto; width: 100%; position:relative; box-sizing: border-box; "> </a> <div class="boxFooter"> <!--class="boxServiceLink">--> <!-- <ServiceLinks/> --> <div class="boxServiceLink"> <a href="https://'+
     domain.name +
     '/a/about" method="about" style="color:white" class="plainLinkButton tagServiceLink fontServiceLink colorLightStandard"> About</a> <span class="tagServiceLink fontServiceLink colorGrey">．</span> <a href="https://' +
     domain.name+

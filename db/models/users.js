@@ -38,44 +38,14 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'cascade',
       onUpdate: 'cascade'
     });
-    users.hasMany(models.marks, {
-      foreignKey:"id_author",
-      sourceKey: "id",
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
-    });
-    users.hasMany(models.responds, {
-      foreignKey:"id_author",
-      sourceKey: "id",
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
-    });
-    users.hasMany(models.responds, {
-      foreignKey:"primer_author",
-      sourceKey: "id",
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
-    });
-    users.hasMany(models.users_nodes_homeland, {
-      foreignKey:"id_user",
-      sourceKey: "id",
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
-    });
-    users.hasMany(models.users_nodes_residence, {
-      foreignKey:"id_user",
-      sourceKey: "id",
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
-    });
     users.hasMany(models.units_nodes_assign, {
       foreignKey:"id_author",
       sourceKey: "id",
       onDelete: 'cascade',
       onUpdate: 'cascade'
     });
-    users.hasMany(models.belongs_invitation, {
-      foreignKey:"id_user",
+    users.hasMany(models.units_calendar, {
+      foreignKey:"id_author",
       sourceKey: "id",
       onDelete: 'cascade',
       onUpdate: 'cascade'
@@ -87,24 +57,6 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: 'cascade'
     });
     users.hasMany(models.inspireds, {
-      foreignKey:"id_user",
-      sourceKey: "id",
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
-    });
-    users.hasMany(models.paths, {
-      foreignKey:"id_creator",
-      sourceKey: "id",
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
-    });
-    users.hasMany(models.paths_subcate, {
-      foreignKey:"id_creator",
-      sourceKey: "id",
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
-    });
-    users.hasMany(models.users_paths, {
       foreignKey:"id_user",
       sourceKey: "id",
       onDelete: 'cascade',

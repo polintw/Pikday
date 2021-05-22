@@ -8,7 +8,6 @@ import {
 import {connect} from "react-redux";
 import classnames from 'classnames';
 import styles from './styles.module.css';
-import InvitationFellow from './InvitationFellow.jsx';
 import SigninForm from '../../Sign/components/SigninForm/SigninForm.jsx';
 import SignupForm from '../../Sign/components/SignupCom/SignupForm.jsx';
 import SignupSuccess from '../../Sign/components/SignupCom/SignupSuccess.jsx';
@@ -52,8 +51,7 @@ class WithinSign extends React.Component {
             //this.props.location.pathname=="/signup" ) ? // only Sign in /up was at the top
             this.props.location.pathname.includes('/resend') ||
             this.props.location.pathname.includes('/confirm') ||
-            this.props.location.pathname.includes('/signup/success') ||
-            this.props.location.search.includes('invitation')
+            this.props.location.pathname.includes('/signup/success')
             ) ?
             {flexDirection: 'column-reverse'}:
             {}}>
@@ -70,17 +68,15 @@ class WithinSign extends React.Component {
             <Route path={this.props.match.path} component={this._compPathPlain}/>
           </Switch>
         </div>
-
+        <div
+          className={classnames(styles.boxFooter)}/>
       </div>
     )
   }
 
   _compPathPlain ( props ){
     let params = new URLSearchParams( props.location.search); //we need value in URL query
-    let invitationify = !!params.get('invitation') ? params.get('invitation') : false;
-
-    if(invitationify) return <InvitationFellow {...this.props}/>
-    else return SigninWrapper( props, this);
+    return SigninWrapper( props, this);
   }
 }
 

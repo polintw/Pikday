@@ -1,0 +1,139 @@
+.comSharedsFeed {
+
+}
+
+.comFeedEmpty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-top: 10.1vh;
+}
+
+.boxRow {
+  position: relative;
+  margin: 12px 0;
+}
+
+.boxTitle {
+  margin: 8px 0;
+}
+
+.boxModule{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.boxDateandNail {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin: 8px 0;
+}
+
+.boxDatewtNoNail {
+  overflow: hidden;
+}
+
+.boxNoDateFrame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.boxCalendarNoNailBack {
+  width: 67%;
+  height: 100%;
+  position: absolute;
+  top: -4px;
+  left: 0;
+  box-shadow: 0 3px 4px -4px #b3b3b3;
+}
+
+.boxCalendarNailDate {
+  margin: 10px 0 8px;
+}
+
+.boxDescript {
+  width: 100%;
+  text-align: center;
+}
+
+.boxNodeUsers {
+  margin: 8px 2.76vw 0 0;
+}
+
+.boxEmptyDescript {
+  width: 100%;
+  text-align: center;
+}
+
+.boxInvite {
+  width: 70%;
+  min-width: 224px;
+  max-width: 320px;
+  padding: 22px 0 20px;
+  text-align: center;
+}
+
+.boxBtnInvite {
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  padding: 6px 1.2rem 7px;
+  border-radius: 4px;
+  border: solid 1px #a3a3a3;
+  cursor: pointer;
+}
+
+.boxBtnInviteActiv {
+  border: dashed 2px #ababab;
+}
+
+.boxFooter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 28px;
+  margin-bottom: 36vh;
+}
+
+.spanFooterHint {
+  margin: 8px 0;
+}
+
+.spanBtnInvite {
+  white-space: nowrap;
+}
+
+@media screen and (min-width:860px) {
+  .boxDatewtNoNail {
+    width: 342px;
+    min-width: 30.8vw;
+  }
+
+}
+
+@media screen and (max-width:860px) {
+  .comSharedsFeed {
+    flex-direction: column;
+  }
+
+  .boxModuleSmall {
+    justify-content: center;
+  }
+
+  .boxDateandNail {
+    width: 94.24vw;
+    max-width: 390px;
+  }
+
+  .boxDatewtNoNail {
+    width: 47vw;
+  }
+
+  .boxFooter {
+    margin-bottom: 19vh;
+  }
+}

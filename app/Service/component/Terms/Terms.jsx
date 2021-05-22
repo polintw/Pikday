@@ -50,10 +50,10 @@ class Terms extends React.Component {
           className={classnames(styles.boxScroll, styles.fontScroll)}>
           <h2>{"Terms of Services"}</h2>
           <section>
-            <p>{"Hi, welcome to Cornerth. !"}</p>
+            <p>{"Hi, welcome to Piksight!"}</p>
           </section>
           <section>
-            <p>{ domain.name +" enable you to post articles with graphic items on this weblog to share something interesting related to the corner you concern about, and we would love for you to use it. "+ domain.name + "’s basic service is free, and are provided by Cornerth., Inc."}</p>
+            <p>{"Piksight, at domain " + domain.name +", enable you to shelf your daily memory by photograph you got and share it to the corner you care about at the same time. Piksight’s basic service is free, and are provided by Cornerth, Inc."}</p>
           </section>
           <section>
             <p>{"These Terms govern your access to and use of " + domain.name+ ". These Terms also govern visitors’ access to and use of " + domain.name+ "."}</p>
@@ -96,13 +96,13 @@ class Terms extends React.Component {
                   <li>{"Will comply with all applicable laws and regulations (including, without limitation, all applicable laws regarding online conduct and acceptable content, privacy, data protection, and the transmission of technical data exported from the United States or the country in which you reside);"}</li>
                   <li>{"Will not use the Services for any unlawful purposes, to publish illegal content, or in furtherance of illegal activities;"}</li>
                   <li>{"Will not infringe or misappropriate the intellectual property rights of any third party;"}</li>
-                  <li>{"Will not post any content inappropriate (Once you post some kind of this content, we have to right to remove it without advance notify. )."}</li>
+                  <li>{"Will not post any content inappropriate (Once you post some kind of this content, we have right to remove it without advance notify. )."}</li>
                 </ul>
               </li>
               <li>
                 <h4>{"Intellectual Property"}</h4>
                 <p>{"The content  you post, including the text and graphic items, may be protected by intellectual property laws. We guarantee you own the fully intellectual property rights according to the related law. But we need your authorization to use this content legally for providing and improving our services. "}</p>
-                <p>{"Specifically, once you post an article on "+ domain.name+ ", we grant the permission to store, copy, and share the content through Hyperlink with others. This permission will terminate if you delete such content."}</p>
+                <p>{"Specifically, once you post a content on "+ domain.name+ ", we grant the permission to store, copy, and share the content through Hyperlink with others. This permission will terminate if you delete such content."}</p>
               </li>
               <li>
                 <h4>{"Copyright Infringement"}</h4>

@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from "react-redux";
 import classnames from 'classnames';
-import stylesFont from '../../stylesFont.module.css';
 import SvgUpload from '../../../Components/Svg/SvgUpload.jsx';
 import AniBtnImgUpload from '../../../Components/AniBtn/AniBtnImgUpload.jsx';
 import {
@@ -70,13 +69,6 @@ class ImgImport extends React.Component {
           <AniBtnImgUpload
             _set_newImgSrc={this.props._set_newImgSrc}
             _set_Submitting={()=>{/* Here we do not inform the parent we are submitting */}}/>
-        </div>
-        <div
-          style={this.style.Com_div_ImgImport_ImgEmpty_Guiding}>
-          <span
-            className={classnames(stylesFont.colorEditLightBlack, stylesFont.fontDescript)}>
-            {this.props.i18nUIString.catalog['guiding_UnitEdit_upload']}
-          </span>
         </div>
       </div>
     )
