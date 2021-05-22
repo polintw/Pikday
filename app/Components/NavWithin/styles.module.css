@@ -86,9 +86,7 @@
 }
 
 @media screen and (max-width:1110px) {
-  .boxRightsClaim {
-    text-align: right;
-  }
+
 }
 
 @media screen and (max-width:860px) {
@@ -100,4 +98,7 @@
     display: none;
   }
 
+  .boxRightsClaim {
+    margin-top: 16px;
+  }
 }

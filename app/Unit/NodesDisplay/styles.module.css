@@ -16,7 +16,7 @@
 }
 
 .spanNodeItemMouse {
-  border-bottom: solid 0.75px #757575;
+  border-bottom: solid 0.75px #FFFFFF;
   cursor: pointer; /* there is some condition do not neew pointer, so set in this special class*/
 }
 

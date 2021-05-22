@@ -10,7 +10,6 @@ import styles from "./styles.module.css";
 const {
   domain,
   email,
-  outside
 } = require('../../../../config/services.js');
 
 class Contact extends React.Component {
@@ -65,21 +64,7 @@ class Contact extends React.Component {
         </ul>
       </section>
     )
-    let facebookDOM = (
-      <section
-        key={"key_textSection_pinterest"}>
-        <ul style={{listStyle: 'none'}}>
-          <a
-            href={outside.facebookTW}
-            target={"_blank"}
-            style={{color: 'rgb(69, 135, 160)'}}>
-            {"Cornerth.TW on Facebook"}
-          </a>
-        </ul>
-      </section>
-    )
     textDOM.splice(1, 0, emailDOM);
-    textDOM.splice(4, 0, facebookDOM);
 
     return textDOM;
   }

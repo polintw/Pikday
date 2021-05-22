@@ -10,9 +10,6 @@ import {connect} from "react-redux";
 import classnames from 'classnames';
 import styles from "./styles.module.css";
 import Around from './partAround/Around.jsx';
-import {
-  fetchBelongRecords
-} from '../redux/actions/general.js'
 import NavWithin from '../Components/NavWithin/NavWithin.jsx';
 import NavOptions from '../Components/NavOptions/NavOptions.jsx';
 import ModalBox from '../Components/ModalBox.jsx';
@@ -20,12 +17,14 @@ import ModalBackground from '../Components/ModalBackground.jsx';
 import SingleDialog from '../Components/Dialog/SingleDialog/SingleDialog.jsx';
 import SingleCloseDialog from '../Components/Dialog/SingleCloseDialog/SingleCloseDialog.jsx';
 import BooleanDialog from '../Components/Dialog/BooleanDialog/BooleanDialog.jsx';
+import ScrollToTop from '../Components/RouterScrollTop.jsx';
 
 class WithinAround extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      switchTo: null
+      switchTo: null,
+      navWithinNotDisSmall: false
     };
     this._refer_von_cosmic = this._refer_von_cosmic.bind(this);
     this.style={
@@ -33,26 +32,13 @@ class WithinAround extends React.Component {
         width: '100%',
         height: '100%',
         position: 'fixed',
-        backgroundColor: '#FCFCFC'
+        backgroundColor: '#FDFDFC'
       },
     }
   }
 
   _refer_von_cosmic(identifier, route){
     switch (route) {
-      case 'user':
-        if(identifier == this.props.userInfo.id){
-          window.location.assign('/user/screen');
-        }else{
-          this.setState((prevState, props)=>{
-            let switchTo = {
-              params: '/cosmic/users/'+identifier+'/accumulated',
-              query: ''
-            };
-            return {switchTo: switchTo}
-          })
-        }
-        break;
       case 'noun':
         this.setState((prevState, props)=>{
           let switchTo = {
@@ -75,6 +61,20 @@ class WithinAround extends React.Component {
         switchTo: null
       });
     }
+    let urlParams = new URLSearchParams(this.props.location.search); //we need value in URL query
+    let prevUrlParmas = new URLSearchParams(prevProps.location.search);
+    if(
+      urlParams.has('creating') &&
+      !prevUrlParmas.has("creating")
+    ){
+      this.setState({ navWithinNotDisSmall: true });
+    }
+    else if(
+      !urlParams.has('creating') &&
+      prevUrlParmas.has("creating")
+    ){
+      this.setState({ navWithinNotDisSmall: false });
+    };
   }
 
   componentDidMount() {
@@ -82,8 +82,6 @@ class WithinAround extends React.Component {
     Here is the highest level next only to status() in root, fetching data or any info needed
     */
     if( !window.localStorage['token'] ) return;
-    //beneath are the process difinately need a token
-    this.props._fetch_belongRecords();
   }
 
   componentWillUnmount() {
@@ -112,17 +110,19 @@ class WithinAround extends React.Component {
                 styles.boxContentFilledLeft)}/>
             <div
               className={classnames(styles.boxAroundContentCenter)}>
-              <Switch>
-                <Route path={this.props.match.path} render={(props)=> <Around {...props} _refer_von_cosmic={this._refer_von_cosmic}/>}/>
-
-              </Switch>
+              <ScrollToTop>
+                <Switch>
+                  <Route path={this.props.match.path} render={(props)=> <Around {...props} _refer_von_cosmic={this._refer_von_cosmic}/>}/>
+                </Switch>
+              </ScrollToTop>
             </div>
             <div
               className={classnames(
                 styles.boxContentFilledRight)}/>
           </div>
           <div
-            className={classnames(styles.boxNavAround)}>
+            className={this.state.navWithinNotDisSmall ? classnames(styles.boxNavAround, styles.boxNavAroundBgColor, 'smallDisplayNone') :
+              classnames(styles.boxNavAround, styles.boxNavAroundBgColor) }>
             <NavWithin {...this.props} _refer_to={this._refer_von_cosmic}/>
           </div>
         </div>
@@ -188,7 +188,7 @@ const mapStateToProps = (state)=>{
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    _fetch_belongRecords: () => {dispatch(fetchBelongRecords())},
+
   }
 }
 

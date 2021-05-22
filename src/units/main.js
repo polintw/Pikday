@@ -8,11 +8,7 @@ const {
 
 const srcExecutive = require('./single/src.js');
 const singleExecutive = require('./single/single.js');
-const relatedExecutive = require('./single/related.js')
-const entitiesExecutive = require('./entities/execute.js')
 const numerousExecutive = require('./numerous.js')
-const primerExecutive = require('./primer.js')
-const respondsExecutive = require('./responds.js')
 
 /*
   Notice! Check First!
@@ -36,12 +32,6 @@ main.use(function(req, res, next) {
       _handle_ErrCatched(new authorizedError(message, 89), req, res);
     }
     switch (secondPath) { //pathSplice should be e.g "[/numerous/,numerous, ...]"
-      case 'primer':
-        noTokenHandler();
-        break;
-      case 'responds':
-        noTokenHandler();
-        break;
       default:
         next()
     }
@@ -53,20 +43,16 @@ main.use(function(req, res, next) {
 //then other middleware after the permission check
 
 // path has token
-main.use('/primer', primerExecutive)
-main.use('/responds', respondsExecutive)
 
 
 // path do not need a token
 
 main.use('/numerous', numerousExecutive)
-main.use('/entity', entitiesExecutive)
 // remember put the pathe with ':id' after the others.
 main.param("exposedId", (req, res, next, exposedId)=>{
   req.reqExposedId = exposedId;
   next();
 })
-main.use('/:exposedId/related', relatedExecutive)
 main.use('/:exposedId/src', srcExecutive)
 main.use('/:exposedId', singleExecutive)
 

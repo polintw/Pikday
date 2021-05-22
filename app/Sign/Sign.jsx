@@ -13,11 +13,11 @@ import Signin from './Signin/Signin.jsx';
 import Resend from './Resend/Resend.jsx';
 import Unsubscribe from './Unsubscribe/Unsubscribe.jsx';
 import Confirmation from './components/Confirmation/Confirmation.jsx';
-import SvgLogo from '../Components/Svg/SvgLogo.jsx';
-import ServiceLinks from '../Components/ServiceLinks.jsx';
+import NavWithin from '../Components/NavWithin/NavWithin.jsx';
 import ModalBox from '../Components/ModalBox.jsx';
 import ModalBackground from '../Components/ModalBackground.jsx';
 import SingleDialog from '../Components/Dialog/SingleDialog/SingleDialog.jsx';
+import NavOptionsUnsign from '../Components/NavOptions/NavOptionsUnsign.jsx';
 
 class Sign extends React.Component {
   constructor(props){
@@ -30,7 +30,7 @@ class Sign extends React.Component {
         width: '100%',
         height: '100%',
         position: 'fixed',
-        backgroundColor: '#FCFCFC'
+        backgroundColor: '#FDFDFC'
       },
     }
   }
@@ -46,6 +46,13 @@ class Sign extends React.Component {
           <div
             className={classnames(styles.comSign)}>
             <div
+              className={classnames("smallDisplayBox")}>
+              <div
+                className={classnames(styles.boxNavOptions)}>
+                <Route path="/" render={(props)=> <NavOptionsUnsign {...props} _refer_to={()=>{ }}/> }/>
+              </div>
+            </div>
+            <div
               className={classnames(styles.boxContent)}>
               <Switch>
                 <Route path="/signup" render={(props)=> <Signup {...props}/>}/>
@@ -55,27 +62,9 @@ class Sign extends React.Component {
                 <Route path="/unsubscribe" render={(props)=> <Unsubscribe {...props}/>}/>
               </Switch>
             </div>
-
             <div
-              className={classnames(styles.boxFooter)}>
-              <div
-                className={classnames(styles.boxLogo)}
-                onClick={(e)=>{e.preventDefault(); e.stopPropagation(); window.location.assign('/');}}>
-                <SvgLogo/>
-              </div>
-              <div
-                className={classnames(styles.boxServiceLink)}>
-                <ServiceLinks />
-                <div
-                  className={classnames(
-                    styles.boxRightsClaim,
-                    'fontTitleSmall',
-                    'colorDescripBlack'
-                  )}>
-                  <span>{this.props.i18nUIString.catalog["Cornerth_inc"]}</span>
-                  <span>{this.props.i18nUIString.catalog["AllRights"]}</span>
-                </div>
-              </div>
+              className={classnames(styles.boxNavAround)}>
+              <Route path="/" render={(props)=> <NavWithin {...props} _refer_to={()=>{window.location.assign('/')}}/> }/>
             </div>
           </div>
 

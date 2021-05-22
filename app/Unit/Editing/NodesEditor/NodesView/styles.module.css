@@ -1,20 +1,22 @@
 .comNodesView{
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-around;
   width: 100%;
   height: 100%;
   position: relative;
+  padding-top: 10%;
 }
 
 .boxForm {
   width: 100%;
 }
 
-.boxRow {
+.boxSearchRow {
   display: flex;
   align-items: center;
+  justify-content: center;
   width: 100%;
   margin-bottom: 15px;
 }
@@ -24,7 +26,8 @@
 }
 
 .boxNodesEditTitle {
-
+  max-width: 254px;
+  text-align: center;
 }
 
 .boxAssignedNodes {
@@ -32,6 +35,7 @@
 }
 
 .boxNodeSearch {
+  width: 80%;
   min-width: 260px;
 }
 
@@ -58,12 +62,6 @@
   height: 39px;
   box-sizing: border-box;
   cursor: default;
-}
-
-.seperationRowVertiLine {
-  height: 39px;
-  border-left: solid 1.2px #757575;
-  margin-right: 2rem;
 }
 
 .seperationBottom {

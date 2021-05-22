@@ -24,7 +24,6 @@ function _handle_nouns_search(req, res){
     return _DB_nouns.findAll({
       where: {
         name: {[Op.like]: aquired+'%'},
-        language: 'en',
         category: 'location_admin'
       },
       attributes: ['id', 'name', 'prefix']

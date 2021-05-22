@@ -8,10 +8,7 @@ const {
   userImg
 } = require('../../config/path.js');
 const _DB_units = require('../../db/models/index').units;
-const _DB_marks = require('../../db/models/index').marks;
-const _DB_marksContent = require('../../db/models/index').marks_content;
 const _DB_attribution = require('../../db/models/index').attribution;
-const _DB_responds = require('../../db/models/index').responds;
 const _DB_units_nodesAssign = require('../../db/models/index').units_nodes_assign;
 
 const {
@@ -77,20 +74,8 @@ async function _handle_PATCH_sharedErase(req, res){
       return _DB_units.destroy({where: {id: unitId}})
       .catch((err)=>{throw err});
     };
-    const destroyMarks = ()=>{ //paranoid
-      return _DB_marks.destroy({where: {id_unit: unitId}})
-      .catch((err)=>{throw err});
-    };
-    const destroyMarksContent = ()=>{ //paranoid
-      return _DB_marksContent.destroy({where: {id_unit: unitId}})
-      .catch((err)=>{throw err});
-    };
     const destroyAttri = ()=>{ //paranoid
       return _DB_attribution.destroy({where: {id_unit: unitId}})
-      .catch((err)=>{throw err});
-    };
-    const destroyRespond = ()=>{ //could not recover
-      return _DB_responds.destroy({where: {id_unit: unitId}})
       .catch((err)=>{throw err});
     };
     const destroyUnitsNodeAss = ()=>{ //could not recover
@@ -100,8 +85,6 @@ async function _handle_PATCH_sharedErase(req, res){
 
     return Promise.all([
       new Promise((resolve, reject)=>{destroyUnits().then(()=>{resolve();});}),
-      new Promise((resolve, reject)=>{destroyMarks().then(()=>{resolve();});}),
-      new Promise((resolve, reject)=>{destroyMarksContent().then(()=>{resolve();});}),
       new Promise((resolve, reject)=>{destroyAttri().then(()=>{resolve();});}),
       new Promise((resolve, reject)=>{destroyUnitsNodeAss().then(()=>{resolve();});})
     ])

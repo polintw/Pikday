@@ -6,7 +6,7 @@ import {
 import { connect } from "react-redux";
 import classnames from 'classnames';
 import styles from "./styles.module.css";
-import {SvgArrowToLeft} from '../Svg/SvgArrow.jsx';
+import {SvgArrowToRight} from '../Svg/SvgArrow.jsx';
 
 class NavWihtinSelf extends React.Component {
     constructor(props) {
@@ -46,14 +46,14 @@ class NavWihtinSelf extends React.Component {
                         styles.boxNavLink,
                         {[styles.boxNavLinkMouseon]: this.state.onbtn}
                     )}
-                    style={{ alignSelf: 'flex-start' }}
+                    style={{ alignSelf: 'center' }}
                     onMouseEnter={this._handleEnter_Link}
                     onMouseLeave={this._handleLeave_Link}>
                     <div
                       className={classnames(styles.boxSvgArrow)}>
                       <div
                         style={{width: "10px", height: "12px"}}>
-                        <SvgArrowToLeft
+                        <SvgArrowToRight
                           mouseOn={this.state.onbtn}
                           customStyles={{fillColorMouseOn: '#444444', fillColor: '#a3a3a3'}}/>
                       </div>

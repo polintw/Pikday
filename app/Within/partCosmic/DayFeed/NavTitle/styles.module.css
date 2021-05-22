@@ -1,0 +1,48 @@
+.boxTitle {
+  margin: 8px 0;
+}
+
+.comNavTitle {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: baseline;
+  width: 100%;
+}
+
+.boxRowSubtitle {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.boxSubtitleDate {
+  display: flex;
+  align-items: baseline;
+}
+
+.boxLinkSwitchMouseOn {
+  width: 100%;
+  height: 28px;
+  position: absolute;
+  top: 47%;
+  transform: translate(0, -50%);
+  box-sizing: border-box;
+  border-radius: 8px;
+  background-color: #d8d8d8;
+}
+
+.spanDaySwitch {
+  display: inline-block;
+  position: relative;
+}
+
+.spanDaySwitchMouseon {
+
+}
+
+.spanAlias {
+  display: inline-block;
+  margin-left: 8px;
+}

@@ -39,19 +39,12 @@ module.exports = (sequelize, DataTypes) => {
     paranoid: true
   });
   units.associate = function(models) {
+    units.hasOne(models.units_calendar, {
+      foreignKey:"id_unit",
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
+    });
     units.hasMany(models.users_units, {
-      foreignKey:"id_unit",
-      sourceKey: "id",
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
-    });
-    units.hasMany(models.marks, {
-      foreignKey:"id_unit",
-      sourceKey: "id",
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
-    });
-    units.hasMany(models.marks_content, {
       foreignKey:"id_unit",
       sourceKey: "id",
       onDelete: 'cascade',
@@ -63,25 +56,7 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'cascade',
       onUpdate: 'cascade'
     });
-    units.hasMany(models.responds, {
-      foreignKey:"id_unit",
-      sourceKey: "id",
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
-    });
-    units.hasMany(models.responds, {
-      foreignKey:"id_primer",
-      sourceKey: "id",
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
-    });
     units.hasMany(models.units_nodes_assign, {
-      foreignKey:"id_unit",
-      sourceKey: "id",
-      onDelete: 'cascade',
-      onUpdate: 'cascade'
-    });
-    units.hasMany(models.units_paths_subdistribute, {
       foreignKey:"id_unit",
       sourceKey: "id",
       onDelete: 'cascade',

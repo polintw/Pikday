@@ -6,8 +6,6 @@ export const accountInfoInit = {
   firstName: '',
   lastName: '',
   id: null,
-  pathProject: null, // 'name' of the project
-  pathName: null // be 'null' to make a bool check
 }
 
 export const unitCurrentInit = {
@@ -19,18 +17,8 @@ export const unitCurrentInit = {
   },
   coverSrc: null,
   beneathSrc: null,
-  coverMarksList:[],
-  coverMarksData:{},
-  beneathMarksList:[],
-  beneathMarksData:{},
   nouns: {list:[]},
-  refsArr: null,
-  outBoundLink: {main: null},
-  imgLocation: { longitude: null, latitude: null },
   createdAt: null,
-  primerify: false,
-  primer: {primerId: '', authorPrimer: ''},
-  primerSrc: null
 }
 
 export const messageDialogInit= {

@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from "react-redux";
 import classnames from 'classnames';
 import styles from "./styles.module.css";
-import SvgLogo from '../Svg/SvgLogo.jsx';
 import ServiceLinks from '../ServiceLinks.jsx';
 
 class NavWithin extends React.Component {
@@ -32,9 +31,10 @@ class NavWithin extends React.Component {
         className={classnames(styles.comNavWithin)}>
         {this.props.logotop}
         <div
-          className={classnames(styles.boxLogo)}
+          className={classnames(
+            styles.boxLogo, "smallDisplayNone") /* No logo now, but keep it in the big screen for flex-box.*/ }
           onClick={(e)=>{e.preventDefault(); e.stopPropagation(); this.props._refer_to('', '/')}}>
-          <SvgLogo/>
+
         </div>
         <div
           className={classnames(styles.boxFooter)}>
@@ -46,7 +46,7 @@ class NavWithin extends React.Component {
               'fontTitleSmall',
               'colorDescripBlack'
             )}>
-            <span>{this.props.i18nUIString.catalog["Cornerth_inc"]}</span>
+            <span>{this.props.i18nUIString.catalog["text_Inc"]}</span>
             <span>{this.props.i18nUIString.catalog["AllRights"]}</span>
           </div>
         </div>

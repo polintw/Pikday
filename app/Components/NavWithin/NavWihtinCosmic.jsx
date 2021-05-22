@@ -8,7 +8,7 @@ import {
 import { connect } from "react-redux";
 import classnames from 'classnames';
 import styles from "./styles.module.css";
-import {SvgArrowToRight} from '../Svg/SvgArrow.jsx';
+import {SvgArrowToLeft} from '../Svg/SvgArrow.jsx';
 
 class NavWihtinCosmic extends React.Component {
     constructor(props) {
@@ -17,7 +17,6 @@ class NavWihtinCosmic extends React.Component {
           onbtn: false,
           onItem: false
         };
-        this._compExploreLink = this._compExploreLink.bind(this);
         this._handleMouseUp_LinkItem = this._handleMouseUp_LinkItem.bind(this);
         this._handleOver_LinkItem = this._handleOver_LinkItem.bind(this);
         this._handleOut_LinkItem = this._handleOut_LinkItem.bind(this);
@@ -33,49 +32,13 @@ class NavWihtinCosmic extends React.Component {
 
     }
 
-  _compExploreLink(){
-    let linkDOM = [];
-
-    linkDOM.push(
-      <Link
-        key={"key_exploreLink"}
-        to={"/cosmic/focus"}
-        linkto={'focus'}
-        className={classnames(
-          'plainLinkButton')}
-          onMouseOver={this._handleOver_LinkItem}
-          onMouseOut={this._handleOut_LinkItem}
-          onMouseUp={this._handleMouseUp_LinkItem}>
-          <span
-            className={classnames(
-              "fontContent", styles.spanLinkItem,
-              {
-                [styles.spanLinkItemMouse]: this.state.onItem == 'focus',
-                ["colorGrey"]: this.state.onItem != 'focus',
-                ["colorEditBlack"]: this.state.onItem == 'focus'
-              }
-            )}>
-            {this.props.i18nUIString.catalog['title_focusBoard']}</span>
-        </Link>
-    );
-
-    return linkDOM;
-  }
-
     render() {
         return (
             <div
               className={classnames(styles.comNavWithinCosmic)}>
                 <div
                   className={classnames(styles.boxNavCosmic)}>
-                  <Switch>
-                    <Route
-                      path={this.props.match.path + "/nodes"}
-                      component = {this._compExploreLink} />
-                    <Route
-                      path={this.props.match.path + "/explore"}
-                      component = {this._compExploreLink} />
-                  </Switch>
+
                 </div>
                 <Link
                   to={"/"}
@@ -90,7 +53,7 @@ class NavWihtinCosmic extends React.Component {
                     className={classnames(styles.boxSvgArrow)}>
                     <div
                       style={{width: "10px", height: "12px"}}>
-                      <SvgArrowToRight
+                      <SvgArrowToLeft
                         mouseOn={this.state.onbtn}
                         customStyles={{fillColorMouseOn: '#444444', fillColor: '#a3a3a3'}}/>
                     </div>

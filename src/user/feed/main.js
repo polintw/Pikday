@@ -1,17 +1,8 @@
 const express = require('express');
 const main = express.Router();
 
-const fellowExecutive = require('./fellows.js');
-const chainExecutive = require('./chainlist.js');
-const focusExecutive = require('./focus.js');
-const unitslistExecutive = require('./unitslist.js');
+const dailyExecutive = require('./daily.js');
 
-main.use('/fellows', fellowExecutive)
-
-main.use('/chainlist', chainExecutive)
-
-main.use('/unitslist', unitslistExecutive)
-
-main.use('/focus', focusExecutive)
+main.use('/daily', dailyExecutive)
 
 module.exports = main;

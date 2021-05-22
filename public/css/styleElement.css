@@ -117,15 +117,8 @@
 .boxServiceLink {
   display: flex;
   flex-wrap: wrap;
+  justify-content: flex-end;
   max-width: 100%;
-}
-
-.tagServiceLink {
-  display: inline-block;
-  width: 50%;
-  box-sizing: border-box;
-  margin-top: 1rem;
-  text-align: center;
 }
 
 .fontServiceLink {
@@ -159,4 +152,8 @@
 
 .spanNameFirstName {
   font-weight: 600; /* to overlap the default font weight */
+}
+
+@media screen and (max-width:860px) {
+
 }

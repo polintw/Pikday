@@ -3,9 +3,9 @@
   flex-direction: column;
   justify-content: space-around;
   width: 100%;
-  min-height: 24rem;
+  min-height: 21rem;
   box-sizing: border-box;
-  padding: 4rem 10% 3rem;
+  padding: 4rem 10% 3.6rem;
 }
 
 .boxMessage {

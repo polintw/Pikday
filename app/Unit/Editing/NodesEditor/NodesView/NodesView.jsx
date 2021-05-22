@@ -6,19 +6,14 @@ import {connect} from "react-redux";
 import classnames from 'classnames';
 import styles from "./styles.module.css";
 import AssignNodes from '../AssignNodes.jsx';
-import AssignOptions from '../AssignOptions/AssignOptions.jsx';
 import NodesSearch from '../NodesSearch/NodesSearch.jsx';
 
 const typesState = {
-  homeland: 'homeSelection',
-  residence: 'residSelection',
   freeOne: 'freeSelection'
 };
-const checkList = ['homeSelection', 'residSelection', 'freeSelection'] // follow typesState
+const checkList = ['freeSelection'] // follow typesState
 
 const stateTypes = {
-  homeSelection:'homeland',
-  residSelection: 'residence',
   freeSelection: 'freeOne'
 };
 
@@ -28,8 +23,6 @@ class NodesView extends React.Component {
     // by props.nodesSet, est. state
     let propsState = {
       selectedList: [], // all id of selectd nodes
-      homeSelection: null, //node id as selection of homeland
-      residSelection: null, //node id as selection of residence
       freeSelection: null //node id as selection of free search
     };
     this.props.nodesSet.forEach((obj, index) => {
@@ -97,50 +90,13 @@ class NodesView extends React.Component {
       <div
         className={classnames(styles.comNodesView)}>
         <div
-          className={classnames(styles.boxNodesEditTitle, "fontSubtitle", "colorEditBlack")}>
+          className={classnames(styles.boxNodesEditTitle, "fontSubtitle", "colorEditBlack", "weightBold")}>
           {this.props.i18nUIString.catalog["guidingCreateShare_NodesView"]}
         </div>
         <div
           className={classnames(styles.boxForm)}>
-          <div className={classnames(styles.boxRow)}>
-            <div className={classnames(styles.boxRowTitle)}>
-              <span className={classnames('fontSubtitle_h5', 'colorEditBlack')}>
-                {this.props.i18nUIString.catalog["subTitle_CreateShare_AssignTypes"][0]}
-              </span>
-            </div>
-            <div className={classnames(styles.seperationRowVertiLine)}/>
-            <div>
-              <AssignOptions
-                assignType={'homeland'}
-                selected={this.state.homeSelection}
-                allSelection={this.state.selectedList}
-                _submit_new_node={this._set_newNode}
-                _submit_deleteNodes={this._set_deleteNodes}/>
-            </div>
-          </div>
-          <div className={classnames(styles.boxRow)}>
-            <div className={classnames(styles.boxRowTitle)}>
-              <span className={classnames('fontSubtitle_h5', 'colorEditBlack')}>
-                {this.props.i18nUIString.catalog["subTitle_CreateShare_AssignTypes"][1]}
-              </span>
-            </div>
-            <div className={classnames(styles.seperationRowVertiLine)}/>
-            <div>
-              <AssignOptions
-                assignType={'residence'}
-                selected={this.state.residSelection}
-                allSelection={this.state.selectedList}
-                _submit_new_node={this._set_newNode}
-                _submit_deleteNodes={this._set_deleteNodes}/>
-            </div>
-          </div>
-          <div className={classnames(styles.boxRow)}>
-            <div className={classnames(styles.boxRowTitle)}>
-              <span className={classnames('fontSubtitle_h5', 'colorEditBlack')}>
-                {this.props.i18nUIString.catalog["subTitle_CreateShare_AssignTypes"][2]}
-              </span>
-            </div>
-            <div className={classnames(styles.seperationRowVertiLine)}/>
+
+          <div className={classnames(styles.boxSearchRow)}>
             <div
               className={classnames(
                 {[styles.boxNodeSearch]: !this.state.freeSelection})}>
@@ -254,7 +210,6 @@ const mapStateToProps = (state) => {
     i18nUIString: state.i18nUIString,
     unitView: state.unitView,
     nounsBasic: state.nounsBasic,
-    belongsByType: state.belongsByType
   }
 }
 

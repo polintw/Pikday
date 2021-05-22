@@ -20,8 +20,6 @@ const {
   belongsPatchLimiter
 } = require('./src/rateLimiter.js');
 const mailTimer = require("./scripts/mailer/mailTimer.js");
-const _DB_units = require('./db/models/index').units;
-const _DB_unitsReqOrigin = require('./db/models/index').units_req_origin;
 
 
 //babel-polyfill is here for the whole code after it!
@@ -116,44 +114,6 @@ app.use('/', function(req, res, next){
         throw err
       }
     });
-    if((req.path == "/cosmic/explore/unit") && (req.hostname != domain.name) ){ // and one more check, record the req if it was a Unit direct req
-      let unitExposedId = req.query.unitId;
-      // no need to wait async process, let it run itself
-      _DB_units.findOne({
-        where: {exposedId: unitExposedId}
-      })
-      .then((result)=>{
-        if(!result) return; // null, no this Unit
-        return _DB_unitsReqOrigin.findOne({
-          where: {
-            id_unit: result.id,
-            prev_domain: req.hostname
-          }
-        })
-        .then((resultReqOrigin)=>{
-          if(resultReqOrigin){
-            let nextCount = resultReqOrigin.reqCount +1;
-            return _DB_unitsReqOrigin.update(
-              {reqCount: nextCount},
-              {where: {
-                id_unit: result.id,
-                prev_domain: req.hostname
-              }}
-            );
-          }
-          else {
-            return _DB_unitsReqOrigin.create({
-              id_unit: result.id,
-              exposedId: result.exposedId,
-              prev_domain: req.hostname
-            });
-          };
-        }).catch((error)=> {throw error});
-      })
-      .catch((error)=>{
-        winston.error(`${"Update statics to units_req_origin failed from url"} - ${req.originalUrl} - ${req.method} - ${req.ip} , Error: ${error}`);
-      });
-    };
   }
 });
 app.use('/', routerPathWithin);
@@ -176,6 +136,8 @@ app.listen(process.env.port || envBasic.port);
 winston.warn("server initiating, running at Port "+envBasic.port);
 
 // initiate mail timer
+/*
+//temporaly cease mailTimer
 function intervalMarketMail(){
   winston.warn("mail timer initiating under production mode, setInterval to: 12 hours.");
   mailTimer(); // first time at init
@@ -185,6 +147,5 @@ function intervalMarketMail(){
     mailTimer();
   }, 43200000) // every 12 hours. Nodejs could accept only integer < 2147483647 miliseconds
 };
-/*
-temporaly cease mailTimer
+
 if (process.env.NODE_ENV != 'development') intervalMarketMail(); */

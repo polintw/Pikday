@@ -4,7 +4,6 @@ import {
   SET_MESSAGE_SINGLE,
   SET_MESSAGE_SINGLECLOSE,
   SET_MESSAGE_BOOLEAN,
-  SET_FETCHFLAGS,
   SET_UNITCURRENT,
   SET_TOKENSTATUS,
   SET_BELONGSBYTYPE,
@@ -13,16 +12,12 @@ import {
   UPDATE_PATHSBASIC
 } from '../types/typesGeneral.js';
 import {
-  SET_INDEXLISTS,
   SUBMIT_FEEDASSIGN,
   SUBMIT_CHAINLIST,
   SUBMIT_SHAREDSLIST,
-  SET_FLAG_CHAINRESPOND
 } from '../types/typesWithin.js';
 import {
   SET_UNITVIEW,
-  SET_UNITSUBCATE,
-  SUBMIT_UNITRESPONDSLIST,
   UNIT_SUBMITTING_SWITCH
 } from '../types/typesUnit.js';
 import {
@@ -62,9 +57,6 @@ function pageWithin(state = initialGeneral, action){
         messageBoolean: action.messageBoolean
       })
       break;
-    case SET_FETCHFLAGS:
-      return Object.assign({}, state, {...action.flags}) //there were many kind of flags, all binary(bool), and all set by this case.
-      break;
     case SET_TOKENSTATUS:
       return Object.assign({}, state, {
         ...action.status
@@ -75,11 +67,6 @@ function pageWithin(state = initialGeneral, action){
         unitView: action.unitView
       })
       break;
-    case SET_UNITSUBCATE:
-      return Object.assign({}, state, {
-        unitSubCate: {...state.unitSubCate, ...action.unitSubCate}
-      })
-      break;
     case SET_UNITCURRENT:
       return Object.assign({}, state, {
         unitCurrent: {...state.unitCurrent, ...action.unitCurrent}
@@ -88,11 +75,6 @@ function pageWithin(state = initialGeneral, action){
     case SET_BELONGSBYTYPE:
       return Object.assign({}, state, {
         belongsByType: {...state.belongsByType, ...action.typeObj}
-      })
-      break;
-    case SET_INDEXLISTS:
-      return Object.assign({}, state, {
-        indexLists: {...state.indexLists, ...action.lists}
       })
       break;
     case SUBMIT_FEEDASSIGN:
@@ -108,16 +90,6 @@ function pageWithin(state = initialGeneral, action){
     case SUBMIT_SHAREDSLIST:
       return Object.assign({}, state, {
         sharedsList: { ...state.sharedsList, ...action.listsObj}
-      })
-      break;
-    case SUBMIT_UNITRESPONDSLIST:
-      return Object.assign({}, state, {
-        unitCurrentResponds: {...state.unitCurrentResponds, ...action.listsObj}
-      })
-      break;
-    case SET_FLAG_CHAINRESPOND:
-      return Object.assign({}, state, {
-        flagChainFetRespond: action.bool
       })
       break;
     case UPDATE_NOUNSBASIC:

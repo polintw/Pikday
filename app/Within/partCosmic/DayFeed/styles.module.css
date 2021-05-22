@@ -1,0 +1,29 @@
+.comWrapperDayFeed {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.boxRow {
+  position: relative;
+  margin: 12px 0;
+}
+
+.boxTopTitle {
+  position: relative;
+  margin: 6.3vh 0 2.5vh;
+}
+
+.boxDecoBottom {
+  height: 2.66vh;
+  width: 80%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background-color: #FCFCFC;
+}
+
+@media screen and (max-width:860px) {
+
+}

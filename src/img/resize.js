@@ -50,7 +50,7 @@ async function _handle_img_resize_POST(req, res){
 
   sharp(base64Buffer)
       .rotate()
-      .resize({width: 1920, height: 1920, fit: 'inside'})  // px, define it to FHD 1920 x 1080
+      .resize({width: 1280, height: 1280, fit: 'inside'})  // px, define it to HD 1280 x 720 under aspect ratio 16:9
       .jpeg({
           quality: 64
         })
