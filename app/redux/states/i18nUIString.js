@@ -66,23 +66,6 @@ const i18nUIString_EN = {
   "hint_onBoard_belongEdit": `Don't worry. You can edit "Your corners" in the Setting any time in the future.`,
   "hint_onBoard_start": `If you've finished the introductions above,`,
   "submit_onBoard_next": "Next",
-  "title_Invite_": "Create an Invitation!",
-  "title_Invitation_": "Invitation",
-  "descript_Invite_optType": [", as Homeland.", ", as Current Stay."],
-  "message_Invite_fellows": [
-    "Hi, there. This is ", //Original: "Here is"
-    "I'm pleased to invite you to experience Cornerth. with me as you're ", //Original:". And I would like to invite you to experience the Cornerth. with me as you're "
-    "from ", "staying at ", //Original: "coming from"
-    "Joining me by Signing up today on Cornerth. ", //Original:"as well! Joining me by Signing up and see you in there!"
-    ".",
-    " as well!",
-    "See you there!",
-    "an invitation from ",
-    "related to ",
-  ],
-  "message_Invite_General": "Welcome to Cornerth.! It's our pleasure to invite you exploring a different world with our fellows. This is a place for you to get more connection to the environment at where you are. Signing up now and join your fellows in this confused world!",
-  "message_Invite_validToken": ["invited you to join Cornerth at ", ". Since you're already a member of Cornerth., you can view or respond to your friends by changing Your Corners."],
-  //Original:"It's a place for you connecting the environment you are. Signing up and join your fellows in this confused world!"
 
   "message_oneLineCopy_success": "Link has copied to your clipboard.",
   "message_oneLineCopy_empty": "No text could be copied.",
@@ -140,7 +123,7 @@ const i18nUIString_EN = {
   "link_PublicExpand": 'Public view',
   "link_ExpandPersonal": 'Expand into Personal',
   "link_Fellows": 'Fellows',
-  "text_Inc": "Piksight. ",
+  "text_Inc": "Cornerth. ",
   "AllRights": "All Rights Reserved.",
   "tab_Steps": 'Steps',
   "tab_Routes": 'Routes',
@@ -240,28 +223,21 @@ const i18nUIString_EN = {
   "message_btn_OpenMap": "See location",
 
   "text_contributors": [[
-    "＊Developed and maintained by Polin Chou.",
-    "＊Operation assisted by TW H.",
-    "＊Contributed by Lisa Chang, chih hung chen, chang-wei huang, Frank Wang and Ssu.T Yang.",
-    "＊Based on Tuan Wu's interface design."
+    "．Development & Production: Polin Chou",
+    "．Original interface design: Tuan Wu",
+    "．Data assist: TW H"
   ]],
   "text_about": [[
-    "We are Cornerth, a start-up team base in Taiwan, establishing this web app on the thought providing people an easier way to notice and learn from their living environment.",
-    "Cornerth.tw enable you sharing contents with pictures, text, and graphic items on it for things you're interested to, or related to the corner you concern about.",
-    "It's our pleasure to see you using it."
+    "We are Piksight! A start-up team base in Taiwan, establishing this web app on the thought providing people an easier way to notice and record their daily life and living environment.",
+    "Here you could shelf your memory, or things you're interested to by content with pictures or graphic items, related to the corner you concern comfortably and pressureless.",
+    "It's our pleasure to see you join us."
   ]],
   "text_Contact": [
     [
-      "We’re always here with you and trying to improve the website.",
+      "We’re always here with you and trying to improve our website.",
       "If you’ve ever faced any difficulties, or are curious about the things we're working on, please don’t hesitate to contact us by email below:"],
     [
       "we would reply you as soon as possible."],
-    [
-      "Or if you are base in Taiwan, or understand mandarin, follow our official Facebook Page!"
-    ],
-    [
-      "You would see weekly selections, new features, or any important announcement on it."
-    ]
   ]
 };
 

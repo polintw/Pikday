@@ -37,8 +37,8 @@ async function _handle_crawler_GET_Unit(req, res){
 router.use('/', function(req, res){
   if(process.env.NODE_ENV == 'development') winston.verbose(`${'from crawler, GET: '} ${req.originalUrl}`);
   const variables= { //create local variable as value used in template
-    title: "Cornerth.",
-    descrip: "Uncover what behind.",
+    title: "Piksight",
+    descrip: "Shelf your day and browse the world.",
     ogurl: req.originalUrl,
     ogimg: "https://" + envServiceGeneral.appDomain + '/router/img/' + envImgPath.file_previewApp  //replace to page icon in the future
   };
