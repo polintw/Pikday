@@ -28,7 +28,7 @@ async function _handle_GET_shareDaily_accumulated(req, res){
         createdAt: {[Op.lt]: lastUnitTime}
       },
       order: [ //make sure the order of arr are from latest
-        Sequelize.literal('`createdAt` DESC') //and here, using 'literal' is due to some wierd behavior of sequelize,
+        Sequelize.literal('`assignedDate` DESC') 
       ],
       limit: 12
     });

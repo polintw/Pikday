@@ -27,7 +27,7 @@ const {
 const resizeThumb = (base64Buffer)=>{
   return sharp(base64Buffer)
       .rotate()
-      .resize({width: 426, height: 426, fit: 'inside'})  // px, define it to 426 x 240 under 16:9 aspect ratio
+      .resize({width: 480, height: 480, fit: 'inside'})  // px, define it to 480 x 272 under 16:9 aspect ratio
       .jpeg({
           quality: 64
         })
