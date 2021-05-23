@@ -156,11 +156,12 @@ class Wrapper extends React.Component {
                 </div>
               </div>
               <div
-                style={{width: '100%', backgroundColor: '#FDFDFC', zIndex: '1'}}>
+                className={classnames(styles.boxRow, styles.boxNavContent)}>
                 <div
-                  className={classnames(styles.boxRow, styles.boxNavFeed)}>
-                  <div style={{backgroundColor: '#FDFDFC', width: '100%', height: '50px', position: 'absolute', top: '0'}}></div>
-                  <NavFeed {...this.props}/>
+                  className={classnames(styles.boxNavFeed)}>
+                  <NavFeed
+                    {...this.props}
+                    sideOpacityParam={this.state.opacityParam}/>
                 </div>
                 <div
                   className={classnames(styles.boxTodayNodes)}

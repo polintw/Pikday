@@ -24,6 +24,7 @@ class FeedNodes extends React.Component {
       nodesList: [],
       nextFetchBasedTime: null,
       scrolled: true,
+      onBtn: null
     };
     this.refScroll = React.createRef();
     this.axiosSource = axios.CancelToken.source();
@@ -31,6 +32,8 @@ class FeedNodes extends React.Component {
     this._check_Position = this._check_Position.bind(this);
     this._render_FeedNodes = this._render_FeedNodes.bind(this);
     this._render_FooterHint = this._render_FooterHint.bind(this);
+    this._handleEnter_Btn = this._handleEnter_Btn.bind(this);
+    this._handleLeave_Btn = this._handleLeave_Btn.bind(this);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot){
@@ -70,26 +73,51 @@ class FeedNodes extends React.Component {
     let groupsDOM = [];
     const _nodesByGroup = (nodesGroup, groupIndex)=>{
       let nodesDOM = [];
-      nodesGroup.forEach((unitId, index) => {
+      nodesGroup.forEach((nodeId, index) => {
         //render if there are something in the data
         if( !(nodeId in this.props.nounsBasic)) return; //skip if the info of the unit not yet fetch
 
         nodesDOM.push (
-          <div
+          <Link
             key={"key_NodeFeed_new_"+index}
-            className={classnames()}>
+            to={ "/cosmic/explore/node?nodeid=" + nodeId }
+            nodeid={nodeId}
+            className={classnames(
+              "plainLinkButton", styles.boxModuleItem,
+              {[styles.boxModuleItemMouseOn]: this.state.onBtn == nodeId}
+            )}
+            onTouchStart={this._handleEnter_Btn}
+            onTouchEnd={this._handleLeave_Btn}
+            onMouseEnter={this._handleEnter_Btn}
+            onMouseLeave={this._handleLeave_Btn}>
             <span
-              className={classnames("fontTitle", "colorSignBlack", "weightBold")}>
+              className={classnames(
+                "fontSubtitle_h5", "weightBold", styles.spanModuleItem,
+                {
+                  [styles.spanModuleItemMouseOn]: this.state.onBtn == nodeId,
+                  ["colorGrey"]: this.state.onBtn != nodeId,
+                  ["colorEditBlack"]: this.state.onBtn == nodeId,
+                  ["weightBold"]: this.state.onBtn == nodeId
+                }
+              )}>
               {this.props.nounsBasic[nodeId].name}
             </span>
             <span
-              className={classnames("fontSubtitle_h5", "colorSignBlack")}>
+              className={classnames(
+                "fontSubtitle_h5", "weightBold", styles.spanModuleItem,
+                {
+                  [styles.spanModuleItemMouseOn]: this.state.onBtn == nodeId,
+                  ["colorGrey"]: this.state.onBtn != nodeId,
+                  ["colorEditBlack"]: this.state.onBtn == nodeId,
+                  ["weightBold"]: this.state.onBtn == nodeId
+                }
+              )}>
               {
                 (this.props.nounsBasic[nodeId].prefix.length > 0) &&
                 (", " + this.props.nounsBasic[nodeId].prefix)
               }
             </span>
-          </div>
+          </Link>
         );
       });
 
@@ -101,8 +129,7 @@ class FeedNodes extends React.Component {
         <div
           key={"key_PathProject_nodesGroup"+index}
           className={classnames(
-            styles.boxModule,
-            styles.boxModuleSmall,
+            styles.boxModuleCenter,
           )}>
           {_nodesByGroup(nodesGroup, index)}
         </div>
@@ -115,37 +142,34 @@ class FeedNodes extends React.Component {
   render(){
     return (
       <div className={styles.comFocusBoardFeed}>
-        <div>
-          {
-            (this.state.nodesList.length > 0) &&
-            <div
-              className={classnames(
-                styles.boxRow
-              )}>
-              {this._render_FeedNodes()}
-            </div>
-          }
-          {
-            ((this.state.nodesList.length == 0) &&
-              !this.state.scrolled &&
-              !this.state.axios
-            ) &&
-            <div
-              className={classnames(
-                styles.boxModule,
-                styles.boxModuleSmall,
-                styles.boxRow
-              )}>
-              <FeedNodesEmpty
-                {...this.props}/>
-            </div>
-          }
-
-          <div ref={this.refScroll}/>
+        {
+          (this.state.nodesList.length > 0) &&
           <div
-            className={classnames(styles.boxRow, styles.boxFooter)}>
-            {this._render_FooterHint()}
+            className={classnames(
+              styles.boxRow
+            )}>
+            {this._render_FeedNodes()}
           </div>
+        }
+        {
+          ((this.state.nodesList.length == 0) &&
+            !this.state.scrolled &&
+            !this.state.axios
+          ) &&
+          <div
+            className={classnames(
+              styles.boxModuleCenter,
+              styles.boxRow
+            )}>
+            <FeedNodesEmpty
+              {...this.props}/>
+          </div>
+        }
+
+        <div ref={this.refScroll}/>
+        <div
+          className={classnames(styles.boxRow, styles.boxFooter)}>
+          {this._render_FooterHint()}
         </div>
       </div>
     )
@@ -170,9 +194,7 @@ class FeedNodes extends React.Component {
 
   _set_nodesFeed(nextFetchBasedTime){
     // feeds was selected by the last unit get last round
-    if(!nextFetchBasedTime && this.state.nodesList.length > 0){
-      nextFetchBasedTime = !!this.state.nextFetchBasedTime ? this.state.nextFetchBasedTime : new Date();
-    };
+    nextFetchBasedTime = !!this.state.nextFetchBasedTime ? this.state.nextFetchBasedTime : new Date();
     const self = this;
     this.setState({axios: true});
     let now = new Date();
@@ -206,6 +228,15 @@ class FeedNodes extends React.Component {
         if(message) alert(message);
       }
     });
+  }
+
+  _handleEnter_Btn(e){
+    let nodeId = e.currentTarget.getAttribute('nodeid');
+    this.setState({onBtn: nodeId});
+  }
+
+  _handleLeave_Btn(e){
+    this.setState({onBtn: false})
   }
 
 }

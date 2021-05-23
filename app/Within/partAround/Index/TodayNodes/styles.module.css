@@ -1,5 +1,6 @@
 .comFocusBoardFeed {
-
+  display: flex;
+  flex-direction: column;
 }
 
 .comFeedEmpty {
@@ -16,17 +17,23 @@
   margin: 8px 0;
 }
 
-.boxModule{
+.boxModuleCenter{
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .boxModuleItem {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  margin: 8px 0;
+  box-sizing: border-box;
+  padding: 10px 20px 9px;
+  margin: 8px;
+  border: 2px solid #a3a3a3;
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+.boxModuleItemMouseOn {
+  border: 2px solid #545454;
 }
 
 .boxEmptyDescript {
@@ -43,12 +50,12 @@
   margin-bottom: 36vh;
 }
 
-.spanBaseNode {
+.spanModuleItem {
   display: inline-block;
   border-bottom: solid 0.75px transparent;
 }
 
-.spanBaseNodeMouse {
+.spanModuleItemMouseOn {
   border-bottom: solid 0.75px #545454;
 }
 
@@ -57,18 +64,9 @@
 }
 
 @media screen and (max-width:860px) {
-  .boxModuleSmall {
-    justify-content: center;
-  }
-
-  .boxModuleItem {
-    width: 94.24vw;
-    max-width: 390px;
-  }
-
   .boxFooter {
     margin-bottom: 19vh;
-    padding-top: 40px;
+    padding-top: 48px;
   }
 
 }
