@@ -41,12 +41,15 @@ class Feed extends React.Component {
 
   componentDidUpdate(prevProps, prevState, snapshot){
     if(this.props.dayrange != prevProps.dayrange){
-      this.setState({
-        feedList: [],
-        unitsBasic: {},
-        scrolled: true,
+      this.setState((prevState,props)=> {
+        return {
+          feedList: [],
+          unitsBasic: {},
+          scrolled: true,
+        };
+      }, ()=>{
+        this._set_feedUnits();
       });
-      this._set_feedUnits();
     };
   }
 
