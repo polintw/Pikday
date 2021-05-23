@@ -1,0 +1,72 @@
+.comFocusBoardFeed {
+  display: flex;
+  flex-direction: column;
+}
+
+.comFeedEmpty {
+  width: 100%;
+  padding-top: 10.1vh;
+}
+
+.boxRow {
+  position: relative;
+  margin: 12px 0;
+}
+
+.boxTitle {
+  margin: 8px 0;
+}
+
+.boxModuleCenter{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.boxModuleItem {
+  box-sizing: border-box;
+  padding: 10px 20px 9px;
+  margin: 8px;
+  border: 2px solid #a3a3a3;
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+.boxModuleItemMouseOn {
+  border: 2px solid #545454;
+}
+
+.boxEmptyDescript {
+  width: 100%;
+  text-align: center;
+}
+
+.boxFooter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  padding-top: 28px;
+  margin-bottom: 36vh;
+}
+
+.spanModuleItem {
+  display: inline-block;
+  border-bottom: solid 0.75px transparent;
+}
+
+.spanModuleItemMouseOn {
+  border-bottom: solid 0.75px #545454;
+}
+
+.spanFooterHint {
+  margin: 8px 0;
+}
+
+@media screen and (max-width:860px) {
+  .boxFooter {
+    margin-bottom: 19vh;
+    padding-top: 48px;
+  }
+
+}

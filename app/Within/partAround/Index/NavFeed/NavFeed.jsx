@@ -30,6 +30,11 @@ class NavFeed extends React.Component {
   }
 
   render(){
+    let sidePropsStyle = {
+      opacity: this.props.sideOpacityParam,
+      display: this.props.sideOpacityParam ? "unset" : "none"} // not display if '0'
+    let centerPropsStyle = (this.props.sideOpacityParam < 1) ? {fontWeight: 'bold'} : {};
+    
     return(
       <div
         className={classnames(styles.comNavFeed, styles.boxTitle)}>
@@ -43,7 +48,7 @@ class NavFeed extends React.Component {
             onTouchEnd={this._handleLeave_link}
             onMouseEnter={this._handleEnter_link}
             onMouseLeave={this._handleLeave_link}
-            style={{ padding: '0 8px' }}>
+            style={ Object.assign({}, { padding: '0 8px' }, sidePropsStyle)}>
             <span
               className={classnames(
                 "fontSubtitle",
@@ -65,7 +70,7 @@ class NavFeed extends React.Component {
             onTouchEnd={this._handleLeave_link}
             onMouseEnter={this._handleEnter_link}
             onMouseLeave={this._handleLeave_link}
-            style={{ padding: '0 8px' }}>
+            style={ Object.assign({}, { padding: '0 8px' }, centerPropsStyle)}>
             <span
               className={classnames(
                 "fontSubtitle",
@@ -87,7 +92,7 @@ class NavFeed extends React.Component {
             onTouchEnd={this._handleLeave_link}
             onMouseEnter={this._handleEnter_link}
             onMouseLeave={this._handleLeave_link}
-            style={{ padding: '0 8px' }}>
+            style={ Object.assign({}, { padding: '0 8px' }, sidePropsStyle)}>
             <span
               className={classnames(
                 "fontSubtitle",

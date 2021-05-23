@@ -41,12 +41,15 @@ class Feed extends React.Component {
 
   componentDidUpdate(prevProps, prevState, snapshot){
     if(this.props.dayrange != prevProps.dayrange){
-      this.setState({
-        feedList: [],
-        unitsBasic: {},
-        scrolled: true,
+      this.setState((prevState,props)=> {
+        return {
+          feedList: [],
+          unitsBasic: {},
+          scrolled: true,
+        };
+      }, ()=>{
+        this._set_feedUnits();
       });
-      this._set_feedUnits();
     };
   }
 
@@ -191,10 +194,16 @@ class Feed extends React.Component {
     };
     const self = this;
     this.setState({axios: true});
+    let now = new Date();
+    if(this.props.dayrange == "yesterday"){
+      // if yesterday desired, minus 1 on date before trun into string
+      now.setDate(now.getDate()-1);
+    };
+    let dateString = now.toDateString();
 
     _axios_get_accumulatedList(this.axiosSource.token, {
       listUnitBase: lastUnitTime,
-      dayRange: this.props.dayrange
+      dateString: dateString
     })
     .then((resObj)=>{
       if(resObj.main.unitsList.length > 0){

@@ -12,6 +12,7 @@ import {
 } from './utils.js';
 import NavFeed from "./NavFeed/NavFeed.jsx";
 import IndexShare from './IndexShare/IndexShare.jsx';
+import TodayNodes from './TodayNodes/FeedNodes.jsx';
 import UnitScreen from '../../../Unit/UnitScreen/UnitScreen.jsx';
 import {
   cancelErr,
@@ -24,9 +25,15 @@ class Wrapper extends React.Component {
     this.state = {
       axios: false,
       lastVisit: false,
+      mainContentFixedTop: null,
+      viewportHeight: window.innerHeight, // init static
+      viewportWidth: window.innerWidth,
+      opacityParam: 1
     };
     this.axiosSource = axios.CancelToken.source();
+    this.refMainContent = React.createRef();
     this.wrapperAround = React.createRef();
+    this._handleScroll_MainContent = this._handleScroll_MainContent.bind(this);
     this._createdRespond = this._createdRespond.bind(this);
     this._construct_UnitInit = this._construct_UnitInit.bind(this);
   }
@@ -55,9 +62,31 @@ class Wrapper extends React.Component {
     ){
       this.wrapperAround.current.style={};
     };
+    let newViewportHeight = window.innerHeight;
+    let newViewportWidth = window.innerWidth;
+    if(
+      prevState.viewportHeight != newViewportHeight &&
+      prevState.viewportWidth != newViewportWidth
+    ){
+      let mainContentOffset = this.refMainContent.current.getBoundingClientRect();
+      this.setState({
+        mainContentFixedTop: mainContentOffset.top,
+        viewportHeight: newViewportHeight,
+        viewportWidth: newViewportWidth
+      });
+    };
   }
 
   componentDidMount(){
+    let mainContentOffset = this.refMainContent.current.getBoundingClientRect();
+    this.setState({
+      mainContentFixedTop: mainContentOffset.top
+    });
+    window.addEventListener('scroll', this._handleScroll_MainContent, {passive: false});
+    //because the modern browser set the 'passive' property of addEventListener default to true,
+    //it would block the e.preventDefault() useage
+    //so we could only add listener manually like this way
+
     const self = this;
     this.setState({axios: true});
 
@@ -85,9 +114,18 @@ class Wrapper extends React.Component {
     if(this.state.axios){
       this.axiosSource.cancel("component will unmount.")
     }
+    //and don't forget to move any exist evetListener
+    window.removeEventListener('scroll',this._handleScroll_MainContent);
   }
 
   render(){
+    let mainBoxStyle = {
+      top: !!this.state.mainContentFixedTop ? (this.state.mainContentFixedTop.toString() + "px") : "unset",
+      opacity: this.state.opacityParam
+    };
+    let todayNodesStyle = {
+      opacity: 1 - this.state.opacityParam
+    };
     return(
       <div>
         {
@@ -99,8 +137,10 @@ class Wrapper extends React.Component {
               ref={this.wrapperAround}
               className={classnames(styles.comAroundWrapper)}>
               <div
+                ref={this.refMainContent}
                 className={classnames(
-                  styles.boxRow, styles.boxMainContent)}>
+                  styles.boxRow, styles.boxMainContent)}
+                style={mainBoxStyle}>
                 <div
                   className={classnames(styles.boxIndexTitle)}>
                   <span
@@ -116,11 +156,19 @@ class Wrapper extends React.Component {
                 </div>
               </div>
               <div
-                className={classnames(styles.boxRow, styles.boxNavFeed)}>
-                <NavFeed {...this.props}/>
+                className={classnames(styles.boxRow, styles.boxNavContent)}>
+                <div
+                  className={classnames(styles.boxNavFeed)}>
+                  <NavFeed
+                    {...this.props}
+                    sideOpacityParam={this.state.opacityParam}/>
+                </div>
+                <div
+                  className={classnames(styles.boxTodayNodes)}
+                  style={todayNodesStyle}>
+                  <TodayNodes/>
+                </div>
               </div>
-              <div
-                className={classnames(styles.boxRow, styles.boxFooter)}/>
             </div>
           )
         }
@@ -141,6 +189,33 @@ class Wrapper extends React.Component {
     )
   }
 
+  _handleScroll_MainContent(event){
+    // keep "default"
+    event.stopPropagation();
+    let viewportHeight = window.innerHeight;
+    let scrollTop = window.scrollY;
+    let opacityParam = 1;
+    if(scrollTop == 0){
+      this.setState({
+        opacityParam: 1
+      })
+    }
+    else if(scrollTop != 0 && scrollTop < (viewportHeight*2/5) ){
+      opacityParam = (((viewportHeight*2/5) - scrollTop)/(viewportHeight*2/5)) * 0.8;
+      this.setState({
+        opacityParam: opacityParam
+      });
+    }
+    else if(
+      scrollTop != 0 && scrollTop > (viewportHeight*2/5) &&
+      this.state.opacityParam // not '0'
+    ){
+      this.setState({
+        opacityParam: 0
+      })
+    }
+    else return ;
+  }
 }
 
 
