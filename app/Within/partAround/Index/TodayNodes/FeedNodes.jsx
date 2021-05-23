@@ -6,11 +6,8 @@ import {
 import {connect} from "react-redux";
 import classnames from 'classnames';
 import styles from "./styles.module.css";
-import stylesNail from "../../../stylesNail.module.css";
-import FeedEmpty from './FeedEmpty.jsx';
-import NailFeedwtNodes from '../../../../Components/Nails/NailFeedwtNodes/NailFeedwtNodes.jsx';
-import {_axios_get_accumulatedList} from '../axios.js';
-import {axios_get_UnitsBasic} from '../../../../utils/fetchHandlers.js';
+import FeedNodesEmpty from './FeedNodesEmpty.jsx';
+import {_axios_get_nodesList} from '../utils.js';
 import {
   handleNounsList,
 } from "../../../../redux/actions/general.js";
@@ -18,40 +15,30 @@ import {
   cancelErr,
   uncertainErr
 } from "../../../../utils/errHandlers.js";
-import {
-  domain
-} from '../../../../../config/services.js';
 
-class Feed extends React.Component {
+class FeedNodes extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       axios: false,
-      feedList: [],
-      unitsBasic: {},
+      nodesList: [],
+      nextFetchBasedTime: null,
       scrolled: true,
     };
     this.refScroll = React.createRef();
     this.axiosSource = axios.CancelToken.source();
-    this._set_feedUnits = this._set_feedUnits.bind(this);
+    this._set_nodesFeed = this._set_nodesFeed.bind(this);
     this._check_Position = this._check_Position.bind(this);
-    this._render_FeedNails = this._render_FeedNails.bind(this);
+    this._render_FeedNodes = this._render_FeedNodes.bind(this);
     this._render_FooterHint = this._render_FooterHint.bind(this);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot){
-    if(this.props.dayrange != prevProps.dayrange){
-      this.setState({
-        feedList: [],
-        unitsBasic: {},
-        scrolled: true,
-      });
-      this._set_feedUnits();
-    };
+
   }
 
   componentDidMount(){
-    this._set_feedUnits();
+    this._set_nodesFeed();
     window.addEventListener("scroll", this._check_Position);
   }
 
@@ -64,7 +51,7 @@ class Feed extends React.Component {
 
   _render_FooterHint(){
     // by feed length, we gave users some message about the thing they could do
-    if (this.state.feedList.length> 0){
+    if (this.state.nodesList.length> 0){
       return (
         <div>
           <span
@@ -79,43 +66,45 @@ class Feed extends React.Component {
     }
   }
 
-  _render_FeedNails(){
+  _render_FeedNodes(){
     let groupsDOM = [];
-    const _nailsGroup = (unitGroup, groupIndex)=>{
-      let nailsDOM = [];
-      unitGroup.forEach((unitId, index) => {
+    const _nodesByGroup = (nodesGroup, groupIndex)=>{
+      let nodesDOM = [];
+      nodesGroup.forEach((unitId, index) => {
         //render if there are something in the data
-        if( !(unitId in this.state.unitsBasic)) return; //skip if the info of the unit not yet fetch
+        if( !(nodeId in this.props.nounsBasic)) return; //skip if the info of the unit not yet fetch
 
-        nailsDOM.push (
+        nodesDOM.push (
           <div
             key={"key_NodeFeed_new_"+index}
-            className={classnames(styles.boxModuleItem)}>
-              <div
-                className={classnames(stylesNail.boxNail)}
-                style={{margin: '0 0 8px'}}>
-                <NailFeedwtNodes
-                  {...this.props}
-                  unitId={unitId}
-                  linkPath={this.props.location.pathname + ((this.props.location.pathname == '/') ? 'unit' : '/unit')}
-                  unitBasic={this.state.unitsBasic[unitId]} />
-              </div>
+            className={classnames()}>
+            <span
+              className={classnames("fontTitle", "colorSignBlack", "weightBold")}>
+              {this.props.nounsBasic[nodeId].name}
+            </span>
+            <span
+              className={classnames("fontSubtitle_h5", "colorSignBlack")}>
+              {
+                (this.props.nounsBasic[nodeId].prefix.length > 0) &&
+                (", " + this.props.nounsBasic[nodeId].prefix)
+              }
+            </span>
           </div>
         );
       });
 
-      return nailsDOM;
+      return nodesDOM;
     };
 
-    this.state.feedList.forEach((unitGroup, index)=>{
+    this.state.nodesList.forEach((nodesGroup, index)=>{
       groupsDOM.push(
         <div
-          key={"key_PathProject_FeedGroup"+index}
+          key={"key_PathProject_nodesGroup"+index}
           className={classnames(
             styles.boxModule,
             styles.boxModuleSmall,
           )}>
-          {_nailsGroup(unitGroup, index)}
+          {_nodesByGroup(nodesGroup, index)}
         </div>
       );
     });
@@ -128,16 +117,16 @@ class Feed extends React.Component {
       <div className={styles.comFocusBoardFeed}>
         <div>
           {
-            (this.state.feedList.length > 0) &&
+            (this.state.nodesList.length > 0) &&
             <div
               className={classnames(
                 styles.boxRow
               )}>
-              {this._render_FeedNails()}
+              {this._render_FeedNodes()}
             </div>
           }
           {
-            ((this.state.feedList.length == 0) &&
+            ((this.state.nodesList.length == 0) &&
               !this.state.scrolled &&
               !this.state.axios
             ) &&
@@ -147,7 +136,7 @@ class Feed extends React.Component {
                 styles.boxModuleSmall,
                 styles.boxRow
               )}>
-              <FeedEmpty
+              <FeedNodesEmpty
                 {...this.props}/>
             </div>
           }
@@ -175,63 +164,37 @@ class Feed extends React.Component {
     ){
       //base on the concept that bottom of boxScroll should always lower than top of viewport,
       //and do not need to fetch if you have see the 'real' bottom.
-      this._set_feedUnits();
+      this._set_nodesFeed();
     }
   }
 
-  _set_feedUnits(lastUnitTime){
+  _set_nodesFeed(nextFetchBasedTime){
     // feeds was selected by the last unit get last round
-    if(!lastUnitTime && this.state.feedList.length > 0){
-      //set the lastUnitTime if no assigned, after the list had already had something
-      let group, groupLength;
-      let list = this.state.feedList;
-      group = list[list.length-1];
-      groupLength = group.length;
-      lastUnitTime = this.state.unitsBasic[group[groupLength-1]].createdAt;
+    if(!nextFetchBasedTime && this.state.nodesList.length > 0){
+      nextFetchBasedTime = !!this.state.nextFetchBasedTime ? this.state.nextFetchBasedTime : new Date();
     };
     const self = this;
     this.setState({axios: true});
     let now = new Date();
-    if(this.props.dayrange == "yesterday"){
-      // if yesterday desired, minus 1 on date before trun into string
-      now.setDate(now.getDate()-1);
-    };
     let dateString = now.toDateString();
 
-    _axios_get_accumulatedList(this.axiosSource.token, {
-      listUnitBase: lastUnitTime,
+    _axios_get_nodesList(this.axiosSource.token, {
+      basedTime: nextFetchBasedTime,
       dateString: dateString
     })
     .then((resObj)=>{
-      if(resObj.main.unitsList.length > 0){
-        self.setState((prevState, props)=>{
-          let copyList = prevState.feedList.slice();
-          copyList.push(resObj.main.unitsList);
-          return {
-            feedList: copyList,
-            scrolled: resObj.main.scrolled
-          }
-        });
-
-        return axios_get_UnitsBasic(self.axiosSource.token, resObj.main.unitsList);
-      }
-      else{
-        self.setState({scrolled: resObj.main.scrolled}) // don't forget set scrolled to false to indicate the list was end
-        return { //just a way to deal with the next step, stop further request
-          main: {
-            nounsListMix: [],
-            unitsBasic: {},
-          }}};
-    })
-    .then((resObj)=>{
       //after res of axios_Units: call get nouns & users
-      self.props._submit_NounsList_new(resObj.main.nounsListMix);
-      //and final, update the data of units to state
+      self.props._submit_NounsList_new(resObj.main.nodesList);
+
       self.setState((prevState, props)=>{
-        return ({
+        let copyList = prevState.nodesList.slice();
+        if(resObj.main.nodesList.length > 0) copyList.push(resObj.main.nodesList);
+        return {
           axios: false,
-          unitsBasic: {...prevState.unitsBasic, ...resObj.main.unitsBasic},
-        });
+          nodesList: copyList,
+          nextFetchBasedTime: resObj.main.nextFetchBasedTime,
+          scrolled: resObj.main.scrolled
+        }
       });
     })
     .catch(function (thrown) {
@@ -251,7 +214,6 @@ const mapStateToProps = (state)=>{
   return {
     i18nUIString: state.i18nUIString,
     nounsBasic: state.nounsBasic,
-    pathsBasic: state.pathsBasic
   }
 }
 
@@ -264,4 +226,4 @@ const mapDispatchToProps = (dispatch) => {
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(Feed));
+)(FeedNodes));
