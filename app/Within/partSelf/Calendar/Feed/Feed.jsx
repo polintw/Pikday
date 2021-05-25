@@ -89,8 +89,8 @@ class Feed extends React.Component {
 
     let groupsDOM = [];
     const currentTime = new Date(); // start from 'now'
-    let currentTimeWeekEarly = new Date();
-    currentTimeWeekEarly.setDate(currentTime.getDate() -7);
+    let currentTimeADayEarly = new Date();
+    currentTimeADayEarly.setDate(currentTime.getDate() -1);
     let currentLoopDate = new Date(currentTime.toDateString());
     let firstUnitDate = new Date(this.state.feedList[0][0].assignedDate);
     let latestUnitDate = false; // default a bool 'false' to control while() loop
@@ -104,7 +104,7 @@ class Feed extends React.Component {
     };
     while(
       (latestUnitDate && (latestUnitDate.getTime() - 86400000) < currentLoopDate.getTime()) || // we have unit can render
-      currentLoopDate > currentTimeWeekEarly // at least 7 day even no unit at all
+      currentLoopDate > currentTimeADayEarly // 1 day even no unit at all
     ){
       let loopDate = currentLoopDate.getDate();
       let loopMonth = currentLoopDate.getMonth() + 1;
