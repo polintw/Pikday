@@ -52,7 +52,7 @@ async function _handle_img_resize_POST(req, res){
       .rotate()
       .resize({width: 1280, height: 1280, fit: 'inside'})  // px, define it to HD 1280 x 720 under aspect ratio 16:9
       .jpeg({
-          quality: 64
+          quality: 72
         })
       .toBuffer({ resolveWithObject: true })
       .then(({data, info})=>{
